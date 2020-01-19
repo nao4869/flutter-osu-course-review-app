@@ -8,6 +8,7 @@ class Course {
   final String proctoredexams;
   final String groupwork;
   final String textbook;
+  final Color color;
 
   const Course({
     @required this.id, 
@@ -17,5 +18,6 @@ class Course {
     @required this.proctoredexams, 
     @required this.groupwork, 
     @required this.textbook, 
+    this.color = Colors.orange, // default color
   });
 }

@@ -11,6 +11,7 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'None',
     groupwork: 'None',
     textbook: 'None',
+    color: Colors.purple,
   ),
   Course(
     id: 'c2',
@@ -20,6 +21,7 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'Yes',
     groupwork: 'None',
     textbook: 'Starting Out with C++: Early Objects (9th edition)',
+    color: Colors.red,
   ),
   Course(
     id: 'c3',
@@ -29,6 +31,7 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'No',
     groupwork: 'One group project halfway through the quarter where a team of about 5 students implements a given program in C++',
     textbook: 'Starting Out with C++: Early Objects (9th edition)',
+    color: Colors.orange,
   ),
   Course(
     id: 'c4',
@@ -38,6 +41,7 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'Yes',
     groupwork: 'Weekly worksheets to complete and discuss in a small group. Must submit typed meeting minutes to Piazza each week.',
     textbook: 'C Programming Language (2nd edition)',
+    color: Colors.amber,
   ),
   Course(
     id: 'c5',
@@ -47,6 +51,7 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'Yes',
     groupwork: 'None',
     textbook: 'Assembly Language for x86 Processors (7th edition)',
+    color: Colors.blue,
   ),
   Course(
     id: 'c6',
@@ -56,5 +61,6 @@ const SAMPLE_COURSES = const [
     proctoredexams: 'Yes',
     groupwork: 'None',
     textbook: 'Eloquent JavaScript, 2nd Ed.: A Modern Introduction to Programming (2nd edition)',
+    color: Colors.green,
   ),
 ];
