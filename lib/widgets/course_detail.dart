@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:osu_course_review/widgets/course_list_item.dart';
 //import '../models/course.dart';
 //import '../screens/course_detail_screen.dart';
 
@@ -12,27 +13,101 @@ class CourseDetail extends StatelessWidget {
   final String textbook;
 
   CourseDetail({
-    this.id,
-    this.courseName,
-    this.courseContent,
-    this.prerequisite,
-    this.proctoredexams,
-    this.groupwork,
-    this.textbook
+    @required this.id,
+    @required this.courseName,
+    @required this.courseContent,
+    @required this.prerequisite,
+    @required this.proctoredexams,
+    @required this.groupwork,
+    @required this.textbook,
   });
 
-  /*
-  void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      MealDetailScreen.routeName,
-      arguments: id,
+  Widget _buildChildContainerBold(String text) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      alignment: Alignment.topCenter,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+      ),
     );
-  */
+  }
+
+  Widget _buildChildContainer(String text) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(40, 3, 2, 3),
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 14.0),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Course Detail'),
+    return Card(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.purple),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        height: 200,
+        child: Row(children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _buildChildContainerBold('$courseName'),
+                _buildChildContainer('Course Content: $courseContent'),
+                _buildChildContainer('Pre-requisite of course: $prerequisite'),
+                _buildChildContainer('Proctored Exams: $proctoredexams'),
+                _buildChildContainer('Group Work: $groupwork'),
+                _buildChildContainer('Textbook: $textbook'),
+              ],
+            ),
+          ),
+        ]),
+      ),
     );
   }
 }
+
+//'$courseName'
+/*
+Container(
+  // 3.1.2行目
+  child: Text(
+    '$courseContent',
+    style: TextStyle(fontSize: 14.0),
+  ),
+),
+Container(
+  // 3.1.2行目
+  child: Text(
+    'Pre-requisite of course: $prerequisite',
+    style: TextStyle(fontSize: 14.0),
+  ),
+),
+Container(
+  // 3.1.2行目
+  child: Text(
+    'Proctored Exams: $proctoredexams',
+    style: TextStyle(fontSize: 14.0),
+  ),
+),
+Container(
+  // 3.1.2行目
+  child: Text(
+    'Group Work: $groupwork',
+    style: TextStyle(fontSize: 14.0),
+  ),
+),
+Container(
+  // 3.1.2行目
+  child: Text(
+    'Textbook: $textbook',
+    style: TextStyle(fontSize: 14.0),
+  ),
+),
+*/
