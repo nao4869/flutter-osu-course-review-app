@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/data/sample_courses_data.dart';
 //import './screens/list_courses_screen.dart';
 import './screens/course_detail_screen.dart';
 import './screens/tabs_screen.dart';
+import './models/course.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,6 +46,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Course> _allCourses= SAMPLE_COURSES;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Lists of available routes in the application
       routes: {
         '/': (context) => TabScreen(), // home route
-        CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
+        CourseDetailScreen.routeName: (context) => CourseDetailScreen(_allCourses),
       },
     );
   }
