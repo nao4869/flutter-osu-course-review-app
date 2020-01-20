@@ -5,7 +5,7 @@ import '../models/course.dart';
 const SAMPLE_COURSES = const [
   Course(
     id: 'c1',
-    courseName: 'CS160',
+    courseName: 'CS160 - Computer Orientation',
     courseContent: 'Computer Science Orientation',
     prerequisite: 'None',
     proctoredexams: 'None',
@@ -15,7 +15,7 @@ const SAMPLE_COURSES = const [
   ),
   Course(
     id: 'c2',
-    courseName: 'CS161',
+    courseName: 'CS161 - Intro to computer science1',
     courseContent: 'Overview of fundamental concepts of computer science. Introduction to problem solving, software engineering, and object-oriented programming. Includes algorithm design and program development. Students write small programs in C++.',
     prerequisite: 'None',
     proctoredexams: 'Yes',
@@ -25,7 +25,7 @@ const SAMPLE_COURSES = const [
   ),
   Course(
     id: 'c3',
-    courseName: 'CS162',
+    courseName: 'CS162 - Intro to computer science2',
     courseContent: 'Introduces data structures, algorithms, and requires students to produce weekly labs and larger bi-weekly projects in C++.',
     prerequisite: 'CS161',
     proctoredexams: 'No',
@@ -35,7 +35,7 @@ const SAMPLE_COURSES = const [
   ),
   Course(
     id: 'c4',
-    courseName: 'CS261',
+    courseName: 'CS261 - Data Structures',
     courseContent: 'Teaches abstract data types, dynamic arrays, linked lists, trees and graphs, binary search trees, hash tables, storage management, complexity analysis of data structures. Classwork is done in C (not C++).',
     prerequisite: 'CS162 or CS165 and CS225',
     proctoredexams: 'Yes',
@@ -45,7 +45,7 @@ const SAMPLE_COURSES = const [
   ),
   Course(
     id: 'c5',
-    courseName: 'CS271',
+    courseName: 'CS271 - Assembly Language',
     courseContent: 'Introduction to functional organization and operation of digital computers. Coverage of assembly language; addressing, stacks, argument passing, arithmetic operations, decisions, macros, modularization, linkers and debuggers.',
     prerequisite: 'CS161 or CS165',
     proctoredexams: 'Yes',
@@ -55,7 +55,7 @@ const SAMPLE_COURSES = const [
   ),
   Course(
     id: 'c6',
-    courseName: 'CS290',
+    courseName: 'CS290 - Web development',
     courseContent: 'How to design and implement a multi-tier application using web technologies: creation of extensive custom client- and server-side code, consistent with achieving a high-quality software architecture.',
     prerequisite: 'CS162 or CS165',
     proctoredexams: 'Yes',

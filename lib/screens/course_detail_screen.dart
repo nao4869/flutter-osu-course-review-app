@@ -42,7 +42,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Test'),
+        title: Text(courseName),
       ),
       body: Center(
         child: Text('Your Courses'),
