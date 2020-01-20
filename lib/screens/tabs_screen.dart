@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './list_courses_screen.dart';
 import './your_courses_screen.dart';
+import '../widgets/main_drawer.dart';
 
 class TabScreen extends StatefulWidget {
   TabScreen({Key key}) : super(key: key);
@@ -35,6 +36,7 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['courseName']),
       ),
+      drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
