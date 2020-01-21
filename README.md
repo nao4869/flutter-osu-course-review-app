@@ -1,9 +1,9 @@
 # Mobile version of OSU course search application
-<img width="334" alt="Screen Shot 2020-01-20 at 11 28 32 PM" src="https://user-images.githubusercontent.com/42655212/72784241-40d91080-3bdd-11ea-8d85-8eade1a9792a.png">
+<img width="200" alt="Screen Shot 2020-01-20 at 11 28 32 PM" src="https://user-images.githubusercontent.com/42655212/72784241-40d91080-3bdd-11ea-8d85-8eade1a9792a.png">
 
-<img width="343" alt="Screen Shot 2020-01-20 at 11 28 42 PM" src="https://user-images.githubusercontent.com/42655212/72784244-42a2d400-3bdd-11ea-9109-d0dbc9434539.png">
+<img width="200" alt="Screen Shot 2020-01-20 at 11 28 42 PM" src="https://user-images.githubusercontent.com/42655212/72784244-42a2d400-3bdd-11ea-9109-d0dbc9434539.png">
 
-<img width="339" alt="Screen Shot 2020-01-20 at 11 28 54 PM" src="https://user-images.githubusercontent.com/42655212/72784247-433b6a80-3bdd-11ea-964e-4fbfd719e52b.png">
+<img width="200" alt="Screen Shot 2020-01-20 at 11 28 54 PM" src="https://user-images.githubusercontent.com/42655212/72784247-433b6a80-3bdd-11ea-964e-4fbfd719e52b.png">
 
 ## Description
 Wondering how hard your next class might be? Did other students think CS162 was a bloodbath, too? This app can tell you!
