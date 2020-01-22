@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../screens/create_course_screen.dart';
+import '../screens/create_review_screen.dart';
+
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, Function tapHandler) {
     return ListTile(
@@ -43,10 +46,10 @@ class MainDrawer extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed('/');
           }),
           buildListTile('Create New Course', Icons.settings, () {
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).pushReplacementNamed(CreateCourseScreen.routeName);
           }),
           buildListTile('Create New Review', Icons.settings, () {
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).pushReplacementNamed(CreateReviewScreen.routeName);
           }),
         ],
       ),

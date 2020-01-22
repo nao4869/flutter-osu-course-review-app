@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/data/sample_courses_data.dart';
 //import './screens/list_courses_screen.dart';
+
 import './screens/course_detail_screen.dart';
 import './screens/tabs_screen.dart';
+import './screens/create_course_screen.dart';
+import './screens/create_review_screen.dart';
+
 import './models/course.dart';
 import './models/review.dart';
 
@@ -44,6 +48,8 @@ class _MyHomePageState extends State<MyApp> {
       routes: {
         '/': (context) => TabScreen(), // home route
         CourseDetailScreen.routeName: (context) => CourseDetailScreen(_allCourses, _allReviews),
+        CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
+        CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
       },
     );
   }

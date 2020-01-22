@@ -82,8 +82,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         child: Column(
           children: <Widget>[
             buildSectionTitle(context, 'Course Detail'),
-            buildContainer(
-              ListView.builder(
+            Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(5),
+              height: 250,
+              width: double.infinity,
+              child: ListView.builder(
                 itemBuilder: (context, index) {
                   return CourseDetail(
                     id: selectedCourse[index].id,
