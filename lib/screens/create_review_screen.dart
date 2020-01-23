@@ -53,11 +53,31 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_reviewsContentFocusNode);
                 },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course name.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Review Content'),
                 textInputAction: TextInputAction.next,
                 focusNode: _reviewsContentFocusNode,
+                onFieldSubmitted: (_) {
+                  _saveForm();
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course reviews.';
+                  }
+                  if (value.length < 10) {
+                    return 'Review should be at least 10 characters long.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
             ],
           ),
