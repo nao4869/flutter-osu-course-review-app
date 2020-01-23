@@ -12,6 +12,22 @@ class CreateReviewScreen extends StatefulWidget {
 class _CreateReviewScreenState extends State<CreateReviewScreen> {
   final _reviewsContentFocusNode = FocusNode();
 
+  // global key
+  final _form = GlobalKey<FormState>();
+
+  // save form data by using grobal key
+  void _saveForm() {
+    final isValid = _form.currentState.validate();
+
+    // error handling for the form value
+    if (!isValid) {
+      return;
+    }
+
+    // only if the form is valid, save the result
+    _form.currentState.save();
+  }
+
   @override
   void dispose() {
     // avoid momery leaks
