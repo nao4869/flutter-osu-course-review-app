@@ -39,12 +39,20 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Course'),
+        title: Text('Create New Review'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveForm,
+          ),
+        ],
       ),
       drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
+          // setting global key in the form
+          key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
@@ -74,9 +82,8 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                   }
                   if (value.length < 10) {
                     return 'Review should be at least 10 characters long.';
-                  } else {
-                    return null; // no error
                   }
+                  return null; // no error
                 },
               ),
             ],
