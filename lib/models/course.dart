@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class Course {
+class Course with ChangeNotifier {
   final String id;
   final String courseName;
   final String courseContent;
@@ -10,7 +11,7 @@ class Course {
   final String textbook;
   final Color color;
 
-  const Course({
+  Course({
     @required this.id, 
     @required this.courseName, 
     @required this.courseContent, 

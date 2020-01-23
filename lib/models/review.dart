@@ -1,14 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class Review {
+class Review with ChangeNotifier {
   @required
   final String id;
   final String courseId;
   final String reviewsContent;
 
-  const Review({
+  Review({
     @required this.id,
     @required this.courseId,
     @required this.reviewsContent,
   });
+
+  // void isReviewBelongToCourse (String id) {
+    
+  //   notifyListeners();
+  // }
 }
