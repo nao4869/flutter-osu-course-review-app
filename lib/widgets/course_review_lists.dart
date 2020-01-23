@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:osu_course_review/widgets/course_list_item.dart';
-//import '../models/course.dart';
-//import '../screens/course_detail_screen.dart';
+import 'package:provider/provider.dart';
+import '../models/review.dart';
 
 class CourseReviewLists extends StatelessWidget {
-  final String id;
-  final String courseId;
-  final String reviewsContent;
-
-  CourseReviewLists({
-    @required this.id,
-    @required this.courseId,
-    @required this.reviewsContent,
-  });
-
+  
   Widget _buildChildContainer(String text) {
     return Container(
       margin: EdgeInsets.fromLTRB(40, 3, 2, 3),
@@ -27,6 +17,8 @@ class CourseReviewLists extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final courseReviews = Provider.of<Review>(context, listen: false);
+
     return Card(
       child: Container(
         decoration: BoxDecoration(
@@ -39,7 +31,7 @@ class CourseReviewLists extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _buildChildContainer('$reviewsContent'),
+                _buildChildContainer('${courseReviews.reviewsContent}'),
               ],
             ),
           ),
