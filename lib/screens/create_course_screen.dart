@@ -17,6 +17,18 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   final _textBookFocusNode = FocusNode();
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    // avoid momery leaks
+    _contentFocusNode.dispose();
+    _prerequisiteFocusNode.dispose();
+    _proctoredExamsFocusNode.dispose();
+    _groupWorkFocusNode.dispose();
+    _textBookFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

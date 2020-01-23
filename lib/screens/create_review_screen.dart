@@ -13,6 +13,13 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
   final _reviewsContentFocusNode = FocusNode();
 
   @override
+  void dispose() {
+    // avoid momery leaks
+    _reviewsContentFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
