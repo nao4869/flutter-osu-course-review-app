@@ -34,7 +34,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     // avoid momery leaks
     _contentFocusNode.dispose();
     _prerequisiteFocusNode.dispose();
@@ -54,6 +53,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
+          // setting global key in the form
+          key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
@@ -61,6 +62,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_contentFocusNode);
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course name.';
+                  } else {
+                    return null; // no error
+                  }
                 },
               ),
               TextFormField(
@@ -70,6 +78,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_prerequisiteFocusNode);
                 },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course content.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Prerequisite'),
@@ -77,6 +92,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 focusNode: _prerequisiteFocusNode,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_proctoredExamsFocusNode);
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course pre-requisite.';
+                  } else {
+                    return null; // no error
+                  }
                 },
               ),
               TextFormField(
@@ -86,6 +108,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_groupWorkFocusNode);
                 },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter whether course have proctored-exams or not.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Groupwork'),
@@ -94,11 +123,28 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_textBookFocusNode);
                 },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter whether a course have groupwork or not.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Textbook'),
                 textInputAction: TextInputAction.next,
                 focusNode: _textBookFocusNode,
+                onFieldSubmitted: (_) {
+                  _saveForm();
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a textbook of course.';
+                  } else {
+                    return null; // no error
+                  }
+                },
               ),
             ],
           ),
