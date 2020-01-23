@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/course.dart';
+import '../models/courses_provider.dart';
 
 import '../widgets/main_drawer.dart';
 
@@ -19,6 +23,48 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   // global key
   final _form = GlobalKey<FormState>();
 
+  // update this edited course when save form
+  var _editedCourse = Course(
+    id: null,
+    courseName: '',
+    courseContent: '',
+    prerequisite: '',
+    proctoredexams: '',
+    groupwork: '',
+    textbook: '',
+  );
+
+  var _initValues = {
+    'courseName': '',
+    'courseContent': '',
+    'prerequisite': '',
+    'proctoredexams': '',
+    'groupwork': '',
+    'textbook': '',
+  };
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final courseId = ModalRoute.of(context).settings.arguments as String;
+      if (courseId != null) {
+        _editedCourse =
+            Provider.of<Courses>(context, listen: false).findById(courseId);
+        _initValues = {
+          'courseName': _editedCourse.courseName,
+          'courseContent': _editedCourse.courseContent,
+          'prerequisite': _editedCourse.prerequisite,
+          'proctoredexams': _editedCourse.proctoredexams,
+          'groupwork': _editedCourse.groupwork,
+          'textbook': _editedCourse.textbook,
+        };
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   // save form data by using grobal key
   void _saveForm() {
     final isValid = _form.currentState.validate();
@@ -30,6 +76,15 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
     // only if the form is valid, save the result
     _form.currentState.save();
+
+    // if existing items edited
+    if (_editedCourse.id != null) {
+      Provider.of<Courses>(context, listen: false)
+          .updateCourse(_editedCourse.id, _editedCourse);
+    } else {
+      Provider.of<Courses>(context, listen: false).addCourse(_editedCourse);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -64,6 +119,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _initValues['courseName'],
                 decoration: InputDecoration(labelText: 'Course Name'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -76,8 +132,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     return null; // no error
                   }
                 },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: value,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    id: _editedCourse.id,
+                  );
+                },
               ),
               TextFormField(
+                initialValue: _initValues['courseContent'],
                 decoration: InputDecoration(labelText: 'Course Content'),
                 textInputAction: TextInputAction.next,
                 focusNode: _contentFocusNode,
@@ -91,8 +159,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     return null; // no error
                   }
                 },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: value,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    id: _editedCourse.id,
+                  );
+                },
               ),
               TextFormField(
+                initialValue: _initValues['prerequisite'],
                 decoration: InputDecoration(labelText: 'Prerequisite'),
                 textInputAction: TextInputAction.next,
                 focusNode: _prerequisiteFocusNode,
@@ -106,8 +186,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     return null; // no error
                   }
                 },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: value,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    id: _editedCourse.id,
+                  );
+                },
               ),
               TextFormField(
+                initialValue: _initValues['proctoredexams'],
                 decoration: InputDecoration(labelText: 'Proctored-Exams'),
                 textInputAction: TextInputAction.next,
                 focusNode: _proctoredExamsFocusNode,
@@ -121,8 +213,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     return null; // no error
                   }
                 },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: value,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    id: _editedCourse.id,
+                  );
+                },
               ),
               TextFormField(
+                initialValue: _initValues['groupwork'],
                 decoration: InputDecoration(labelText: 'Groupwork'),
                 textInputAction: TextInputAction.next,
                 focusNode: _groupWorkFocusNode,
@@ -136,8 +240,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     return null; // no error
                   }
                 },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: value,
+                    textbook: _editedCourse.textbook,
+                    id: _editedCourse.id,
+                  );
+                },
               ),
               TextFormField(
+                initialValue: _initValues['textbook'],
                 decoration: InputDecoration(labelText: 'Textbook'),
                 textInputAction: TextInputAction.next,
                 focusNode: _textBookFocusNode,
@@ -150,6 +266,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   } else {
                     return null; // no error
                   }
+                },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: value,
+                    id: _editedCourse.id,
+                  );
                 },
               ),
             ],

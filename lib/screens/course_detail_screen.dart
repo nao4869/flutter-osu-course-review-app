@@ -1,129 +1,128 @@
 // This file will display the meals for the chosen category
 import 'package:flutter/material.dart';
-import '../widgets/course_detail.dart';
-import '../widgets/course_review_lists.dart';
-import '../models/course.dart';
-import '../models/review.dart';
+import 'package:provider/provider.dart';
 
-class CourseDetailScreen extends StatefulWidget {
+import '../models/courses_provider.dart';
+import '../models/reviews_provider.dart';
+
+class CourseDetailScreen extends StatelessWidget {
   static const routeName = '/course-detail';
-  final List<Course> displayCourseDetail;
-  final List<Review> displayCourseReviews;
-
-  CourseDetailScreen(this.displayCourseDetail, this.displayCourseReviews);
-
-  @override
-  _CourseDetailScreenState createState() => _CourseDetailScreenState();
-}
-
-class _CourseDetailScreenState extends State<CourseDetailScreen> {
-  String courseName;
-  List<Course> selectedCourse;
-
-  String reviewsContent;
-  List<Review> selectedCourseReviews;
-
-  var _loadedInitData = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (_loadedInitData == false) {
-      // Retrieving loaded course and translate to list
-      final routeArgs = ModalRoute.of(context).settings.arguments
-          as Map<String, String>; // way to get args from main.dart
-      courseName = routeArgs['courseName'];
-      final courseId = routeArgs['id'];
-      selectedCourse = widget.displayCourseDetail.where((course) {
-        return course.id.contains(courseId);
-      }).toList();
-
-      // Retrieving reviews of loaded course and translate to list
-      selectedCourseReviews = widget.displayCourseReviews.where((review) {
-        return review.courseId.contains(courseId);
-      }).toList();
-
-      _loadedInitData = true;
-    }
-    super.didChangeDependencies();
-  }
 
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.title,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
       ),
-    );
-  }
-
-  Widget buildContainer(Widget child) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(5),
-      height: 250,
-      width: double.infinity,
-      child: child,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final courseId = ModalRoute.of(context).settings.arguments
+        as String; // retrieving ID from routes passed
+    final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+    final loadedCourseReviews = Provider.of<Reviews>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(courseName),
+        title: Text(loadedCourse.courseName),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             buildSectionTitle(context, 'Course Detail'),
             Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(255, 255, 255, 1)),
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(5),
-              height: 250,
+              height: 300,
               width: double.infinity,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return CourseDetail(
-                    id: selectedCourse[index].id,
-                    courseName: selectedCourse[index].courseName,
-                    courseContent: selectedCourse[index].courseName,
-                    prerequisite: selectedCourse[index].prerequisite,
-                    proctoredexams: selectedCourse[index].proctoredexams,
-                    groupwork: selectedCourse[index].groupwork,
-                    textbook: selectedCourse[index].textbook,
-                  );
-                },
-                itemCount: selectedCourse.length,
-              ),
-            ),
-            buildSectionTitle(context, 'Reviews for $courseName'),
-            Container(
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(5),
-              height: 500,
-              width: double.infinity,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: double.infinity,
-                    height: 100,
-                    child: CourseReviewLists(
-                      id: selectedCourseReviews[index].id,
-                      courseId: selectedCourseReviews[index].courseId,
-                      reviewsContent:
-                          selectedCourseReviews[index].reviewsContent,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Text(
+                      loadedCourse.courseName,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  );
-                },
-                itemCount: selectedCourseReviews.length,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 10, 0, 15),
+                    child: Text(
+                      'Course Content: ${loadedCourse.courseContent}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Pre-requisite: ${loadedCourse.prerequisite}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Proctored Exams: ${loadedCourse.proctoredexams}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Group Work: ${loadedCourse.groupwork}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Textbook: ${loadedCourse.textbook}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+            buildSectionTitle(context, 'Course Reviews'),
           ],
         ),
       ),
