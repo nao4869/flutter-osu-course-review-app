@@ -51,17 +51,21 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(25),
-        itemCount: courses.length,
-        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-          value: courses[i],
-          child: CourseListItem(
-            coursesList.courses[i].id,
-            coursesList.courses[i].courseName,
-          ),
-        ),
-      ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(25),
+              itemCount: courses.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                value: courses[i],
+                child: CourseListItem(
+                  coursesList.courses[i].id,
+                  coursesList.courses[i].courseName,
+                ),
+              ),
+            ),
     );
   }
 }
