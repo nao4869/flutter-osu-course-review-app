@@ -142,8 +142,18 @@ class Courses with ChangeNotifier {
     }
   }
 
-  void deleteCourse(String id) {
-    _courses.removeWhere((cs) => cs.id == id);
+  Future<void> deleteCourse(String id) async {
+    final url = 'https://osu-course-search.firebaseio.com/courses/$id.json';
+    final existingCourseIndex = _courses.indexWhere((cs) => cs.id == id);
+    var existingCourse = _courses[existingCourseIndex];
+    _courses.removeAt(existingCourseIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _courses.insert(existingCourseIndex, existingCourse);
+      notifyListeners();
+      throw HttpException('Could not delete product.');
+    }
+    existingCourse = null;
   }
 }
