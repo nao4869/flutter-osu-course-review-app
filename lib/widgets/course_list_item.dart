@@ -4,15 +4,14 @@ import 'package:provider/provider.dart';
 import '../screens/create_course_screen.dart';
 
 import '../models/courses_provider.dart';
+import '../models/course.dart';
 
 class CourseListItem extends StatelessWidget {
-  final String id;
-  final String title;
-
-  CourseListItem(this.id, this.title);
-
   @override
   Widget build(BuildContext context) {
+    // retrieving providers objects
+    final course = Provider.of<Course>(context, listen: false);
+
     return Container(
       padding: EdgeInsets.only(bottom: 10),
       child: Column(
@@ -32,7 +31,7 @@ class CourseListItem extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       width: 200,
                       child: Text(
-                        title,
+                        course.courseName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -45,7 +44,7 @@ class CourseListItem extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                             CourseDetailScreen.routeName,
-                            arguments: id);
+                            arguments: course.id);
                       },
                     ),
                     IconButton(
@@ -54,7 +53,7 @@ class CourseListItem extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                             CreateCourseScreen.routeName,
-                            arguments: id);
+                            arguments: course.id);
                       },
                     ),
                     IconButton(
@@ -62,7 +61,7 @@ class CourseListItem extends StatelessWidget {
                       color: Theme.of(context).errorColor,
                       onPressed: () {
                         Provider.of<Courses>(context, listen: false)
-                            .deleteCourse(id);
+                            .deleteCourse(course.id);
                       },
                     ),
                   ],

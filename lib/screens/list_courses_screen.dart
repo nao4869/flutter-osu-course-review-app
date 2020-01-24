@@ -2,9 +2,9 @@
 // Displays lsit of courses for the application
 
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/create_course_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/create_course_screen.dart';
 import '../models/courses_provider.dart';
 import '../widgets/course_list_item.dart';
 import '../widgets/main_drawer.dart';
@@ -19,7 +19,6 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
   @override
   void initState() {
-    // Provider.of<Products>(context).fetchAndSetProducts(); // not work
     Future.delayed(Duration.zero).then((_) {
       setState(() {
         _isLoading = true;
@@ -60,10 +59,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
               itemCount: courses.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                 value: courses[i],
-                child: CourseListItem(
-                  coursesList.courses[i].id,
-                  coursesList.courses[i].courseName,
-                ),
+                child: CourseListItem(),
               ),
             ),
     );
