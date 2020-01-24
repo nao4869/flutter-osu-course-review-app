@@ -88,6 +88,36 @@ class Courses with ChangeNotifier {
     return _courses.firstWhere((cs) => cs.id == id);
   }
 
+  Future<void> retrieveCourseData() async {
+    const url = 'https://osu-course-search.firebaseio.com/courses.json';
+    try {
+      final response = await http.get(url); // get for fetching from DB
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData == null) {
+        return;
+      }
+      
+      final List<Course> loadedCourses = [];
+
+      extractedData.forEach((courseId, courseData) {
+        loadedCourses.add(Course(
+          id: courseId,
+          courseName: courseData['courseName'],
+          courseContent: courseData['courseContent'],
+          prerequisite: courseData['prerequisite'],
+          proctoredexams: courseData['proctoredexams'],
+          groupwork: courseData['groupwork'],
+          textbook: courseData['textbook'],
+        ));
+      });
+      _courses = loadedCourses;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> addCourse(Course course) async {
     const url = 'https://osu-course-search.firebaseio.com/courses.json';
 
