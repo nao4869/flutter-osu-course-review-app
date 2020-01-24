@@ -43,6 +43,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'textbook': '',
   };
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -66,7 +67,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   }
 
   // save form data by using grobal key
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
     // error handling for the form value
@@ -76,14 +77,43 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
     // only if the form is valid, save the result
     _form.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
 
     // if existing items edited
     if (_editedCourse.id != null) {
-      Provider.of<Courses>(context, listen: false)
+      await Provider.of<Courses>(context, listen: false)
           .updateCourse(_editedCourse.id, _editedCourse);
     } else {
-      Provider.of<Courses>(context, listen: false).addCourse(_editedCourse);
+      try {
+        await Provider.of<Courses>(context, listen: false).addCourse(_editedCourse);
+      } catch (error) {
+        await showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('An error occured!'),
+                  content: Text('Some error occured while adding courses'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Okay'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+        // finally block always run no matter try, catch succeded or not
+      // } finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      }
     }
+    setState(() {
+      _isLoading = false;
+    });
     Navigator.of(context).pop();
   }
 

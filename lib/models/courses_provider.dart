@@ -88,7 +88,7 @@ class Courses with ChangeNotifier {
   }
 
   Future<void> addCourse(Course course) async {
-    const url = 'https://osu-course-search.firebaseio.com/';
+    const url = 'https://osu-course-search.firebaseio.com/courses.json';
 
     try {
       final response = await http.post(
