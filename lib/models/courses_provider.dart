@@ -1,5 +1,7 @@
 // The file which is to create new course from user input
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http; // for http request
 import './course.dart';
 
 class Courses with ChangeNotifier {
@@ -7,7 +9,8 @@ class Courses with ChangeNotifier {
     Course(
       id: 'c1',
       courseName: 'CS160 - Computer Orientation',
-      courseContent: 'Introduction to the computer science field and profession. Team problem solving. Introduction to writing computer programs.',
+      courseContent:
+          'Introduction to the computer science field and profession. Team problem solving. Introduction to writing computer programs.',
       prerequisite: 'None',
       proctoredexams: 'None',
       groupwork: 'None',
@@ -79,27 +82,42 @@ class Courses with ChangeNotifier {
     return [..._courses];
   }
 
-  // List<Course> get subscriptedCourse {
-  //   return _courses.where((courseItem) => courseItem.isFavorite).toList();
-  // }
-
   //Comparing ID of each products with id of the arguments
   Course findById(String id) {
     return _courses.firstWhere((cs) => cs.id == id);
   }
 
-  void addCourse(Course course) {
-    final newCourse = Course(
-      courseName: course.courseName,
-      courseContent: course.courseContent,
-      prerequisite: course.prerequisite,
-      proctoredexams: course.proctoredexams,
-      groupwork: course.proctoredexams,
-      textbook: course.textbook,
-      id: DateTime.now().toString(),
-    );
-    _courses.add(newCourse);
-    notifyListeners();
+  Future<void> addCourse(Course course) async {
+    const url = 'https://osu-course-search.firebaseio.com/';
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'courseName': course.courseName,
+          'courseContent': course.courseContent,
+          'prerequisite': course.prerequisite,
+          'proctoredexams': course.proctoredexams,
+          'groupwork': course.groupwork,
+          'textbook': course.textbook,
+        }),
+      );
+
+      final newCourse = Course(
+        courseName: course.courseName,
+        courseContent: course.courseContent,
+        prerequisite: course.prerequisite,
+        proctoredexams: course.proctoredexams,
+        groupwork: course.proctoredexams,
+        textbook: course.textbook,
+        id: json.decode(response.body)['name'],
+      );
+      _courses.add(newCourse);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
   void updateCourse(String id, Course newCourse) {
@@ -108,8 +126,7 @@ class Courses with ChangeNotifier {
     if (courseIndex >= 0) {
       _courses[courseIndex] = newCourse;
       notifyListeners();
-    }
-    else {
+    } else {
       print('...');
     }
   }
