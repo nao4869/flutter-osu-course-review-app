@@ -120,11 +120,22 @@ class Courses with ChangeNotifier {
     }
   }
 
-  void updateCourse(String id, Course newCourse) {
-    final courseIndex = _courses.indexWhere((cs) => cs.id == id);
+  Future<void> updateCourse(String id, Course newCourse) async {
+    final courseIdenx = _courses.indexWhere((cs) => cs.id == id);
 
-    if (courseIndex >= 0) {
-      _courses[courseIndex] = newCourse;
+    if (courseIdenx >= 0) {
+      // target URL
+      final url = 'https://osu-course-search.firebaseio.com/courses/$id.json';
+      await http.patch(url,
+          body: json.encode({
+            'courseName': newCourse.courseName,
+            'courseContent': newCourse.courseContent,
+            'prerequisite': newCourse.prerequisite,
+            'proctoredexams': newCourse.proctoredexams,
+            'groupwork': newCourse.groupwork,
+            'textbook': newCourse.textbook,
+          }));
+      _courses[courseIdenx] = newCourse;
       notifyListeners();
     } else {
       print('...');
