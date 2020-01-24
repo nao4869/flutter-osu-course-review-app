@@ -2,6 +2,7 @@
 // Displays lsit of courses for the application
 
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/create_course_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/courses_provider.dart';
@@ -21,6 +22,14 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('OSU Course Search'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
+            },
+          )
+        ],
       ),
       drawer: MainDrawer(),
       body: ListView.builder(
