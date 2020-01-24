@@ -15,6 +15,25 @@ class ListCoursesScreen extends StatefulWidget {
 }
 
 class _ListCoursesScreenState extends State<ListCoursesScreen> {
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Provider.of<Products>(context).fetchAndSetProducts(); // not work
+    Future.delayed(Duration.zero).then((_) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<Courses>(context).retrieveCourseData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final coursesList = Provider.of<Courses>(context);
