@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http; // for http request
 import './course.dart';
+import '../models/http_exception.dart';
 
 class Courses with ChangeNotifier {
   List<Course> _courses = [
