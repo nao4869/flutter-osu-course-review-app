@@ -1,5 +1,9 @@
 // The file which is to create new course from user input
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http; // for http request
+
+import '../models/http_exception.dart';
 import './review.dart';
 
 class Reviews with ChangeNotifier {
@@ -21,5 +25,24 @@ class Reviews with ChangeNotifier {
   //Comparing ID of each products with id of the arguments
   Review findById(String id) {
     return _reviews.firstWhere((rv) => rv.id == id);
+  }
+
+  Future<void> addReview(Review review) async {
+    final url = 'https://osu-course-search.firebaseio.com/reviews.json';
+
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'courseId': courseId,
+        'reviewContent': review.reviewsContent,
+      }),
+    );
+
+    final newReview = Review(
+      id: json.decode(response.body)['name'],
+      reviewsContent: review.reviewsContent,
+    );
+    _reviews.add(newReview); // add to reviews list
+    notifyListeners(); // reflect results to children widget
   }
 }
