@@ -19,4 +19,8 @@ class Course with ChangeNotifier {
     @required this.groupwork, 
     @required this.textbook, 
   });
+
+  String get courseId {
+    return id;
+  }
 }

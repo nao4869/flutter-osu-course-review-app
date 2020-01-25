@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
           value: Courses(),
         ),
         ChangeNotifierProxyProvider<Course, Reviews>(
-          builder: (ctx, course, previousReviews) => Reviews(course.id,
+          builder: (ctx, course, previousReviews) => Reviews(course.courseId,
               previousReviews == null ? [] : previousReviews.reviews),
         ),
       ],
