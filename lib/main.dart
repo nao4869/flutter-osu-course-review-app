@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './screens/course_detail_screen.dart';
 import './screens/list_courses_screen.dart';
 import './screens/create_course_screen.dart';
+import './screens/create_review_screen.dart';
 
 import './models/course.dart';
 import './models/courses_provider.dart';
@@ -11,12 +12,7 @@ import './models/reviews_provider.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -54,6 +50,7 @@ class _MyAppState extends State<MyApp> {
           routes: {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
             CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
+            CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
           }),
     );
   }

@@ -28,21 +28,27 @@ class Reviews with ChangeNotifier {
   }
 
   Future<void> addReview(Review review) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews.json';
+    final url =
+        'https://osu-course-search.firebaseio.com/courses/reviews.json&equalTo="$courseId"';
 
-    final response = await http.post(
-      url,
-      body: json.encode({
-        'courseId': courseId,
-        'reviewContent': review.reviewsContent,
-      }),
-    );
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'courseId': courseId,
+          'reviewsContent': review.reviewsContent,
+        }),
+      );
 
-    final newReview = Review(
-      id: json.decode(response.body)['name'],
-      reviewsContent: review.reviewsContent,
-    );
-    _reviews.add(newReview); // add to reviews list
-    notifyListeners(); // reflect results to children widget
+      final newReview = Review(
+        id: json.decode(response.body)['name'],
+        reviewsContent: review.reviewsContent,
+      );
+      _reviews.add(newReview); // add to reviews list
+      notifyListeners(); // reflect results to children widget
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 }
