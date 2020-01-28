@@ -3,20 +3,19 @@ import 'package:provider/provider.dart';
 
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
-import '../models/course.dart';
-import '../models/courses_provider.dart';
+//import '../models/course.dart';
+//import '../models/courses_provider.dart';
 
 import '../widgets/main_drawer.dart';
 
 class CreateReviewScreen extends StatefulWidget {
   static const routeName = '/create-new-review';
-  
+
   @override
   _CreateReviewScreen createState() => _CreateReviewScreen();
 }
 
 class _CreateReviewScreen extends State<CreateReviewScreen> {
-  
   final _contentFocusNode = FocusNode();
 
   // global key

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http; // for http request
 import '../models/http_exception.dart';
 import './review.dart';
+import './courses_provider.dart';
 
 class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
@@ -12,6 +13,7 @@ class Reviews with ChangeNotifier {
   // retrieving the reviewId token
   // temporary storing CS160's reviewId from FB
   String reviewId;
+  String courseId = 'LzKmQS6x5t4e946iVe4';
 
   Reviews(
     this.reviewId,
@@ -29,7 +31,7 @@ class Reviews with ChangeNotifier {
   }
 
   Future<void> retrieveReviewData() async {
-    const url = 'https://osu-course-search.firebaseio.com/reviews.json';
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

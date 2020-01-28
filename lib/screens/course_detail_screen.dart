@@ -1,11 +1,11 @@
 // This file will display the meals for the chosen category
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/create_review_screen.dart';
-import 'package:osu_course_review/widgets/course_review_item.dart';
+//import 'package:osu_course_review/widgets/course_review_item.dart';
 import 'package:provider/provider.dart';
 
 import '../models/courses_provider.dart';
-import '../models/reviews_provider.dart';
+//import '../models/reviews_provider.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   static const routeName = '/course-detail';
