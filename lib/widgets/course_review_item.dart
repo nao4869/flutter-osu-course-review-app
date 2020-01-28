@@ -38,15 +38,6 @@ class CourseReviewItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // IconButton(
-                    //   icon: Icon(Icons.search),
-                    //   color: Theme.of(context).primaryColor,
-                    //   onPressed: () {
-                    //     Navigator.of(context).pushNamed(
-                    //         CourseDetailScreen.routeName,
-                    //         arguments: review.id);
-                    //   },
-                    // ),
                     IconButton(
                       icon: Icon(Icons.edit),
                       color: Theme.of(context).primaryColor,
@@ -56,14 +47,14 @@ class CourseReviewItem extends StatelessWidget {
                             arguments: review.id);
                       },
                     ),
-                    // IconButton(
-                    //   icon: Icon(Icons.delete),
-                    //   color: Theme.of(context).errorColor,
-                    //   onPressed: () {
-                    //     Provider.of<Reviews>(context, listen: false)
-                    //         .deleteCourse(review.id);
-                    //   },
-                    // ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () {
+                        Provider.of<Reviews>(context, listen: false)
+                            .deleteReview(review.id);
+                      },
+                    ),
                   ],
                 ),
               ],

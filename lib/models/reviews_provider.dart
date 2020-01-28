@@ -78,4 +78,36 @@ class Reviews with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<void> updateReview(String id, Review newReview) async {
+    final reviewIndex = _reviews.indexWhere((rv) => rv.id == id);
+
+    if (reviewIndex >= 0) {
+      // target URL
+      final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId/$id.json';
+      await http.patch(url,
+          body: json.encode({
+            'reviewsContent': newReview.reviewsContent,
+          }));
+      _reviews[reviewIndex] = newReview;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
+
+  Future<void> deleteReview(String id) async {
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId/$id.json';
+    final existingReviewIndex = _reviews.indexWhere((rv) => rv.id == id);
+    var existingReview = _reviews[existingReviewIndex];
+    _reviews.removeAt(existingReviewIndex);
+    notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _reviews.insert(existingReviewIndex, existingReview);
+      notifyListeners();
+      throw HttpException('Could not delete product.');
+    }
+    existingReview = null;
+  }
 }

@@ -71,29 +71,30 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       _isLoading = true;
     });
 
-    // // if existing items edited
-    // if (_editedReview.id != null) {
-    //   await Provider.of<Reviews>(context, listen: false)
-    //       .updateProduct(_editedReview.id, _editedReview);
-    // } else {
-    try {
+    // if existing items edited
+    if (_editedReview.id != null) {
       await Provider.of<Reviews>(context, listen: false)
-          .addReview(_editedReview);
-    } catch (error) {
-      await showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: Text('An error occured!'),
-                content: Text('Some error occured while adding products'),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('Okay'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ));
+          .updateReview(_editedReview.id, _editedReview);
+    } else {
+      try {
+        await Provider.of<Reviews>(context, listen: false)
+            .addReview(_editedReview);
+      } catch (error) {
+        await showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('An error occured!'),
+                  content: Text('Some error occured while adding products'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Okay'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+      }
     }
 
     setState(() {

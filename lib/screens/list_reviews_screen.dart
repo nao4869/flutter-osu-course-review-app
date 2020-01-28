@@ -1,5 +1,5 @@
 // Control the entire contents of the first screens
-// Displays lsit of courses for the application
+// Displays lsit of reviews for the application
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class _ListReviewsScreenState extends State<ListReviewsScreen> {
   @override
   Widget build(BuildContext context) {
     final reviewList = Provider.of<Reviews>(context);
-    final courses = reviewList.reviews;
+    final reviews = reviewList.reviews;
     return Scaffold(
       appBar: AppBar(
         title: Text('OSU Course Search'),
@@ -57,9 +57,9 @@ class _ListReviewsScreenState extends State<ListReviewsScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(25),
-              itemCount: courses.length,
+              itemCount: reviews.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                value: courses[i],
+                value: reviews[i],
                 child: CourseReviewItem(),
               ),
             ),
