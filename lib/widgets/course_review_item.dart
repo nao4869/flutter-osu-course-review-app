@@ -1,43 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../screens/create_review_screen.dart';
+
+import '../models/reviews_provider.dart';
 import '../models/review.dart';
 
 class CourseReviewItem extends StatelessWidget {
-  Widget _buildChildContainer(String text) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(40, 3, 2, 3),
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 14.0),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final courseReviews = Provider.of<Review>(context, listen: false);
+    // retrieving providers objects
+    final review = Provider.of<Review>(context, listen: false);
 
-    return Card(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.purple),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        height: 200,
-        child: Row(children: <Widget>[
-          Expanded(
+    return Container(
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.purple),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _buildChildContainer('${courseReviews.reviewsContent}'),
-                Container(
-                  child: Text('Test'),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      width: 200,
+                      child: Text(
+                        review.reviewsContent,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    // IconButton(
+                    //   icon: Icon(Icons.search),
+                    //   color: Theme.of(context).primaryColor,
+                    //   onPressed: () {
+                    //     Navigator.of(context).pushNamed(
+                    //         CourseDetailScreen.routeName,
+                    //         arguments: review.id);
+                    //   },
+                    // ),
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                            CreateReviewScreen.routeName,
+                            arguments: review.id);
+                      },
+                    ),
+                    // IconButton(
+                    //   icon: Icon(Icons.delete),
+                    //   color: Theme.of(context).errorColor,
+                    //   onPressed: () {
+                    //     Provider.of<Reviews>(context, listen: false)
+                    //         .deleteCourse(review.id);
+                    //   },
+                    // ),
+                  ],
                 ),
               ],
             ),
           ),
-        ]),
+        ],
       ),
     );
   }

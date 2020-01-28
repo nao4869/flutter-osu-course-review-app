@@ -9,6 +9,8 @@ import '../widgets/course_review_item.dart';
 import '../widgets/main_drawer.dart';
 
 class ListReviewsScreen extends StatefulWidget {
+  static const routeName = '/list-reviews-screen';
+
   @override
   _ListReviewsScreenState createState() => _ListReviewsScreenState();
 }
