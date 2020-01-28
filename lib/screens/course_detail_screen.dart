@@ -1,5 +1,7 @@
 // This file will display the meals for the chosen category
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/create_review_screen.dart';
+import 'package:osu_course_review/widgets/course_review_item.dart';
 import 'package:provider/provider.dart';
 
 import '../models/courses_provider.dart';
@@ -27,7 +29,6 @@ class CourseDetailScreen extends StatelessWidget {
     final courseId = ModalRoute.of(context).settings.arguments
         as String; // retrieving ID from routes passed
     final loadedCourse = Provider.of<Courses>(context).findById(courseId);
-    final loadedCourseReviews = Provider.of<Reviews>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -122,7 +123,16 @@ class CourseDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            buildSectionTitle(context, 'Course Reviews'),
+            buildSectionTitle(context, 'Create Course Reviews'),
+            FlatButton(
+              child: Text('Create Course Reviews'),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+              },
+              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              textColor: Theme.of(context).primaryColor,
+            ),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import './screens/create_review_screen.dart';
 
 import './models/course.dart';
 import './models/courses_provider.dart';
+import './models/review.dart';
 import './models/reviews_provider.dart';
 
 void main() => runApp(MyApp());
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Courses(),
         ),
-        ChangeNotifierProxyProvider<Course, Reviews>(
-          builder: (ctx, course, previousReviews) => Reviews(course.courseId,
+        ChangeNotifierProxyProvider<Courses, Reviews>(
+          builder: (ctx, courses, previousReviews) => Reviews(courses.courseId,
               previousReviews == null ? [] : previousReviews.reviews),
         ),
       ],
@@ -45,7 +46,9 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 )),
           ),
-          home: ListCoursesScreen(),
+          home: Consumer<Courses>(
+            builder: (ctx, courses, _) => ListCoursesScreen(),
+          ),
           // Lists of available routes in the application
           routes: {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),

@@ -67,6 +67,7 @@ class CourseDetail extends StatelessWidget {
               ],
             ),
           ),
+          
         ]),
       ),
     );

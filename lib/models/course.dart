@@ -10,6 +10,8 @@ class Course with ChangeNotifier {
   final String groupwork;
   final String textbook;
 
+  //String _courseId;
+
   Course({
     @required this.id, 
     @required this.courseName, 
@@ -20,7 +22,7 @@ class Course with ChangeNotifier {
     @required this.textbook, 
   });
 
-  String get courseId {
-    return id;
-  }
+  // String get courseId {
+  //   return _courseId;
+  // }
 }

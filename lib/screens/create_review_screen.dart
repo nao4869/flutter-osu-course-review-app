@@ -10,12 +10,13 @@ import '../widgets/main_drawer.dart';
 
 class CreateReviewScreen extends StatefulWidget {
   static const routeName = '/create-new-review';
-
+  
   @override
   _CreateReviewScreen createState() => _CreateReviewScreen();
 }
 
 class _CreateReviewScreen extends State<CreateReviewScreen> {
+  
   final _contentFocusNode = FocusNode();
 
   // global key
@@ -41,17 +42,18 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
 
   @override
   void didChangeDependencies() {
-    // if (_isInit) {
-    //   final reviewId = ModalRoute.of(context).settings.arguments as String;
-    //   if (reviewId != null) {
-    //     _editedReview =
-    //         Provider.of<Reviews>(context, listen: false).findById(reviewId);
-    //     _initValues = {
-    //       'reviewsContent': _editedReview.reviewsContent,
-    //     };
-    //   }
-    // }
-    //  _isInit = false;
+    if (_isInit) {
+      final reviewId = ModalRoute.of(context).settings.arguments as String;
+      final courseId = ModalRoute.of(context).settings.arguments as String;
+      if (reviewId != null) {
+        _editedReview =
+            Provider.of<Reviews>(context, listen: false).findById(reviewId);
+        _initValues = {
+          'reviewsContent': _editedReview.reviewsContent,
+        };
+      }
+    }
+    _isInit = false;
     super.didChangeDependencies();
   }
 
@@ -76,7 +78,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     //       .updateProduct(_editedReview.id, _editedReview);
     // } else {
     try {
-      await Provider.of<Reviews>(context, listen: false).addReview(_editedReview);
+      await Provider.of<Reviews>(context, listen: false)
+          .addReview(_editedReview);
     } catch (error) {
       await showDialog(
           context: context,
@@ -127,20 +130,20 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           key: _form,
           child: ListView(
             children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Course Name'),
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_contentFocusNode);
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a course name.';
-                  } else {
-                    return null; // no error
-                  }
-                },
-              ),
+              // TextFormField(
+              //   decoration: InputDecoration(labelText: 'Course Name'),
+              //   textInputAction: TextInputAction.next,
+              //   onFieldSubmitted: (_) {
+              //     FocusScope.of(context).requestFocus(_contentFocusNode);
+              //   },
+              //   validator: (value) {
+              //     if (value.isEmpty) {
+              //       return 'Please enter a course name.';
+              //     } else {
+              //       return null; // no error
+              //     }
+              //   },
+              // ),
               TextFormField(
                 initialValue: _initValues['reviewsContent'],
                 decoration: InputDecoration(labelText: 'Review Content'),
@@ -152,6 +155,12 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   } else {
                     return null; // no error
                   }
+                },
+                onSaved: (value) {
+                  _editedReview = Review(
+                    id: _editedReview.id,
+                    reviewsContent: value,
+                  );
                 },
               ),
             ],

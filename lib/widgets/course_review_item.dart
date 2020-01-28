@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/review.dart';
 
-class CourseReviewLists extends StatelessWidget {
-  
+class CourseReviewItem extends StatelessWidget {
   Widget _buildChildContainer(String text) {
     return Container(
       margin: EdgeInsets.fromLTRB(40, 3, 2, 3),
@@ -32,6 +31,9 @@ class CourseReviewLists extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 _buildChildContainer('${courseReviews.reviewsContent}'),
+                Container(
+                  child: Text('Test'),
+                ),
               ],
             ),
           ),

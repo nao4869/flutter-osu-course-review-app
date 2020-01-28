@@ -1,8 +1,8 @@
 // The file which is to create new course from user input
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http; // for http request
 
+import 'package:http/http.dart' as http; // for http request
 import '../models/http_exception.dart';
 import './review.dart';
 
@@ -10,7 +10,8 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   // retrieving the courseId token
-  final String courseId;
+  // temporary storing CS160's courseId from FB
+  String courseId;
 
   Reviews(
     this.courseId,
@@ -27,9 +28,10 @@ class Reviews with ChangeNotifier {
     return _reviews.firstWhere((rv) => rv.id == id);
   }
 
+  
+
   Future<void> addReview(Review review) async {
-    final url =
-        'https://osu-course-search.firebaseio.com/courses/reviews.json&equalTo="$courseId"';
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json?course=$courseId';
 
     try {
       final response = await http.post(

@@ -8,6 +8,8 @@ import '../models/http_exception.dart';
 class Courses with ChangeNotifier {
   List<Course> _courses = [];
 
+  String _courseId = 'LzKmQS6x5t4e946iVe4';
+
   // getter for course
   List<Course> get courses {
     return [..._courses];
@@ -16,6 +18,10 @@ class Courses with ChangeNotifier {
   //Comparing ID of each products with id of the arguments
   Course findById(String id) {
     return _courses.firstWhere((cs) => cs.id == id);
+  }
+
+  String get courseId {
+    return _courseId;
   }
 
   Future<void> retrieveCourseData() async {
