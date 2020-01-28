@@ -9,12 +9,12 @@ import './review.dart';
 class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
-  // retrieving the courseId token
-  // temporary storing CS160's courseId from FB
-  String courseId;
+  // retrieving the reviewId token
+  // temporary storing CS160's reviewId from FB
+  String reviewId;
 
   Reviews(
-    this.courseId,
+    this.reviewId,
     this._reviews,
   );
 
@@ -28,16 +28,39 @@ class Reviews with ChangeNotifier {
     return _reviews.firstWhere((rv) => rv.id == id);
   }
 
-  
+  Future<void> retrieveReviewData() async {
+    const url = 'https://osu-course-search.firebaseio.com/reviews.json';
+    try {
+      final response = await http.get(url); // get for fetching from DB
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData == null) {
+        return;
+      }
+      
+      final List<Review> loadedReviews = [];
+
+      extractedData.forEach((reviewId, reviewData) {
+        loadedReviews.add(Review(
+          id: reviewId,
+          reviewsContent: reviewData['reviewsContent'],
+        ));
+      });
+      _reviews = loadedReviews;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
 
   Future<void> addReview(Review review) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json?course=$courseId';
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId.json?course=$reviewId';
 
     try {
       final response = await http.post(
         url,
         body: json.encode({
-          'courseId': courseId,
+          'reviewId': reviewId,
           'reviewsContent': review.reviewsContent,
         }),
       );
