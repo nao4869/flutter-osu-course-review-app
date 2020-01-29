@@ -6,17 +6,18 @@ import 'package:http/http.dart' as http; // for http request
 import '../models/http_exception.dart';
 import './review.dart';
 import './courses_provider.dart';
+import './course.dart';
 
 class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   // retrieving the reviewId token
   // temporary storing CS160's reviewId from FB
-  String reviewId;
-  String courseId = 'LzKmQS6x5t4e946iVe4';
+  //String reviewId;
+  String courseId;
 
   Reviews(
-    this.reviewId,
+    this.courseId,
     this._reviews,
   );
 
@@ -30,8 +31,8 @@ class Reviews with ChangeNotifier {
     return _reviews.firstWhere((rv) => rv.id == id);
   }
 
-  Future<void> retrieveReviewData() async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
+  Future<void> retrieveReviewData(String id) async {
+    final url = 'https://osu-course-search.firebaseio.com/reviews.json?orderBy="courseId"&equalTo="$id"';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -56,13 +57,13 @@ class Reviews with ChangeNotifier {
   }
 
   Future<void> addReview(Review review) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId.json?course=$reviewId';
+    final url = 'https://osu-course-search.firebaseio.com/reviews.json?';
 
     try {
       final response = await http.post(
         url,
         body: json.encode({
-          'reviewId': reviewId,
+          'courseId': courseId,
           'reviewsContent': review.reviewsContent,
         }),
       );
@@ -84,7 +85,7 @@ class Reviews with ChangeNotifier {
 
     if (reviewIndex >= 0) {
       // target URL
-      final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId/$id.json';
+      final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId/$id.json';
       await http.patch(url,
           body: json.encode({
             'reviewsContent': newReview.reviewsContent,
@@ -97,7 +98,7 @@ class Reviews with ChangeNotifier {
   }
 
   Future<void> deleteReview(String id) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews/$reviewId/$id.json';
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId/$id.json';
     final existingReviewIndex = _reviews.indexWhere((rv) => rv.id == id);
     var existingReview = _reviews[existingReviewIndex];
     _reviews.removeAt(existingReviewIndex);

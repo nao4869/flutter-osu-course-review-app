@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
 import '../models/reviews_provider.dart';
+import '../models/courses_provider.dart';
 import '../widgets/course_review_item.dart';
 import '../widgets/main_drawer.dart';
 
@@ -25,7 +26,11 @@ class _ListReviewsScreenState extends State<ListReviewsScreen> {
         _isLoading = true;
       });
 
-      Provider.of<Reviews>(context).retrieveReviewData().then((_) {
+      final courseId = ModalRoute.of(context).settings.arguments
+        as String; // retrieving ID from routes passed
+      final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+
+      Provider.of<Reviews>(context).retrieveReviewData(courseId).then((_) {
         setState(() {
           _isLoading = false;
         });

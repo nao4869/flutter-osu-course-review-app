@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
+import '../models/review.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {
@@ -24,7 +25,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         _isLoading = true;
       });
 
-      Provider.of<Reviews>(context).retrieveReviewData().then((_) {
+      final courseId = ModalRoute.of(context).settings.arguments
+        as String; 
+      print(courseId);
+        // retrieving ID from routes passed
+      //final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+
+      Provider.of<Reviews>(context).retrieveReviewData(courseId).then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -148,15 +155,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               ],
             ),
           ),
-          FlatButton(
-            child: Text('Create Course Reviews'),
-            onPressed: () {
-              Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
-            },
-            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            textColor: Theme.of(context).primaryColor,
-          ),
           buildSectionTitle(context, 'Course Reviews'),
           _isLoading
               ? Center(
@@ -174,6 +172,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+        },
+        tooltip: 'Increment',
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(Icons.add),
+      ), //
     );
   }
 }
