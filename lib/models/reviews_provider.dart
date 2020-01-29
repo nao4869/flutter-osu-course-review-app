@@ -11,9 +11,6 @@ import './course.dart';
 class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
-  // retrieving the reviewId token
-  // temporary storing CS160's reviewId from FB
-  //String reviewId;
   String courseId;
 
   Reviews(
