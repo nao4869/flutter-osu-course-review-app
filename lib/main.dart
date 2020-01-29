@@ -7,9 +7,7 @@ import './screens/create_course_screen.dart';
 import './screens/create_review_screen.dart';
 import './screens/list_reviews_screen.dart';
 
-//import './models/course.dart';
 import './models/courses_provider.dart';
-//import './models/review.dart';
 import './models/reviews_provider.dart';
 
 void main() => runApp(MyApp());
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.purple,
             accentColor: Colors.amber,
-            canvasColor: Color.fromRGBO(255, 254, 229, 1),
+            canvasColor: Color.fromRGBO(255, 254, 219, 1),
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
                 body1: TextStyle(
