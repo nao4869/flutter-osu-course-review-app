@@ -73,10 +73,10 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     });
 
     // if existing items edited
-    if (_editedReview.courseId != null) {
-      await Provider.of<Reviews>(context, listen: false)
-          .updateReview(_editedReview, _editedReview.courseId);
-    } else {
+    // if (_editedReview.courseId != null) {
+    //   await Provider.of<Reviews>(context, listen: false)
+    //       .updateReview(_editedReview, _editedReview.courseId);
+    // } else {
       try {
         await Provider.of<Reviews>(context, listen: false)
             .addReview(_editedReview, _editedReview.courseId);
@@ -96,7 +96,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   ],
                 ));
       }
-    }
+    //}
 
     setState(() {
       _isLoading = false;
@@ -155,6 +155,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
               TextFormField(
                 initialValue: _initValues['reviewsContent'],
                 decoration: InputDecoration(labelText: 'Review Content'),
+                maxLines: 10,
+                keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.next,
                 focusNode: _contentFocusNode,
                 validator: (value) {

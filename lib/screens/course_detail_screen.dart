@@ -25,10 +25,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         _isLoading = true;
       });
 
-      final courseId = ModalRoute.of(context).settings.arguments
-        as String; 
+      final courseId = ModalRoute.of(context).settings.arguments as String;
       print(courseId);
-        // retrieving ID from routes passed
+      // retrieving ID from routes passed
       //final loadedCourse = Provider.of<Courses>(context).findById(courseId);
 
       Provider.of<Reviews>(context).retrieveReviewData(courseId).then((_) {
@@ -67,110 +66,114 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       appBar: AppBar(
         title: Text(loadedCourse.courseName),
       ),
-      body: Column(
-        children: <Widget>[
-          buildSectionTitle(context, 'Course Detail'),
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromRGBO(255, 255, 255, 1)),
-            margin: EdgeInsets.all(5),
-            padding: EdgeInsets.all(5),
-            height: 300,
-            width: double.infinity,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Text(
-                    loadedCourse.courseName,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            buildSectionTitle(context, 'Course Detail'),
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(255, 255, 255, 1)),
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(5),
+              height: 300,
+              width: double.infinity,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Text(
+                      loadedCourse.courseName,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(30, 10, 0, 15),
-                  child: Text(
-                    'Course Content: ${loadedCourse.courseContent}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 10, 0, 15),
+                    child: Text(
+                      'Course Content: ${loadedCourse.courseContent}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                  child: Text(
-                    'Pre-requisite: ${loadedCourse.prerequisite}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Pre-requisite: ${loadedCourse.prerequisite}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                  child: Text(
-                    'Proctored Exams: ${loadedCourse.proctoredexams}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Proctored Exams: ${loadedCourse.proctoredexams}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                  child: Text(
-                    'Group Work: ${loadedCourse.groupwork}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Group Work: ${loadedCourse.groupwork}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                  child: Text(
-                    'Textbook: ${loadedCourse.textbook}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                    child: Text(
+                      'Textbook: ${loadedCourse.textbook}',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          buildSectionTitle(context, 'Course Reviews'),
-          _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                  itemCount: reviews.length,
-                  itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                    value: reviews[i],
-                    child: CourseReviewItem(),
+            buildSectionTitle(context, 'Course Reviews'),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Container(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      itemCount: reviews.length,
+                      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                        value: reviews[i],
+                        child: CourseReviewItem(),
+                      ),
+                    ),
                   ),
-                ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

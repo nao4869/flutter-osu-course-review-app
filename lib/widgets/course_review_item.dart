@@ -13,7 +13,7 @@ class CourseReviewItem extends StatelessWidget {
     final review = Provider.of<Review>(context, listen: false);
 
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.only(bottom: 15),
       child: Column(
         children: <Widget>[
           Container(
@@ -29,31 +29,14 @@ class CourseReviewItem extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      width: 200,
+                      width: 300,
                       child: Text(
                         review.reviewsContent,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                           fontSize: 15,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            CreateReviewScreen.routeName,
-                            arguments: review.courseId);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () {
-                        Provider.of<Reviews>(context, listen: false)
-                            .deleteReview(review.courseId);
-                      },
                     ),
                   ],
                 ),
@@ -65,3 +48,23 @@ class CourseReviewItem extends StatelessWidget {
     );
   }
 }
+
+// IconButton(
+//   icon: Icon(Icons.edit),
+//   color: Theme.of(context).primaryColor,
+//   onPressed: () {
+//     Navigator.of(context).pushNamed(
+//         CreateReviewScreen.routeName,
+//         arguments: review.courseId);
+//   },
+// ),
+// IconButton(
+//   icon: Icon(Icons.delete),
+//   color: Theme.of(context).errorColor,
+//   onPressed: () {
+//     // retrieve the loaded course id
+//     final courseId = ModalRoute.of(context).settings.arguments as String;
+//     Provider.of<Reviews>(context, listen: false)
+//         .deleteReview(courseId);
+//   },
+// ),

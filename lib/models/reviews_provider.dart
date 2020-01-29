@@ -77,26 +77,25 @@ class Reviews with ChangeNotifier {
     }
   }
 
-  Future<void> updateReview(Review review, String courseId) async {
-    final reviewIndex = _reviews.indexWhere((rv) => rv.courseId == courseId);
+  // Future<void> updateReview(Review review, String courseId) async {
+  //   final reviewIndex = _reviews.indexWhere((rv) => rv.courseId == courseId);
 
-    if (reviewIndex >= 0) {
-      // target URL
-      final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
-      await http.patch(url,
-          body: json.encode({
-            'courseId': review.courseId,
-            'reviewsContent': review.reviewsContent,
-          }));
-      _reviews[reviewIndex] = review;
-      notifyListeners();
-    } else {
-      print('...');
-    }
-  }
+  //   if (reviewIndex >= 0) {
+  //     // target URL
+  //     final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
+  //     await http.patch(url,
+  //         body: json.encode({
+  //           'reviewsContent': review.reviewsContent,
+  //         }));
+  //     _reviews[reviewIndex] = review;
+  //     notifyListeners();
+  //   } else {
+  //     print('...');
+  //   }
+  // }
 
   Future<void> deleteReview(String id) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
+    final url = 'https://osu-course-search.firebaseio.com/reviews/$id.json';
     final existingReviewIndex = _reviews.indexWhere((rv) => rv.courseId == id);
     var existingReview = _reviews[existingReviewIndex];
     _reviews.removeAt(existingReviewIndex);
