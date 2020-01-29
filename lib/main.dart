@@ -5,7 +5,6 @@ import './screens/course_detail_screen.dart';
 import './screens/list_courses_screen.dart';
 import './screens/create_course_screen.dart';
 import './screens/create_review_screen.dart';
-import './screens/list_reviews_screen.dart';
 
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
@@ -54,7 +53,6 @@ class MyApp extends StatelessWidget {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
             CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
             CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
-            ListReviewsScreen.routeName: (context) => ListReviewsScreen(),
           }),
     );
   }
