@@ -8,7 +8,8 @@ import '../models/http_exception.dart';
 class Courses with ChangeNotifier {
   List<Course> _courses = [];
 
-  String _courseId = '-LzKmxO3QJLd4R6kenZ9';
+  //String _courseId = '-LzKmxO3QJLd4R6kenZ9';
+  String _courseId;
 
   // getter for course
   List<Course> get courses {

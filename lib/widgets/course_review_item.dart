@@ -44,7 +44,7 @@ class CourseReviewItem extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                             CreateReviewScreen.routeName,
-                            arguments: review.id);
+                            arguments: review.courseId);
                       },
                     ),
                     IconButton(
@@ -52,7 +52,7 @@ class CourseReviewItem extends StatelessWidget {
                       color: Theme.of(context).errorColor,
                       onPressed: () {
                         Provider.of<Reviews>(context, listen: false)
-                            .deleteReview(review.id);
+                            .deleteReview(review.courseId);
                       },
                     ),
                   ],

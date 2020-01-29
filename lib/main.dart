@@ -9,6 +9,7 @@ import './screens/list_reviews_screen.dart';
 
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
+import './models/review.dart';
 
 void main() => runApp(MyApp());
 

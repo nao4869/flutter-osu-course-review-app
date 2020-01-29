@@ -23,7 +23,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
 
   // update this edited product when save form
   var _editedReview = Review(
-    id: null,
+    courseId: null,
     reviewsContent: '',
   );
 
@@ -33,6 +33,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   }
 
   var _initValues = {
+    'courseId': '',
     'reviewsContent': '',
   };
 
@@ -42,12 +43,12 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final reviewId = ModalRoute.of(context).settings.arguments as String;
       final courseId = ModalRoute.of(context).settings.arguments as String;
-      if (reviewId != null) {
+      if (courseId != null) {
         _editedReview =
-            Provider.of<Reviews>(context, listen: false).findById(reviewId);
+            Provider.of<Reviews>(context, listen: false).findById(courseId);
         _initValues = {
+          'courseId': _editedReview.courseId,
           'reviewsContent': _editedReview.reviewsContent,
         };
       }
@@ -72,13 +73,13 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     });
 
     // if existing items edited
-    if (_editedReview.id != null) {
+    if (_editedReview.courseId != null) {
       await Provider.of<Reviews>(context, listen: false)
-          .updateReview(_editedReview.id, _editedReview);
+          .updateReview(_editedReview, _editedReview.courseId);
     } else {
       try {
         await Provider.of<Reviews>(context, listen: false)
-            .addReview(_editedReview);
+            .addReview(_editedReview, _editedReview.courseId);
       } catch (error) {
         await showDialog(
             context: context,
@@ -130,20 +131,27 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           key: _form,
           child: ListView(
             children: <Widget>[
-              // TextFormField(
-              //   decoration: InputDecoration(labelText: 'Course Name'),
-              //   textInputAction: TextInputAction.next,
-              //   onFieldSubmitted: (_) {
-              //     FocusScope.of(context).requestFocus(_contentFocusNode);
-              //   },
-              //   validator: (value) {
-              //     if (value.isEmpty) {
-              //       return 'Please enter a course name.';
-              //     } else {
-              //       return null; // no error
-              //     }
-              //   },
-              // ),
+              TextFormField(
+                initialValue: _initValues['courseId'],
+                decoration: InputDecoration(labelText: 'Course ID'),
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_contentFocusNode);
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a course name.';
+                  } else {
+                    return null; // no error
+                  }
+                },
+                onSaved: (value) {
+                  _editedReview = Review(
+                    courseId: value,
+                    reviewsContent: _editedReview.reviewsContent,
+                  );
+                },
+              ),
               TextFormField(
                 initialValue: _initValues['reviewsContent'],
                 decoration: InputDecoration(labelText: 'Review Content'),
@@ -158,7 +166,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                 },
                 onSaved: (value) {
                   _editedReview = Review(
-                    id: _editedReview.id,
+                    courseId: _editedReview.courseId,
                     reviewsContent: value,
                   );
                 },
