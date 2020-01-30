@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
 
+import '../models/courses_provider.dart';
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../widgets/main_drawer.dart';
@@ -36,6 +37,16 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     'reviewsContent': '',
     'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
   };
+
+  // temporary list of dropdown courses list
+  var _coursesList = [
+    "-LzKmk8RUelcN4U__DO5",
+    "-LzKmxO3QJLd4R6kenZ9",
+    "-LzKn8iDyKZtHuO7wQDf",
+    "-LzKnJ9QHts7vslxdiKI"
+  ];
+
+  var _currentSelectedValue;
 
   var _isInit = true;
   var _isLoading = false;
@@ -78,25 +89,25 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     //   await Provider.of<Reviews>(context, listen: false)
     //       .updateReview(_editedReview, _editedReview.courseId);
     // } else {
-      try {
-        await Provider.of<Reviews>(context, listen: false)
-            .addReview(_editedReview, _editedReview.courseId);
-      } catch (error) {
-        await showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: Text('An error occured!'),
-                  content: Text('Some error occured while adding products'),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('Okay'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ));
-      }
+    try {
+      await Provider.of<Reviews>(context, listen: false)
+          .addReview(_editedReview, _editedReview.courseId);
+    } catch (error) {
+      await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: Text('An error occured!'),
+                content: Text('Some error occured while adding products'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Okay'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ));
+    }
     //}
 
     setState(() {
@@ -132,19 +143,38 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           key: _form,
           child: ListView(
             children: <Widget>[
-              TextFormField(
-                initialValue: _initValues['courseId'],
-                decoration: InputDecoration(labelText: 'Course ID'),
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_contentFocusNode);
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a course name.';
-                  } else {
-                    return null; // no error
-                  }
+              FormField<String>(
+                builder: (FormFieldState<String> state) {
+                  return InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: 'Course Name',
+                      labelStyle: TextStyle(
+                        fontSize: 22,
+                      ),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                      hintText: 'Please select course name',
+                    ),
+                    isEmpty: _currentSelectedValue == '',
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _currentSelectedValue,
+                        isDense: true,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            _currentSelectedValue = newValue;
+                            state.didChange(newValue);
+                          });
+                        },
+                        items: _coursesList.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
                 },
                 onSaved: (value) {
                   _editedReview = Review(
