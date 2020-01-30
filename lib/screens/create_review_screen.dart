@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import "package:intl/intl.dart";
 
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
-//import '../models/course.dart';
-//import '../models/courses_provider.dart';
-
 import '../widgets/main_drawer.dart';
 
 class CreateReviewScreen extends StatefulWidget {
@@ -25,7 +23,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _editedReview = Review(
     courseId: null,
     reviewsContent: '',
-    createdAt: DateTime.now(),
+    createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
   );
 
   @override
@@ -36,7 +34,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _initValues = {
     'courseId': '',
     'reviewsContent': '',
-    'createdAt': DateTime.now(),
+    'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
   };
 
   var _isInit = true;

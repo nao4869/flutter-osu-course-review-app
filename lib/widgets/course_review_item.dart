@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import "package:intl/intl.dart";
 
-import 'dart:convert';
-import '../screens/create_review_screen.dart';
-
-import '../models/reviews_provider.dart';
 import '../models/review.dart';
 
 class CourseReviewItem extends StatelessWidget {
@@ -29,7 +26,7 @@ class CourseReviewItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       width: 350,
                       child: Text(
                         review.reviewsContent,
@@ -41,11 +38,15 @@ class CourseReviewItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  review.createdAt,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
+                Container(
+                  alignment: Alignment.bottomRight,
+                  padding: EdgeInsets.fromLTRB(0, 0, 15, 5),
+                  child: Text(
+                    review.createdAt,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ],

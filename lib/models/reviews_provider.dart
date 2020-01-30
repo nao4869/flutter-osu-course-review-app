@@ -5,14 +5,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http; // for http request
 import '../models/http_exception.dart';
 import './review.dart';
-import './courses_provider.dart';
-import './course.dart';
+
+import "package:intl/intl.dart";
 
 class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
-  var createdAt = DateTime.now();
+  var createdAt = DateFormat("yyyy/MM/dd").format(new DateTime.now());
 
   Reviews(
     this.courseId,
@@ -66,14 +66,14 @@ class Reviews with ChangeNotifier {
         body: json.encode({
           'courseId': courseId,
           'reviewsContent': review.reviewsContent,
-          'createdAt': review.createdAt.toIso8601String(),
+          'createdAt': review.createdAt,
         }),
       );
 
       final newReview = Review(
         courseId: json.decode(response.body)['name'],
         reviewsContent: review.reviewsContent,
-        createdAt: review.createdAt.toIso8601String(),
+        createdAt: review.createdAt,
       );
       _reviews.add(newReview); // add to reviews list
       notifyListeners(); // reflect results to children widget

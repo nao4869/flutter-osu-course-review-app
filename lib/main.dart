@@ -8,11 +8,12 @@ import './screens/create_review_screen.dart';
 
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
-import './models/review.dart';
+import "package:intl/intl.dart";
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  var createdAt = DateFormat("y/m/d").format(new DateTime.now());
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Courses, Reviews>(
           builder: (ctx, courses, previousReviews) => Reviews(
               courses.courseId,
-              DateTime.now(),
+              createdAt,
               previousReviews == null ? [] : previousReviews.reviews),
         ),
       ],
