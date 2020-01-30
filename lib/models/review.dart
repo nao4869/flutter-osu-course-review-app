@@ -5,10 +5,11 @@ class Review with ChangeNotifier {
   //final String id;
   final String courseId;
   final String reviewsContent;
+  var createdAt;
 
   Review({
-    //@required this.id,
     @required this.courseId,
     @required this.reviewsContent,
+    @required this.createdAt,
   });
 }

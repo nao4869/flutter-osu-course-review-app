@@ -25,6 +25,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _editedReview = Review(
     courseId: null,
     reviewsContent: '',
+    createdAt: DateTime.now(),
   );
 
   @override
@@ -35,6 +36,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _initValues = {
     'courseId': '',
     'reviewsContent': '',
+    'createdAt': DateTime.now(),
   };
 
   var _isInit = true;
@@ -50,6 +52,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
         _initValues = {
           'courseId': _editedReview.courseId,
           'reviewsContent': _editedReview.reviewsContent,
+          'createdAt': _editedReview.createdAt,
         };
       }
     }
@@ -149,6 +152,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   _editedReview = Review(
                     courseId: value,
                     reviewsContent: _editedReview.reviewsContent,
+                    createdAt: _editedReview.createdAt,
                   );
                 },
               ),
@@ -170,6 +174,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   _editedReview = Review(
                     courseId: _editedReview.courseId,
                     reviewsContent: value,
+                    createdAt: _editedReview.createdAt,
                   );
                 },
               ),

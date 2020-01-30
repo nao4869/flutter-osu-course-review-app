@@ -12,9 +12,11 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
+  var createdAt = DateTime.now();
 
   Reviews(
     this.courseId,
+    this.createdAt,
     this._reviews,
   );
 
@@ -29,7 +31,8 @@ class Reviews with ChangeNotifier {
   }
 
   Future<void> retrieveReviewData(String id) async {
-    final url = 'https://osu-course-search.firebaseio.com/reviews.json?orderBy="courseId"&equalTo="$id"';
+    final url =
+        'https://osu-course-search.firebaseio.com/reviews.json?orderBy="courseId"&equalTo="$id"';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -37,13 +40,14 @@ class Reviews with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      
+
       final List<Review> loadedReviews = [];
 
       extractedData.forEach((reviewId, reviewData) {
         loadedReviews.add(Review(
           courseId: reviewId,
           reviewsContent: reviewData['reviewsContent'],
+          createdAt: reviewData['createdAt'],
         ));
       });
       _reviews = loadedReviews;
@@ -62,12 +66,14 @@ class Reviews with ChangeNotifier {
         body: json.encode({
           'courseId': courseId,
           'reviewsContent': review.reviewsContent,
+          'createdAt': review.createdAt.toIso8601String(),
         }),
       );
 
       final newReview = Review(
         courseId: json.decode(response.body)['name'],
         reviewsContent: review.reviewsContent,
+        createdAt: review.createdAt.toIso8601String(),
       );
       _reviews.add(newReview); // add to reviews list
       notifyListeners(); // reflect results to children widget
@@ -76,23 +82,6 @@ class Reviews with ChangeNotifier {
       throw error;
     }
   }
-
-  // Future<void> updateReview(Review review, String courseId) async {
-  //   final reviewIndex = _reviews.indexWhere((rv) => rv.courseId == courseId);
-
-  //   if (reviewIndex >= 0) {
-  //     // target URL
-  //     final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
-  //     await http.patch(url,
-  //         body: json.encode({
-  //           'reviewsContent': review.reviewsContent,
-  //         }));
-  //     _reviews[reviewIndex] = review;
-  //     notifyListeners();
-  //   } else {
-  //     print('...');
-  //   }
-  // }
 
   Future<void> deleteReview(String id) async {
     final url = 'https://osu-course-search.firebaseio.com/reviews/$id.json';
@@ -109,3 +98,20 @@ class Reviews with ChangeNotifier {
     existingReview = null;
   }
 }
+
+// Future<void> updateReview(Review review, String courseId) async {
+//   final reviewIndex = _reviews.indexWhere((rv) => rv.courseId == courseId);
+
+//   if (reviewIndex >= 0) {
+//     // target URL
+//     final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
+//     await http.patch(url,
+//         body: json.encode({
+//           'reviewsContent': review.reviewsContent,
+//         }));
+//     _reviews[reviewIndex] = review;
+//     notifyListeners();
+//   } else {
+//     print('...');
+//   }
+// }

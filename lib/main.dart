@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
           value: Courses(),
         ),
         ChangeNotifierProxyProvider<Courses, Reviews>(
-          builder: (ctx, courses, previousReviews) => Reviews(courses.courseId,
+          builder: (ctx, courses, previousReviews) => Reviews(
+              courses.courseId,
+              DateTime.now(),
               previousReviews == null ? [] : previousReviews.reviews),
         ),
       ],

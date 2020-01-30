@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'dart:convert';
 import '../screens/create_review_screen.dart';
 
 import '../models/reviews_provider.dart';
@@ -20,7 +21,7 @@ class CourseReviewItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.purple),
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
             width: double.infinity,
             child: Column(
@@ -29,7 +30,7 @@ class CourseReviewItem extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      width: 300,
+                      width: 350,
                       child: Text(
                         review.reviewsContent,
                         style: TextStyle(
@@ -39,6 +40,13 @@ class CourseReviewItem extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                Text(
+                  review.createdAt,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
                 ),
               ],
             ),
