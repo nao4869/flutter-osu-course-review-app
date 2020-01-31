@@ -50,7 +50,7 @@ class CourseDetail extends StatelessWidget {
       child: Card(
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.purple),
+            border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(20),
           ),
           height: 200,

@@ -18,7 +18,7 @@ class CourseReviewItem extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.purple),
+              border: Border.all(color: Colors.white),
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
@@ -30,7 +30,7 @@ class CourseReviewItem extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
                   child: StarDisplayWidget(
                     value: review.starScore,
-                    filledStar: Icon(Icons.star, color: Colors.amber, size: 25),
+                    filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
                     unfilledStar: Icon(Icons.star_border, color: Colors.grey),
                   ),
                 ),
@@ -51,7 +51,7 @@ class CourseReviewItem extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
-                  padding: EdgeInsets.fromLTRB(0, 0, 15, 5),
+                  padding: EdgeInsets.fromLTRB(0, 10, 15, 5),
                   child: Text(
                     review.createdAt,
                     style: TextStyle(

@@ -116,7 +116,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             ),
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(20),
                   color: Color.fromRGBO(255, 255, 255, 1)),
               margin: EdgeInsets.all(5),

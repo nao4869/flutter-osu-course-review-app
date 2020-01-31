@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.purple,
             accentColor: Colors.amber,
-            canvasColor: Color.fromRGBO(255, 255, 250, 1),
+            canvasColor: Color.fromRGBO(250, 245, 240, 1),
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
                 body1: TextStyle(
