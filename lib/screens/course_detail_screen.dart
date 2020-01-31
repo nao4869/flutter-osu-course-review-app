@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/create_review_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/list_courses_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
 import '../models/review.dart';
@@ -69,7 +70,50 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildSectionTitle(context, 'Course Detail'),
+            //buildSectionTitle(context, 'Course Detail'),
+            Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/');
+                    },
+                    child: Icon(
+                      Icons.home,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/');
+                    },
+                    child: Text(
+                      'HOME ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    '/ ' + loadedCourse.courseName + ' review',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Container(
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
