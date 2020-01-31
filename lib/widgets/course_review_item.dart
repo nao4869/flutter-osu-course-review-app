@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
 
+import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
 import '../models/review.dart';
 
@@ -28,7 +29,7 @@ class CourseReviewItem extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
                   child: StarDisplayWidget(
-                    value: 3,
+                    value: review.starScore,
                     filledStar:
                         Icon(Icons.star, color: Colors.amber, size: 25),
                     unfilledStar: Icon(Icons.star_border, color: Colors.grey),

@@ -12,11 +12,13 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
+  String _starScore;
   var createdAt = DateFormat("yyyy/MM/dd").format(new DateTime.now());
 
   Reviews(
     this.courseId,
     this.createdAt,
+    //this.starScore,
     this._reviews,
   );
 
@@ -28,6 +30,10 @@ class Reviews with ChangeNotifier {
   //Comparing ID of each products with id of the arguments
   Review findById(String id) {
     return _reviews.firstWhere((rv) => rv.courseId == id);
+  }
+
+  String get starScore {
+    return _starScore;
   }
 
   Future<void> retrieveReviewData(String id) async {
@@ -47,6 +53,7 @@ class Reviews with ChangeNotifier {
         loadedReviews.add(Review(
           courseId: reviewId,
           reviewsContent: reviewData['reviewsContent'],
+          starScore: reviewData['starScore'],
           createdAt: reviewData['createdAt'],
         ));
       });
@@ -57,7 +64,7 @@ class Reviews with ChangeNotifier {
     }
   }
 
-  Future<void> addReview(Review review, String courseId) async {
+  Future<void> addReview(Review review, String courseId, int starScore) async {
     final url = 'https://osu-course-search.firebaseio.com/reviews.json?';
 
     try {
@@ -66,6 +73,7 @@ class Reviews with ChangeNotifier {
         body: json.encode({
           'courseId': courseId,
           'reviewsContent': review.reviewsContent,
+          'starScore': starScore,
           'createdAt': review.createdAt,
         }),
       );
@@ -73,6 +81,7 @@ class Reviews with ChangeNotifier {
       final newReview = Review(
         courseId: json.decode(response.body)['name'],
         reviewsContent: review.reviewsContent,
+        starScore: starScore,
         createdAt: review.createdAt,
       );
       _reviews.add(newReview); // add to reviews list

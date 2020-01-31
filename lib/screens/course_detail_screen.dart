@@ -175,13 +175,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
         },
-        tooltip: 'Increment',
+        label: Text('New-Review'),
         backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
       ), //
     );
   }

@@ -24,6 +24,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _editedReview = Review(
     courseId: null,
     reviewsContent: '',
+    starScore: 0,
     createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
   );
 
@@ -35,6 +36,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _initValues = {
     'courseId': '',
     'reviewsContent': '',
+    'starScore': null,
     'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
   };
 
@@ -46,7 +48,10 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     "-LzKnJ9QHts7vslxdiKI"
   ];
 
+  var _starScore = [1, 2, 3, 4, 5];
+
   var _currentSelectedValue;
+  var _currentSelectedValue2;
 
   var _isInit = true;
   var _isLoading = false;
@@ -55,12 +60,14 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       final courseId = ModalRoute.of(context).settings.arguments as String;
+      //inal starScores = ModalRoute.of(context).settings.arguments as String;
       if (courseId != null) {
         _editedReview =
             Provider.of<Reviews>(context, listen: false).findById(courseId);
         _initValues = {
           'courseId': _editedReview.courseId,
           'reviewsContent': _editedReview.reviewsContent,
+          'starScore': _editedReview.starScore.toString(),
           'createdAt': _editedReview.createdAt,
         };
       }
@@ -91,7 +98,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     // } else {
     try {
       await Provider.of<Reviews>(context, listen: false)
-          .addReview(_editedReview, _editedReview.courseId);
+          .addReview(_editedReview, _editedReview.courseId, _editedReview.starScore);
     } catch (error) {
       await showDialog(
           context: context,
@@ -180,6 +187,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   _editedReview = Review(
                     courseId: value,
                     reviewsContent: _editedReview.reviewsContent,
+                    starScore: _editedReview.starScore,
                     createdAt: _editedReview.createdAt,
                   );
                 },
@@ -202,6 +210,49 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   _editedReview = Review(
                     courseId: _editedReview.courseId,
                     reviewsContent: value,
+                    starScore: _editedReview.starScore,
+                    createdAt: _editedReview.createdAt,
+                  );
+                },
+              ),
+              FormField<int>(
+                builder: (FormFieldState<int> state) {
+                  return InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: 'Rate of Course',
+                      labelStyle: TextStyle(
+                        fontSize: 22,
+                      ),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                      hintText: 'Please select rate of course',
+                    ),
+                    isEmpty: _currentSelectedValue2 == '',
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<int>(
+                        value: _currentSelectedValue2,
+                        isDense: true,
+                        onChanged: (int newValue) {
+                          setState(() {
+                            _currentSelectedValue2 = newValue;
+                            state.didChange(newValue);
+                          });
+                        },
+                        items: _starScore.map((int value) {
+                          return DropdownMenuItem<int>(
+                            value: value,
+                            child: Text('$value'),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
+                },
+                onSaved: (value) {
+                  _editedReview = Review(
+                    courseId: _editedReview.courseId,
+                    reviewsContent: _editedReview.reviewsContent,
+                    starScore: value,
                     createdAt: _editedReview.createdAt,
                   );
                 },
