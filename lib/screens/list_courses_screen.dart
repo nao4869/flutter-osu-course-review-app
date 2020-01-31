@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/create_review_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../models/courses_provider.dart';
 import '../widgets/course_list_item.dart';
@@ -62,6 +63,22 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                 child: CourseListItem(),
               ),
             ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+        },
+        label: Text(
+          'New-Review',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        icon: Icon(
+          Icons.create,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

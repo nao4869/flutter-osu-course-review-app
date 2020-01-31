@@ -179,9 +179,17 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         onPressed: () {
           Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
         },
-        label: Text('New-Review'),
+        label: Text(
+          'New-Review',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
-        icon: Icon(Icons.add),
+        icon: Icon(
+          Icons.create,
+          color: Colors.white,
+        ),
       ), //
     );
   }
