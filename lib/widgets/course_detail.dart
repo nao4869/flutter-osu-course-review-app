@@ -46,29 +46,31 @@ class CourseDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.purple),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        height: 200,
-        child: Row(children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _buildChildContainerBold('$courseName'),
-                _buildChildContainer('Course Content: $courseContent'),
-                _buildChildContainer('Pre-requisite of course: $prerequisite'),
-                _buildChildContainer('Proctored Exams: $proctoredexams'),
-                _buildChildContainer('Group Work: $groupwork'),
-                _buildChildContainer('Textbook: $textbook'),
-              ],
-            ),
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.purple),
+            borderRadius: BorderRadius.circular(20),
           ),
-          
-        ]),
+          height: 200,
+          child: Row(children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  _buildChildContainerBold('$courseName'),
+                  _buildChildContainer('Course Content: $courseContent'),
+                  _buildChildContainer(
+                      'Pre-requisite of course: $prerequisite'),
+                  _buildChildContainer('Proctored Exams: $proctoredexams'),
+                  _buildChildContainer('Group Work: $groupwork'),
+                  _buildChildContainer('Textbook: $textbook'),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

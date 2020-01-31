@@ -30,8 +30,7 @@ class CourseReviewItem extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
                   child: StarDisplayWidget(
                     value: review.starScore,
-                    filledStar:
-                        Icon(Icons.star, color: Colors.amber, size: 25),
+                    filledStar: Icon(Icons.star, color: Colors.amber, size: 25),
                     unfilledStar: Icon(Icons.star_border, color: Colors.grey),
                   ),
                 ),
