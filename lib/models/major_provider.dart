@@ -34,7 +34,7 @@ class Majors with ChangeNotifier {
         loadedMajors.add(Major(
           id: majorId,
           majorName: majorData['majorName'],
-          color: majorData['color'],
+          //color: majorData['color'].toString(,
         ));
       });
       _majors = loadedMajors;
@@ -59,7 +59,7 @@ class Majors with ChangeNotifier {
       final newMajor = Major(
         id: json.decode(response.body)['name'],
         majorName: major.majorName,
-        color: major.color,
+        //color: major.color,
       );
       _majors.add(newMajor); // add to reviews list
       notifyListeners(); // reflect results to children widget
