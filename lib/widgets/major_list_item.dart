@@ -41,6 +41,7 @@ class _MajorListItemState extends State<MajorListItem> {
     return Container(
       child: Column(
         children: <Widget>[
+          
           Container(
             width: double.infinity,
             height: 100,

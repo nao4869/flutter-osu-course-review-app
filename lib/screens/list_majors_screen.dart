@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
+import '../models/star_display.dart';
 import '../models/major_provider.dart';
 import '../widgets/major_list_item.dart';
 import '../widgets/main_drawer.dart';
@@ -37,7 +38,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 5, 0, 0),
+      margin: EdgeInsets.fromLTRB(20, 5, 0, 10),
       alignment: Alignment.centerLeft,
       child: Text(
         text,
@@ -105,6 +106,173 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                       ),
                     ),
                   ),
+                  buildSectionTitle(context, 'Reviews Ranking'),
+                  
+                  // 1st review
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('/');
+                                },
+                                child: Icon(
+                                  Icons.looks_one,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                              width: 350,
+                              child: Text(
+                                'CS162 - Intro to computer Science2',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            
+                          ],
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                          child: StarDisplayWidget(
+                            value: 5,
+                            filledStar:
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                            unfilledStar:
+                                Icon(Icons.star_border, color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // 2nd review
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('/');
+                                },
+                                child: Icon(
+                                  Icons.looks_two,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                              width: 350,
+                              child: Text(
+                                'CS290 - Web Development',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            
+                          ],
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                          child: StarDisplayWidget(
+                            value: 5,
+                            filledStar:
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                            unfilledStar:
+                                Icon(Icons.star_border, color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // 3rd review
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('/');
+                                },
+                                child: Icon(
+                                  Icons.looks_3,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                              width: 350,
+                              child: Text(
+                                'CS261 - Data Structures',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            
+                          ],
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                          child: StarDisplayWidget(
+                            value: 5,
+                            filledStar:
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                            unfilledStar:
+                                Icon(Icons.star_border, color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                 ],
               ),
             ),
