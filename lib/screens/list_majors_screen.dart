@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
+import '../screens/course_detail_screen.dart';
 import '../models/star_display.dart';
 import '../models/major_provider.dart';
 import '../widgets/major_list_item.dart';
@@ -107,7 +108,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                     ),
                   ),
                   buildSectionTitle(context, 'Reviews Ranking'),
-                  
+
                   // 1st review
                   Container(
                     margin: EdgeInsets.only(bottom: 15),
@@ -124,9 +125,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                             Container(
                               margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('/');
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.looks_one,
                                   color: Colors.black,
@@ -145,7 +144,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 ),
                               ),
                             ),
-                            
                           ],
                         ),
                         Container(
@@ -157,6 +155,32 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 Icon(Icons.star, color: Colors.amber, size: 20),
                             unfilledStar:
                                 Icon(Icons.star_border, color: Colors.grey),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
+                          child: ButtonTheme(
+                            minWidth: double.infinity,
+                            height: 30.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                            ),
+                            child: RaisedButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed('/course-detail');
+                              },
+                              child: Text(
+                                "Check all reviews",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.purple,
+                            ),
                           ),
                         ),
                       ],
@@ -200,7 +224,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 ),
                               ),
                             ),
-                            
                           ],
                         ),
                         Container(
@@ -212,6 +235,29 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 Icon(Icons.star, color: Colors.amber, size: 20),
                             unfilledStar:
                                 Icon(Icons.star_border, color: Colors.grey),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
+                          child: ButtonTheme(
+                            minWidth: double.infinity,
+                            height: 30.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                            ),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Check all reviews",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.purple,
+                            ),
                           ),
                         ),
                       ],
@@ -255,7 +301,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 ),
                               ),
                             ),
-                            
                           ],
                         ),
                         Container(
@@ -269,10 +314,32 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                 Icon(Icons.star_border, color: Colors.grey),
                           ),
                         ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
+                          child: ButtonTheme(
+                            minWidth: double.infinity,
+                            height: 30.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                            ),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Check all reviews",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.purple,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),

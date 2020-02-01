@@ -17,8 +17,9 @@ class CourseListItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
+            margin: EdgeInsets.only(bottom: 15),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.purple),
+              border: Border.all(color: Colors.white),
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
