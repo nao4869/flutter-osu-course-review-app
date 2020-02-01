@@ -34,19 +34,19 @@ class CourseListItem extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {},
                         child: Icon(
-                          Icons.looks_one,
+                          Icons.school,
                           color: Colors.black,
                         ),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                      width: 200,
+                      width: 300,
                       child: Text(
                         course.courseName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -54,7 +54,7 @@ class CourseListItem extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                  padding: EdgeInsets.fromLTRB(17, 5, 0, 0),
                   child: StarDisplayWidget(
                     value: 5,
                     filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
@@ -63,7 +63,7 @@ class CourseListItem extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(17, 5, 17, 0),
+                  padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
                   child: ButtonTheme(
                     minWidth: double.infinity,
                     height: 30.0,
