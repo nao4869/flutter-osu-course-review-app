@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
-import '../screens/list_courses_screen.dart';
-
-import '../models/courses_provider.dart';
 import '../models/major.dart';
 
 class MajorListItem extends StatefulWidget {
