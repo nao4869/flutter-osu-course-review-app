@@ -34,6 +34,20 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     super.initState();
   }
 
+  Widget buildSectionTitle(BuildContext context, String text) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final majorList = Provider.of<Majors>(context);
@@ -47,19 +61,29 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : GridView.builder(
-              padding: const EdgeInsets.all(25),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+          : Container(
+              width: double.infinity,
+              height: 400,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.red,
+                  width: 8.0,
+                ),
               ),
-              // temporary data for categories
-              itemCount: majors.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                value: majors[i],
-                child: MajorListItem(),
+              child: GridView.builder(
+                padding: const EdgeInsets.all(25),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                // temporary data for categories
+                itemCount: majors.length,
+                itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                  value: majors[i],
+                  child: MajorListItem(),
+                ),
               ),
             ),
     );
