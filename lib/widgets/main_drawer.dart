@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/create_course_screen.dart';
 import '../screens/create_review_screen.dart';
+import '../screens/list_majors_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, Function tapHandler) {
@@ -44,6 +45,9 @@ class MainDrawer extends StatelessWidget {
           ),
           buildListTile('List of Courses', Icons.settings, () {
             Navigator.of(context).pushReplacementNamed('/');
+          }),
+          buildListTile('List of Majors', Icons.settings, () {
+            Navigator.of(context).pushReplacementNamed(ListMajorsScreen.routeName);
           }),
           buildListTile('Create New Course', Icons.settings, () {
             Navigator.of(context)

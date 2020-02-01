@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
 
-import '../models/courses_provider.dart';
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../widgets/main_drawer.dart';

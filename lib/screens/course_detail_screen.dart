@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/create_review_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/list_courses_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
-import '../models/review.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {

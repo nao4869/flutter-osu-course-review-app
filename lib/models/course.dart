@@ -13,13 +13,13 @@ class Course with ChangeNotifier {
   //String _courseId;
 
   Course({
-    @required this.id, 
-    @required this.courseName, 
-    @required this.courseContent, 
+    @required this.id,
+    @required this.courseName,
+    @required this.courseContent,
     @required this.prerequisite,
-    @required this.proctoredexams, 
-    @required this.groupwork, 
-    @required this.textbook, 
+    @required this.proctoredexams,
+    @required this.groupwork,
+    @required this.textbook,
   });
 
   // String get courseId {
