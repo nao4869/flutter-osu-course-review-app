@@ -5,6 +5,7 @@ import '../screens/create_course_screen.dart';
 
 import '../models/courses_provider.dart';
 import '../models/course.dart';
+import '../models/star_display.dart';
 
 class CourseListItem extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class CourseListItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
             width: double.infinity,
             child: Column(
@@ -29,7 +30,17 @@ class CourseListItem extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.looks_one,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 8, 0, 0),
                       width: 200,
                       child: Text(
                         course.courseName,
@@ -39,33 +50,43 @@ class CourseListItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      color: Theme.of(context).primaryColor,
+                  ],
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                  child: StarDisplayWidget(
+                    value: 5,
+                    filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
+                    unfilledStar: Icon(Icons.star_border, color: Colors.grey),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.fromLTRB(17, 5, 17, 0),
+                  child: ButtonTheme(
+                    minWidth: double.infinity,
+                    height: 30.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                    child: RaisedButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                             CourseDetailScreen.routeName,
                             arguments: course.id);
                       },
+                      child: Text(
+                        "Check all reviews",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      color: Colors.purple,
                     ),
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            CreateCourseScreen.routeName,
-                            arguments: course.id);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () {
-                        Provider.of<Courses>(context, listen: false)
-                            .deleteCourse(course.id);
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
