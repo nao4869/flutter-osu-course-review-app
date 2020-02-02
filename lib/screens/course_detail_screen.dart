@@ -94,19 +94,19 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 14,
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                Expanded(
+                  //margin: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     '/ ' + loadedCourse.courseName + ' review',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 14,
                     ),
                   ),
                 ),
