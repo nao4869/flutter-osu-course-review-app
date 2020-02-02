@@ -20,6 +20,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   final _groupWorkFocusNode = FocusNode();
   final _textBookFocusNode = FocusNode();
   final _languageFocusNode = FocusNode();
+  final _majorFocusNode = FocusNode();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -34,6 +35,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     groupwork: '',
     textbook: '',
     language: '',
+    major: '',
   );
 
   var _initValues = {
@@ -44,6 +46,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'groupwork': '',
     'textbook': '',
     'language': '',
+    'major': '',
   };
   var _isInit = true;
   var _isLoading = false;
@@ -63,6 +66,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           'groupwork': _editedCourse.groupwork,
           'textbook': _editedCourse.textbook,
           'language': _editedCourse.language,
+          'major': _editedCourse.major,
         };
       }
     }
@@ -130,6 +134,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     _proctoredExamsFocusNode.dispose();
     _groupWorkFocusNode.dispose();
     _textBookFocusNode.dispose();
+    _languageFocusNode.dispose();
+    _majorFocusNode.dispose();
     super.dispose();
   }
 
@@ -175,6 +181,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -202,6 +210,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -229,6 +239,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -256,6 +268,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: value,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -283,6 +297,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: value,
                     textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -310,6 +326,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: value,
+                    language: _editedCourse.language,
+                    major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
                 },
@@ -320,7 +338,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 textInputAction: TextInputAction.next,
                 focusNode: _languageFocusNode,
                 onFieldSubmitted: (_) {
-                  _saveForm();
+                  FocusScope.of(context).requestFocus(_majorFocusNode);
                 },
                 validator: (value) {
                   if (value.isEmpty) {
@@ -338,6 +356,36 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
                     language: value,
+                    major: _editedCourse.major,
+                    id: _editedCourse.id,
+                  );
+                },
+              ),
+              TextFormField(
+                initialValue: _initValues['major'],
+                decoration: InputDecoration(labelText: 'Major of course'),
+                textInputAction: TextInputAction.next,
+                focusNode: _majorFocusNode,
+                onFieldSubmitted: (_) {
+                  _saveForm();
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a major of course.';
+                  } else {
+                    return null; // no error
+                  }
+                },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    language: _editedCourse.language,
+                    major: value,
                     id: _editedCourse.id,
                   );
                 },

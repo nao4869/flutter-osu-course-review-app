@@ -47,6 +47,7 @@ class Courses with ChangeNotifier {
           groupwork: courseData['groupwork'],
           textbook: courseData['textbook'],
           language: courseData['language'],
+          major: courseData['major'],
         ));
       });
       _courses = loadedCourses;
@@ -79,6 +80,8 @@ class Courses with ChangeNotifier {
         proctoredexams: course.proctoredexams,
         groupwork: course.proctoredexams,
         textbook: course.textbook,
+        language: course.language,
+        major: course.major,
         id: json.decode(response.body)['name'],
       );
       _courses.add(newCourse);

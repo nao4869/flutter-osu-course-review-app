@@ -10,6 +10,7 @@ class Course with ChangeNotifier {
   final String groupwork;
   final String textbook;
   final String language;
+  final String major;
 
   //String _courseId;
 
@@ -22,5 +23,6 @@ class Course with ChangeNotifier {
     @required this.groupwork,
     @required this.textbook,
     this.language,
+    @required this.major,
   });
 }
