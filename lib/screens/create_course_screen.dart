@@ -48,8 +48,32 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'language': '',
     'major': '',
   };
+
+  // temporary list of dropdown courses list
+  var _languageList = [
+    "C",
+    "C++",
+    "Python",
+    "Ruby",
+    "PHP",
+    "Jave",
+    "HTML, CSS, Javascript",
+    "Assembly language",
+    "Flutter, Dart",
+    "MySQL",
+    "other",
+  ];
+
+  var _majorList = [
+    "Computer Science",
+    "Business Administration",
+    "Mathematics",
+  ];
+
   var _isInit = true;
   var _isLoading = false;
+  var _currentSelectedValue;
+  var _currentSelectedValue2;
 
   @override
   void didChangeDependencies() {
@@ -332,20 +356,38 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   );
                 },
               ),
-              TextFormField(
-                initialValue: _initValues['language'],
-                decoration: InputDecoration(labelText: 'Programming Language'),
-                textInputAction: TextInputAction.next,
-                focusNode: _languageFocusNode,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_majorFocusNode);
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a programming language of course.';
-                  } else {
-                    return null; // no error
-                  }
+              FormField<String>(
+                builder: (FormFieldState<String> state) {
+                  return InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: 'Programming language',
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                      ),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                      hintText: 'Please select programming language of course',
+                    ),
+                    isEmpty: _currentSelectedValue == '',
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _currentSelectedValue,
+                        isDense: true,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            _currentSelectedValue = newValue;
+                            state.didChange(newValue);
+                          });
+                        },
+                        items: _languageList.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
                 },
                 onSaved: (value) {
                   _editedCourse = Course(
@@ -361,20 +403,38 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   );
                 },
               ),
-              TextFormField(
-                initialValue: _initValues['major'],
-                decoration: InputDecoration(labelText: 'Major of course'),
-                textInputAction: TextInputAction.next,
-                focusNode: _majorFocusNode,
-                onFieldSubmitted: (_) {
-                  _saveForm();
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a major of course.';
-                  } else {
-                    return null; // no error
-                  }
+              FormField<String>(
+                builder: (FormFieldState<String> state) {
+                  return InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: 'Major of course',
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                      ),
+                      errorStyle:
+                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                      hintText: 'Please select major of course',
+                    ),
+                    isEmpty: _currentSelectedValue2 == '',
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _currentSelectedValue2,
+                        isDense: true,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            _currentSelectedValue2 = newValue;
+                            state.didChange(newValue);
+                          });
+                        },
+                        items: _majorList.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
                 },
                 onSaved: (value) {
                   _editedCourse = Course(
