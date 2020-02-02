@@ -19,6 +19,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   final _proctoredExamsFocusNode = FocusNode();
   final _groupWorkFocusNode = FocusNode();
   final _textBookFocusNode = FocusNode();
+  final _languageFocusNode = FocusNode();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -292,7 +293,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 textInputAction: TextInputAction.next,
                 focusNode: _textBookFocusNode,
                 onFieldSubmitted: (_) {
-                  _saveForm();
+                  FocusScope.of(context).requestFocus(_languageFocusNode);
                 },
                 validator: (value) {
                   if (value.isEmpty) {
@@ -317,7 +318,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 initialValue: _initValues['language'],
                 decoration: InputDecoration(labelText: 'Programming Language'),
                 textInputAction: TextInputAction.next,
-                focusNode: _textBookFocusNode,
+                focusNode: _languageFocusNode,
                 onFieldSubmitted: (_) {
                   _saveForm();
                 },
