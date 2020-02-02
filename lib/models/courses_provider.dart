@@ -70,6 +70,8 @@ class Courses with ChangeNotifier {
           'proctoredexams': course.proctoredexams,
           'groupwork': course.groupwork,
           'textbook': course.textbook,
+          'language': course.language,
+          'major': course.major,
         }),
       );
 
@@ -106,6 +108,8 @@ class Courses with ChangeNotifier {
             'proctoredexams': newCourse.proctoredexams,
             'groupwork': newCourse.groupwork,
             'textbook': newCourse.textbook,
+            'language': newCourse.language,
+            'major': newCourse.major,
           }));
       _courses[courseIdenx] = newCourse;
       notifyListeners();
