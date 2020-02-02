@@ -46,6 +46,7 @@ class Courses with ChangeNotifier {
           proctoredexams: courseData['proctoredexams'],
           groupwork: courseData['groupwork'],
           textbook: courseData['textbook'],
+          language: courseData['language'],
         ));
       });
       _courses = loadedCourses;

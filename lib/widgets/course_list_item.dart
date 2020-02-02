@@ -40,7 +40,7 @@ class CourseListItem extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(20, 8, 0, 0),
+                      padding: EdgeInsets.fromLTRB(15, 8, 0, 0),
                       width: 300,
                       child: Text(
                         course.courseName,
@@ -52,6 +52,7 @@ class CourseListItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Star display
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(17, 5, 0, 0),
@@ -60,6 +61,36 @@ class CourseListItem extends StatelessWidget {
                     filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
                     unfilledStar: Icon(Icons.star_border, color: Colors.grey),
                   ),
+                ),
+                // Language display
+                Row(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.fromLTRB(20, 5, 5, 0),
+                      child: Icon(
+                        Icons.language,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          course.language,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
                   alignment: Alignment.center,

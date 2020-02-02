@@ -9,6 +9,7 @@ class Course with ChangeNotifier {
   final String proctoredexams;
   final String groupwork;
   final String textbook;
+  final String language;
 
   //String _courseId;
 
@@ -20,6 +21,7 @@ class Course with ChangeNotifier {
     @required this.proctoredexams,
     @required this.groupwork,
     @required this.textbook,
+    this.language,
   });
 
   // String get courseId {
