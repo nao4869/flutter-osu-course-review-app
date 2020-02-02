@@ -32,6 +32,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     proctoredexams: '',
     groupwork: '',
     textbook: '',
+    language: '',
   );
 
   var _initValues = {
@@ -41,6 +42,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'proctoredexams': '',
     'groupwork': '',
     'textbook': '',
+    'language': '',
   };
   var _isInit = true;
   var _isLoading = false;
@@ -59,6 +61,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           'proctoredexams': _editedCourse.proctoredexams,
           'groupwork': _editedCourse.groupwork,
           'textbook': _editedCourse.textbook,
+          'language': _editedCourse.language,
         };
       }
     }
@@ -87,7 +90,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           .updateCourse(_editedCourse.id, _editedCourse);
     } else {
       try {
-        await Provider.of<Courses>(context, listen: false).addCourse(_editedCourse);
+        await Provider.of<Courses>(context, listen: false)
+            .addCourse(_editedCourse);
       } catch (error) {
         await showDialog(
             context: context,
@@ -104,11 +108,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   ],
                 ));
         // finally block always run no matter try, catch succeded or not
-      // } finally {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      //   Navigator.of(context).pop();
+        // } finally {
+        //   setState(() {
+        //     _isLoading = false;
+        //   });
+        //   Navigator.of(context).pop();
       }
     }
     setState(() {
@@ -305,6 +309,34 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: value,
+                    id: _editedCourse.id,
+                  );
+                },
+              ),
+              TextFormField(
+                initialValue: _initValues['language'],
+                decoration: InputDecoration(labelText: 'Programming Language'),
+                textInputAction: TextInputAction.next,
+                focusNode: _textBookFocusNode,
+                onFieldSubmitted: (_) {
+                  _saveForm();
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a programming language of course.';
+                  } else {
+                    return null; // no error
+                  }
+                },
+                onSaved: (value) {
+                  _editedCourse = Course(
+                    courseName: _editedCourse.courseName,
+                    courseContent: _editedCourse.courseContent,
+                    prerequisite: _editedCourse.prerequisite,
+                    proctoredexams: _editedCourse.proctoredexams,
+                    groupwork: _editedCourse.groupwork,
+                    textbook: _editedCourse.textbook,
+                    language: value,
                     id: _editedCourse.id,
                   );
                 },
