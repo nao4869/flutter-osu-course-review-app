@@ -56,6 +56,7 @@ class CourseDetail extends StatelessWidget {
           height: 200,
           child: Row(children: <Widget>[
             Expanded(
+              flex: 7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[

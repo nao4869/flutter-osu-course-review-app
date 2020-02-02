@@ -72,7 +72,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             Row(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
+                  margin: EdgeInsets.fromLTRB(5, 5, 0, 10),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed('/');
@@ -114,9 +114,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             ),
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 1)),
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(20),
+                color: Color.fromRGBO(255, 255, 255, 1),
+              ),
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(5),
               height: 300,
@@ -136,9 +137,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   ),
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 10, 0, 15),
+                    padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
                     child: Text(
-                      'Course Content: ${loadedCourse.courseContent}',
+                      '${loadedCourse.courseContent}',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,

@@ -34,14 +34,16 @@ class CourseReviewItem extends StatelessWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: 350,
-                      child: Text(
-                        review.reviewsContent,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
+                    Expanded(
+                      flex: 7,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+                        child: Text(
+                          review.reviewsContent,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ),
