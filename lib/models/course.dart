@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import './major.dart';
 
 class Course with ChangeNotifier {
   final String id;

@@ -6,7 +6,9 @@ import './major.dart';
 import '../models/http_exception.dart';
 
 class Majors with ChangeNotifier {
-  List<Major> _majors = [];
+  List<Major> _majors = [
+    // to do, add sample majors in here
+  ];
 
   // getter for course
   List<Major> get majors {

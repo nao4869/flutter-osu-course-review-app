@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 import '../models/course.dart';
 import '../models/courses_provider.dart';
+import '../models/major.dart';
+import '../models/major_provider.dart';
 
 import '../widgets/main_drawer.dart';
 
@@ -165,6 +168,15 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // need List<String> type to be able to map
+    final majorsList = Provider.of<Majors>(context);
+    final majors = majorsList.majors;
+    List<String> majorsStr = majors.cast();
+    print(majorsStr.runtimeType);
+    print(majorsStr);
+    
+    // notice majors list itself is empty
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Create New Course'),
@@ -403,6 +415,16 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   );
                 },
               ),
+              // DropDownField(
+              //     value: majors,
+              //     required: true,
+              //     strict: true,
+              //     labelText: 'Major Name *',
+              //     icon: Icon(Icons.account_balance),
+              //     items: majors,
+              //     setter: (dynamic newValue) {
+              //       majors = newValue;
+              //     }),
               FormField<String>(
                 builder: (FormFieldState<String> state) {
                   return InputDecorator(
@@ -426,7 +448,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             state.didChange(newValue);
                           });
                         },
-                        items: _majorList.map((String value) {
+                        items: majorsStr.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
