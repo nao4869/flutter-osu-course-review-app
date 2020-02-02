@@ -23,8 +23,4 @@ class Course with ChangeNotifier {
     @required this.textbook,
     this.language,
   });
-
-  // String get courseId {
-  //   return _courseId;
-  // }
 }

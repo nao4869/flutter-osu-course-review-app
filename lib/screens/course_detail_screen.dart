@@ -120,7 +120,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               ),
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(5),
-              height: 300,
               width: double.infinity,
               child: Column(
                 children: <Widget>[
@@ -147,6 +146,39 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       ),
                     ),
                   ),
+
+                  // display language
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Language: ',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.purple),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Text(
+                          '${loadedCourse.language}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(30, 0, 0, 5),

@@ -78,14 +78,14 @@ class CourseListItem extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue),
-                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.purple),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
                           course.language,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                            fontSize: 16,
                           ),
                         ),
                       ),

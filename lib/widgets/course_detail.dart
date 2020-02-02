@@ -51,9 +51,10 @@ class CourseDetail extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30),
           ),
-          height: 200,
+          width: double.infinity,
+          height: double.infinity,
           child: Row(children: <Widget>[
             Expanded(
               flex: 7,
