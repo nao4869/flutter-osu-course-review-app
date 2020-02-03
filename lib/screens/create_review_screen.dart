@@ -4,6 +4,8 @@ import "package:intl/intl.dart";
 
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
+import '../models/course.dart';
+import '../models/courses_provider.dart';
 import '../widgets/main_drawer.dart';
 
 class CreateReviewScreen extends StatefulWidget {
@@ -27,11 +29,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
   );
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   var _initValues = {
     'courseId': '',
     'reviewsContent': '',
@@ -48,12 +45,27 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   ];
 
   var _starScore = [1, 2, 3, 4, 5];
-
   var _currentSelectedValue;
   var _currentSelectedValue2;
-
   var _isInit = true;
   var _isLoading = false;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // retrieve major data from FB
+      Provider.of<Courses>(context).retrieveCourseData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    });
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -96,8 +108,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     //       .updateReview(_editedReview, _editedReview.courseId);
     // } else {
     try {
-      await Provider.of<Reviews>(context, listen: false)
-          .addReview(_editedReview, _editedReview.courseId, _editedReview.starScore);
+      await Provider.of<Reviews>(context, listen: false).addReview(
+          _editedReview, _editedReview.courseId, _editedReview.starScore);
     } catch (error) {
       await showDialog(
           context: context,
@@ -131,6 +143,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final courseList = Provider.of<Courses>(context);
+    final courses = courseList.courses;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Create New Review'),
@@ -149,13 +164,13 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           key: _form,
           child: ListView(
             children: <Widget>[
-              FormField<String>(
-                builder: (FormFieldState<String> state) {
+              FormField<Course>(
+                builder: (FormFieldState<Course> state) {
                   return InputDecorator(
                     decoration: InputDecoration(
                       labelText: 'Course Name',
                       labelStyle: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                       ),
                       errorStyle:
                           TextStyle(color: Colors.redAccent, fontSize: 15.0),
@@ -163,19 +178,27 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     ),
                     isEmpty: _currentSelectedValue == '',
                     child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                      child: DropdownButton<Course>(
                         value: _currentSelectedValue,
                         isDense: true,
-                        onChanged: (String newValue) {
+                        onChanged: (Course newValue) {
                           setState(() {
                             _currentSelectedValue = newValue;
                             state.didChange(newValue);
                           });
                         },
-                        items: _coursesList.map((String value) {
-                          return DropdownMenuItem<String>(
+                        items: courses.map((Course value) {
+                          return DropdownMenuItem<Course>(
                             value: value,
-                            child: Text(value),
+                            
+                            child: Text(
+                              value.courseName.toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                              ),
+                            ),
                           );
                         }).toList(),
                       ),
@@ -184,7 +207,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                 },
                 onSaved: (value) {
                   _editedReview = Review(
-                    courseId: value,
+                    courseId: value.id.toString(),
                     reviewsContent: _editedReview.reviewsContent,
                     starScore: _editedReview.starScore,
                     createdAt: _editedReview.createdAt,
