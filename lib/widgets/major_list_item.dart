@@ -76,8 +76,6 @@ class _MajorListItemState extends State<MajorListItem> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      // major.color.withOpacity(0.7),
-                      // major.color,
                       colors[index].withOpacity(0.7),
                       colors[index],
                     ],

@@ -6,9 +6,9 @@ import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
-//import '../screens/course_detail_screen.dart';
 import '../models/star_display.dart';
 import '../models/major_provider.dart';
+import '../models/courses_provider.dart';
 import '../widgets/major_list_item.dart';
 import '../widgets/main_drawer.dart';
 
@@ -57,6 +57,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
   Widget build(BuildContext context) {
     final majorList = Provider.of<Majors>(context);
     final majors = majorList.majors;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('OSU Course Search'),
@@ -76,8 +77,8 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                         child: GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushNamed(
-                            ListCoursesScreen.routeName,
-                            arguments: majorList.majors);
+                                ListCoursesScreen.routeName,
+                                arguments: majorList.majors);
                           },
                           child: Text(
                             'Search course by Major',
@@ -171,8 +172,9 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                             ),
                             child: RaisedButton(
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed('/course-detail');
+                                Navigator.of(context).pushNamed(
+                                    ListCoursesScreen.routeName,
+                                    arguments: "Computer Science");
                               },
                               child: Text(
                                 "Check all reviews",
@@ -250,7 +252,11 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                               borderRadius: new BorderRadius.circular(10.0),
                             ),
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    ListCoursesScreen.routeName,
+                                    arguments: "Computer Science");
+                              },
                               child: Text(
                                 "Check all reviews",
                                 style: TextStyle(
@@ -327,7 +333,11 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                               borderRadius: new BorderRadius.circular(10.0),
                             ),
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    ListCoursesScreen.routeName,
+                                    arguments: "Computer Science");
+                              },
                               child: Text(
                                 "Check all reviews",
                                 style: TextStyle(

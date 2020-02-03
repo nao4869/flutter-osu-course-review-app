@@ -43,8 +43,6 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     super.didChangeDependencies();
   }
 
-  var _currentSelectedValue;
-
   @override
   Widget build(BuildContext context) {
     final majorName = ModalRoute.of(context).settings.arguments
@@ -56,34 +54,39 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          DropdownButton<Course>(
-            value: ddv,
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            elevation: 0,
-            underline: null,
-            onChanged: (Course newValue) {
-              setState(() {
-                ddv = newValue;
-                Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
-                    arguments: ddv.id);
-              });
-            },
-            items: loadedMajorCourses.map((Course value) {
-              return DropdownMenuItem<Course>(
-                value: value,
-                child: Text(
-                  value.courseName.toString(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 13,
-                  ),
+          Container(
+            child: DropdownButton<Course>(
+              value: ddv,
+              icon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.white,
                 ),
-              );
-            }).toList(),
+              ),
+              elevation: 0,
+              underline: null,
+              onChanged: (Course newValue) {
+                setState(() {
+                  ddv = newValue;
+                  Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
+                      arguments: ddv.id);
+                });
+              },
+              items: loadedMajorCourses.map((Course value) {
+                return DropdownMenuItem<Course>(
+                  value: value,
+                  child: Text(
+                    value.courseName.toString(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ),
           IconButton(
             icon: Icon(
@@ -101,12 +104,14 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              padding: const EdgeInsets.all(25),
-              itemCount: loadedMajorCourses.length,
-              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                value: loadedMajorCourses[i],
-                child: CourseListItem(),
+          : Container(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(25),
+                itemCount: loadedMajorCourses.length,
+                itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                  value: loadedMajorCourses[i],
+                  child: CourseListItem(),
+                ),
               ),
             ),
       floatingActionButton: FloatingActionButton.extended(
