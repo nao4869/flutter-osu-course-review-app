@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../screens/create_review_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../models/courses_provider.dart';
+import '../models/course.dart';
 import '../widgets/course_list_item.dart';
 import '../widgets/main_drawer.dart';
 
@@ -37,17 +38,55 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  var _currentSelectedValue;
+
+  @override
   Widget build(BuildContext context) {
     final majorName = ModalRoute.of(context).settings.arguments
         as String; // retrieving majorName passed from list majors screen
-    final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(majorName); // findByMajor returns list of courses where condition match
-    
+    final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(
+        majorName); // findByMajor returns list of courses where condition match
+    var ddv;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('OSU Course Search'),
         actions: <Widget>[
+          DropdownButton<Course>(
+            value: ddv,
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            elevation: 0,
+            underline: null,
+            onChanged: (Course newValue) {
+              setState(() {
+                ddv = newValue;
+              });
+            },
+            items: loadedMajorCourses.map((Course value) {
+              return DropdownMenuItem<Course>(
+                value: value,
+                child: Text(
+                  value.courseName.toString(),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 13,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+            ),
+            iconSize: 24,
             onPressed: () {
               Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
             },

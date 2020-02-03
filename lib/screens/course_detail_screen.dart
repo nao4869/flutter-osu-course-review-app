@@ -68,7 +68,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            //buildSectionTitle(context, 'Course Detail'),
             Row(
               children: <Widget>[
                 Container(

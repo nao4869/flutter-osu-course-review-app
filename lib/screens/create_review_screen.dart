@@ -36,14 +36,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
   };
 
-  // temporary list of dropdown courses list
-  var _coursesList = [
-    "-LzKmk8RUelcN4U__DO5",
-    "-LzKmxO3QJLd4R6kenZ9",
-    "-LzKn8iDyKZtHuO7wQDf",
-    "-LzKnJ9QHts7vslxdiKI"
-  ];
-
   var _starScore = [1, 2, 3, 4, 5];
   var _currentSelectedValue;
   var _currentSelectedValue2;
