@@ -170,6 +170,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'roboto',
                           ),
                         ),
                       ),
