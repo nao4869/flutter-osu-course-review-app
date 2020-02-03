@@ -16,6 +16,10 @@ class Courses with ChangeNotifier {
     return [..._courses];
   }
 
+  // String get coursesMajor {
+  //   return courses['major'].toString();
+  // }
+
   //Comparing ID of each products with id of the arguments
   Course findById(String id) {
     return _courses.firstWhere((cs) => cs.id == id);

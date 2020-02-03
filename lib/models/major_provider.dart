@@ -29,7 +29,7 @@ class Majors with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      
+
       final List<Major> loadedMajors = [];
 
       extractedData.forEach((majorId, majorData) {

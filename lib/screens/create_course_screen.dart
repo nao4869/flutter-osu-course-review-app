@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:dropdownfield/dropdownfield.dart';
+//import 'package:dropdownfield/dropdownfield.dart';
 
 import '../models/course.dart';
 import '../models/courses_provider.dart';
@@ -77,6 +77,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   var _isLoading = false;
   var _currentSelectedValue;
   var _currentSelectedValue2;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<Majors>(context).retrieveMajorData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    });
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -168,14 +184,19 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final majorList = Provider.of<Majors>(context);
+    final majors = majorList.majors;
+
     // need List<String> type to be able to map
-    final majorsList = Provider.of<Majors>(context);
-    final majors = majorsList.majors;
-    List<String> majorsStr = majors.cast();
-    print(majorsStr.runtimeType);
-    print(majorsStr);
-    
-    // notice majors list itself is empty
+    // final majorsList = Provider.of<Majors>(context);
+    // final majors = majorsList.majors;
+    // List<String> majorsStr = majors.cast();
+    // print(majorsStr.runtimeType);
+    // print(majorsStr);
+
+    //List<String> majorsStr = majors.cast();
+    //print(majorsStr.runtimeType);
+    //final majorsMap = majors.forEach((mj) => print(mj.majorName));
 
     return Scaffold(
       appBar: AppBar(
@@ -415,18 +436,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   );
                 },
               ),
-              // DropDownField(
-              //     value: majors,
-              //     required: true,
-              //     strict: true,
-              //     labelText: 'Major Name *',
-              //     icon: Icon(Icons.account_balance),
-              //     items: majors,
-              //     setter: (dynamic newValue) {
-              //       majors = newValue;
-              //     }),
-              FormField<String>(
-                builder: (FormFieldState<String> state) {
+              FormField<Major>(
+                builder: (FormFieldState<Major> state) {
                   return InputDecorator(
                     decoration: InputDecoration(
                       labelText: 'Major of course',
@@ -439,19 +450,19 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                     isEmpty: _currentSelectedValue2 == '',
                     child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                      child: DropdownButton<Major>(
                         value: _currentSelectedValue2,
                         isDense: true,
-                        onChanged: (String newValue) {
+                        onChanged: (Major newValue) {
                           setState(() {
                             _currentSelectedValue2 = newValue;
                             state.didChange(newValue);
                           });
                         },
-                        items: majorsStr.map((String value) {
-                          return DropdownMenuItem<String>(
+                        items: majors.map((Major value) {
+                          return DropdownMenuItem<Major>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value.majorName.toString()),
                           );
                         }).toList(),
                       ),
@@ -467,7 +478,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
                     language: _editedCourse.language,
-                    major: value,
+                    major: value.majorName.toString(),
                     id: _editedCourse.id,
                   );
                 },
