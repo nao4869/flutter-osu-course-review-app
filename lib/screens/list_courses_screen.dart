@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
 import '../screens/create_course_screen.dart';
+import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
 import '../widgets/course_list_item.dart';
@@ -66,6 +67,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             onChanged: (Course newValue) {
               setState(() {
                 ddv = newValue;
+                Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
+                    arguments: ddv.id);
               });
             },
             items: loadedMajorCourses.map((Course value) {
