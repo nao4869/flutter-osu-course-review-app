@@ -11,13 +11,27 @@ class MajorListItem extends StatefulWidget {
 
 class _MajorListItemState extends State<MajorListItem> {
   List colors = [
+    Colors.pink,
     Colors.red,
-    Colors.blue,
+    Colors.deepOrange,
     Colors.orange,
+    Colors.amber,
     Colors.yellow,
+    Colors.lime,
+    Colors.lightGreen,
+    Colors.lightGreenAccent,
     Colors.green,
+    Colors.greenAccent,
+    Colors.teal,
+    Colors.tealAccent,
+    Colors.cyan,
+    Colors.cyanAccent,
+    Colors.lightBlue,
+    Colors.lightBlueAccent,
+    Colors.indigo,
     Colors.purple,
-    Colors.pink
+    Colors.deepPurple,
+    Colors.blueGrey,
   ];
 
   Random random = new Random();
@@ -25,7 +39,7 @@ class _MajorListItemState extends State<MajorListItem> {
   int index = 0;
 
   void changeIndex() {
-    setState(() => index = random.nextInt(7));
+    setState(() => index = random.nextInt(21));
   }
 
   @override
@@ -41,7 +55,6 @@ class _MajorListItemState extends State<MajorListItem> {
     return Container(
       child: Column(
         children: <Widget>[
-          
           Container(
             width: double.infinity,
             height: 100,
@@ -60,6 +73,8 @@ class _MajorListItemState extends State<MajorListItem> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
+                      // major.color.withOpacity(0.7),
+                      // major.color,
                       colors[index].withOpacity(0.7),
                       colors[index],
                     ],

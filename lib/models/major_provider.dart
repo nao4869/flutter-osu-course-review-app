@@ -35,8 +35,8 @@ class Majors with ChangeNotifier {
       extractedData.forEach((majorId, majorData) {
         loadedMajors.add(Major(
           id: majorId,
+          //color: majorData['color'],
           majorName: majorData['majorName'],
-          //color: majorData['color'].toString(,
         ));
       });
       _majors = loadedMajors;
@@ -46,28 +46,28 @@ class Majors with ChangeNotifier {
     }
   }
 
-  Future<void> addMajor(Major major) async {
-    final url = 'https://osu-course-search.firebaseio.com/majors.json?';
+  // Future<void> addMajor(Major major) async {
+  //   final url = 'https://osu-course-search.firebaseio.com/majors.json?';
 
-    try {
-      final response = await http.post(
-        url,
-        body: json.encode({
-          'majorName': major.majorName,
-          'color': major.color,
-        }),
-      );
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       body: json.encode({
+  //         'majorName': major.majorName,
+  //         'color': major.color,
+  //       }),
+  //     );
 
-      final newMajor = Major(
-        id: json.decode(response.body)['name'],
-        majorName: major.majorName,
-        //color: major.color,
-      );
-      _majors.add(newMajor); // add to reviews list
-      notifyListeners(); // reflect results to children widget
-    } catch (error) {
-      print(error);
-      throw error;
-    }
-  }
+  //     final newMajor = Major(
+  //       id: json.decode(response.body)['name'],
+  //       majorName: major.majorName,
+  //       //color: major.color,
+  //     );
+  //     _majors.add(newMajor); // add to reviews list
+  //     notifyListeners(); // reflect results to children widget
+  //   } catch (error) {
+  //     print(error);
+  //     throw error;
+  //   }
+  // }
 }

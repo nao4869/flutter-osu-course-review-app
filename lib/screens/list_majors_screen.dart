@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
-import '../screens/course_detail_screen.dart';
+//import '../screens/course_detail_screen.dart';
 import '../models/star_display.dart';
 import '../models/major_provider.dart';
 import '../widgets/major_list_item.dart';
