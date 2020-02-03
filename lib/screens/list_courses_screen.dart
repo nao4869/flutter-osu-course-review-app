@@ -1,5 +1,5 @@
 // Control the entire contents of the first screens
-// Displays lsit of courses for the application
+// Displays lsit of loadedMajorCourses for the application
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,8 @@ import '../widgets/course_list_item.dart';
 import '../widgets/main_drawer.dart';
 
 class ListCoursesScreen extends StatefulWidget {
+  static const routeName = '/list-loadedMajorCourses-screen';
+
   @override
   _ListCoursesScreenState createState() => _ListCoursesScreenState();
 }
@@ -36,8 +38,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final coursesList = Provider.of<Courses>(context);
-    final courses = coursesList.courses;
+    final majorName = ModalRoute.of(context).settings.arguments
+        as String; // retrieving majorName passed from list majors screen
+    final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(majorName); // findByMajor returns list of courses where condition match
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('OSU Course Search'),
@@ -57,9 +61,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(25),
-              itemCount: courses.length,
+              itemCount: loadedMajorCourses.length,
               itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                value: courses[i],
+                value: loadedMajorCourses[i],
                 child: CourseListItem(),
               ),
             ),

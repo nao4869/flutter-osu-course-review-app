@@ -16,13 +16,14 @@ class Courses with ChangeNotifier {
     return [..._courses];
   }
 
-  // String get coursesMajor {
-  //   return courses['major'].toString();
-  // }
-
-  //Comparing ID of each products with id of the arguments
+  //Comparing ID of each courses with id of the arguments
   Course findById(String id) {
     return _courses.firstWhere((cs) => cs.id == id);
+  }
+
+  //Comparing major name of each courses with majorName of the arguments
+  List<Course> findByMajor(String majorName) {
+    return [..._courses.where((mj) => mj.major == majorName)];
   }
 
   String get courseId {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
-import '../screens/create_course_screen.dart';
 
-import '../models/courses_provider.dart';
 import '../models/course.dart';
 import '../models/star_display.dart';
 

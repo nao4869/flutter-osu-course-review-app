@@ -57,15 +57,17 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 )),
           ),
-          home: Consumer<Courses>(
-            builder: (ctx, courses, _) => ListCoursesScreen(),
-          ),
+          home: ListMajorsScreen(),
+          // home: Consumer<Courses>(
+          //   builder: (ctx, courses, _) => ListCoursesScreen(),
+          // ),
           // Lists of available routes in the application
           routes: {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
             CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
             CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
             ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
+            ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
           }),
     );
   }

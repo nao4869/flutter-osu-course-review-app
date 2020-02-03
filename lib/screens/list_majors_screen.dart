@@ -2,6 +2,7 @@
 // Displays lsit of courses for the application
 
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/create_review_screen.dart';
@@ -74,7 +75,9 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                         margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/');
+                            Navigator.of(context).pushNamed(
+                            ListCoursesScreen.routeName,
+                            arguments: majorList.majors);
                           },
                           child: Text(
                             'Search course by Major',

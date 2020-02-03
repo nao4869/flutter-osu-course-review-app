@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
@@ -60,7 +61,9 @@ class _MajorListItemState extends State<MajorListItem> {
             height: 100,
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed('/');
+                Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
+                    arguments: major.majorName);
+                //print(major.majorName);
               },
               splashColor: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(15),
