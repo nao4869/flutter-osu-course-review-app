@@ -12,13 +12,11 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
-  String _starScore;
   var createdAt = DateFormat("yyyy/MM/dd").format(new DateTime.now());
 
   Reviews(
     this.courseId,
     this.createdAt,
-    //this.starScore,
     this._reviews,
   );
 
@@ -30,10 +28,6 @@ class Reviews with ChangeNotifier {
   //Comparing ID of each products with id of the arguments
   Review findById(String id) {
     return _reviews.firstWhere((rv) => rv.courseId == id);
-  }
-
-  String get starScore {
-    return _starScore;
   }
 
   Future<void> retrieveReviewData(String id) async {

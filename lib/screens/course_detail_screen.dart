@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/create_review_screen.dart';
 import 'package:provider/provider.dart';
+import 'dart:core';
 
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
+import '../models/star_display.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {
@@ -60,6 +62,17 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
 
     final reviewList = Provider.of<Reviews>(context);
     final reviews = reviewList.reviews;
+
+    // map to obtain each reviews star score
+    final total = reviews.map((rv) => rv.starScore).toList();
+
+    // retrieve sum of star score
+    final sum = total.fold(0, (a, b) => a + b);
+    // print(sum);
+
+    // round to decimal 2 point
+    final scoreToDisplay = (sum / reviews.length);
+    final finalScore = num.parse(scoreToDisplay.toStringAsFixed(1));
 
     return Scaffold(
       appBar: AppBar(
@@ -128,11 +141,41 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       loadedCourse.courseName,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
+                  // display language
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
+                        child: StarDisplayWidget(
+                          value: 5,
+                          filledStar:
+                              Icon(Icons.star, color: Colors.amber, size: 20),
+                          unfilledStar:
+                              Icon(Icons.star_border, color: Colors.grey),
+                        ),
+                      ),
+                      Container(
+                        //width: double.infinity,
+                        padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                        child: Text(
+                          '$finalScore',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
