@@ -10,6 +10,7 @@ import './screens/list_majors_screen.dart';
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
 import './models/major_provider.dart';
+import './models/language_provider.dart';
 import "package:intl/intl.dart";
 
 void main() => runApp(MyApp());
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Majors(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Languages(),
         ),
         ChangeNotifierProxyProvider<Courses, Reviews>(
           builder: (ctx, courses, previousReviews) => Reviews(

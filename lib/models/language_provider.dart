@@ -11,7 +11,7 @@ class Languages with ChangeNotifier {
   ];
 
   // getter for course
-  List<Language> get majors {
+  List<Language> get languages {
     return [..._languages];
   }
 

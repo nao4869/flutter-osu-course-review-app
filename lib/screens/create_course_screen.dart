@@ -6,6 +6,8 @@ import '../models/course.dart';
 import '../models/courses_provider.dart';
 import '../models/major.dart';
 import '../models/major_provider.dart';
+import '../models/language.dart';
+import '../models/language_provider.dart';
 
 import '../widgets/main_drawer.dart';
 
@@ -52,27 +54,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'major': '',
   };
 
-  // temporary list of dropdown courses list
-  var _languageList = [
-    "C",
-    "C++",
-    "Python",
-    "Ruby",
-    "PHP",
-    "Jave",
-    "HTML, CSS, Javascript",
-    "Assembly language",
-    "Flutter, Dart",
-    "MySQL",
-    "other",
-  ];
-
-  var _majorList = [
-    "Computer Science",
-    "Business Administration",
-    "Mathematics",
-  ];
-
   var _isInit = true;
   var _isLoading = false;
   var _currentSelectedValue;
@@ -85,7 +66,15 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         _isLoading = true;
       });
 
+      // retrieve major data from FB
       Provider.of<Majors>(context).retrieveMajorData().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+
+      // retrieve language data from FB
+      Provider.of<Languages>(context).retrieveLanguageData().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -186,6 +175,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   Widget build(BuildContext context) {
     final majorList = Provider.of<Majors>(context);
     final majors = majorList.majors;
+
+    final languageList = Provider.of<Languages>(context);
+    final languages = languageList.languages;
 
     // need List<String> type to be able to map
     // final majorsList = Provider.of<Majors>(context);
@@ -389,8 +381,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   );
                 },
               ),
-              FormField<String>(
-                builder: (FormFieldState<String> state) {
+              FormField<Language>(
+                builder: (FormFieldState<Language> state) {
                   return InputDecorator(
                     decoration: InputDecoration(
                       labelText: 'Programming language',
@@ -403,19 +395,19 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                     isEmpty: _currentSelectedValue == '',
                     child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                      child: DropdownButton<Language>(
                         value: _currentSelectedValue,
                         isDense: true,
-                        onChanged: (String newValue) {
+                        onChanged: (Language newValue) {
                           setState(() {
                             _currentSelectedValue = newValue;
                             state.didChange(newValue);
                           });
                         },
-                        items: _languageList.map((String value) {
-                          return DropdownMenuItem<String>(
+                        items: languages.map((Language value) {
+                          return DropdownMenuItem<Language>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value.languageName.toString()),
                           );
                         }).toList(),
                       ),
@@ -430,7 +422,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
-                    language: value,
+                    language: value.toString(),
                     major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
