@@ -261,21 +261,29 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
               ),
               // Raised Button
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    _saveForm();
-                  },
-                  child: Text(
-                    "Save Review",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.all(15.0),
+                child: ButtonTheme(
+                  minWidth: double.infinity,
+                  child: RaisedButton(
+                    onPressed: () {
+                      _saveForm();
+                    },
+                    child: Text(
+                      "Save Review",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    color: Colors.purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  color: Colors.purple,
                 ),
+                // to do, add clear form button
+                // to do, add save and add another button
               ),
             ],
           ),
