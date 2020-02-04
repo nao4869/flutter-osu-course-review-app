@@ -7,6 +7,8 @@ import '../screens/create_review_screen.dart';
 import '../widgets/main_drawer.dart';
 
 class TabScreen extends StatefulWidget {
+  static const routeName = '/tabs-screen';
+
   @override
   _TabScreenState createState() => _TabScreenState();
 }
@@ -22,7 +24,7 @@ class _TabScreenState extends State<TabScreen> {
     _pages = [
       {
         'page': ListMajorsScreen(),
-        'title': 'Majors',
+        'title': 'Home',
       },
       {
         'page': CreateCourseScreen(),

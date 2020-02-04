@@ -59,10 +59,6 @@ class MyApp extends StatelessWidget {
                 )),
           ),
           home: TabScreen(),
-          // home: Consumer<Courses>(
-          //   builder: (ctx, courses, _) => ListCoursesScreen(),
-          // ),
-          // Lists of available routes in the application
           routes: {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
             CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
