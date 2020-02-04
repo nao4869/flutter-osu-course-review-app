@@ -356,22 +356,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
-        },
-        label: Text(
-          'New-Review',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        icon: Icon(
-          Icons.create,
-          color: Colors.white,
-        ),
-      ), //
     );
   }
 }
