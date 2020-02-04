@@ -11,7 +11,6 @@ import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
 import '../widgets/course_list_item.dart';
-import '../widgets/main_drawer.dart';
 
 class ListCoursesScreen extends StatefulWidget {
   static const routeName = '/list-loadedMajorCourses-screen';

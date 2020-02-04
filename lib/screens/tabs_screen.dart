@@ -4,8 +4,6 @@ import '../screens/list_majors_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../screens/create_review_screen.dart';
 
-import '../widgets/main_drawer.dart';
-
 class TabScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
 
@@ -50,7 +48,6 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text('OSU Course Search'),
       ),
-      drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

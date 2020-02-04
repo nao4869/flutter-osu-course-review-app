@@ -8,8 +8,6 @@ import '../models/major_provider.dart';
 import '../models/language.dart';
 import '../models/language_provider.dart';
 
-import '../widgets/main_drawer.dart';
-
 class CreateCourseScreen extends StatefulWidget {
   static const routeName = '/create-new-course';
 
@@ -23,8 +21,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   final _proctoredExamsFocusNode = FocusNode();
   final _groupWorkFocusNode = FocusNode();
   final _textBookFocusNode = FocusNode();
-  // final _languageFocusNode = FocusNode();
-  // final _majorFocusNode = FocusNode();
+  final _languageFocusNode = FocusNode();
+  final _majorFocusNode = FocusNode();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -165,8 +163,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     _proctoredExamsFocusNode.dispose();
     _groupWorkFocusNode.dispose();
     _textBookFocusNode.dispose();
-    // _languageFocusNode.dispose();
-    // _majorFocusNode.dispose();
+    _languageFocusNode.dispose();
+    _majorFocusNode.dispose();
     super.dispose();
   }
 
@@ -190,7 +188,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     //final majorsMap = majors.forEach((mj) => print(mj.majorName));
 
     return Scaffold(
-      drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -347,9 +344,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 decoration: InputDecoration(labelText: 'Textbook'),
                 textInputAction: TextInputAction.next,
                 focusNode: _textBookFocusNode,
-                // onFieldSubmitted: (_) {
-                //   FocusScope.of(context).requestFocus(_languageFocusNode);
-                // },
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_languageFocusNode);
+                },
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Please enter a textbook of course.';

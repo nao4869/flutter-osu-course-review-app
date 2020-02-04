@@ -10,7 +10,6 @@ import '../models/star_display.dart';
 import '../models/major_provider.dart';
 import '../models/courses_provider.dart';
 import '../widgets/major_list_item.dart';
-import '../widgets/main_drawer.dart';
 
 class ListMajorsScreen extends StatefulWidget {
   static const routeName = '/major-list';
@@ -59,7 +58,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     final majors = majorList.majors;
 
     return Scaffold(
-      drawer: MainDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),

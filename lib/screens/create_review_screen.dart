@@ -6,7 +6,6 @@ import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../models/course.dart';
 import '../models/courses_provider.dart';
-import '../widgets/main_drawer.dart';
 
 class CreateReviewScreen extends StatefulWidget {
   static const routeName = '/create-new-review';
@@ -139,7 +138,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
-      drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
