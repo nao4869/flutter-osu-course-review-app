@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/tabs_screen.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
+import '../screens/list_courses_screen.dart';
+import '../screens/tabs_screen.dart';
 
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
@@ -28,19 +31,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
   );
 
-  var _initValues = {
-    'courseId': '',
-    'reviewsContent': '',
-    'starScore': null,
-    'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
-  };
-
-  var _starScore = [1, 2, 3, 4, 5];
-  var _currentSelectedValue;
-  var _currentSelectedValue2;
-  var _isInit = true;
-  var _isLoading = false;
-
   @override
   void initState() {
     Future.delayed(Duration.zero).then((_) {
@@ -57,6 +47,19 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     });
     super.initState();
   }
+
+  var _initValues = {
+    'courseId': '',
+    'reviewsContent': '',
+    'starScore': null,
+    'createdAt': DateFormat("yyyy/MM/dd").format(DateTime.now()),
+  };
+
+  var _starScore = [1, 2, 3, 4, 5];
+  var _currentSelectedValue;
+  var _currentSelectedValue2;
+  var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -122,7 +125,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pop();
+    Navigator.of(context).pushNamed(ListCoursesScreen.routeName);
   }
 
   @override
@@ -143,147 +146,149 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
         child: Form(
           // setting global key in the form
           key: _form,
-          child: Column(
-            children: <Widget>[
-              FormField<Course>(
-                builder: (FormFieldState<Course> state) {
-                  return InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Course Name',
-                      labelStyle: TextStyle(
-                        fontSize: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                FormField<Course>(
+                  builder: (FormFieldState<Course> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Course Name',
+                        labelStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                        hintText: 'Please select course name',
                       ),
-                      errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
-                      hintText: 'Please select course name',
-                    ),
-                    isEmpty: _currentSelectedValue == '',
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<Course>(
-                        value: _currentSelectedValue,
-                        isDense: true,
-                        onChanged: (Course newValue) {
-                          setState(() {
-                            _currentSelectedValue = newValue;
-                            state.didChange(newValue);
-                          });
-                        },
-                        items: courses.map((Course value) {
-                          return DropdownMenuItem<Course>(
-                            value: value,
-                            child: Text(
-                              value.courseName.toString(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
+                      isEmpty: _currentSelectedValue == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Course>(
+                          value: _currentSelectedValue,
+                          isDense: true,
+                          onChanged: (Course newValue) {
+                            setState(() {
+                              _currentSelectedValue = newValue;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: courses.map((Course value) {
+                            return DropdownMenuItem<Course>(
+                              value: value,
+                              child: Text(
+                                value.courseName.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                onSaved: (value) {
-                  _editedReview = Review(
-                    courseId: value.id.toString(),
-                    reviewsContent: _editedReview.reviewsContent,
-                    starScore: _editedReview.starScore,
-                    createdAt: _editedReview.createdAt,
-                  );
-                },
-              ),
-              TextFormField(
-                initialValue: _initValues['reviewsContent'],
-                decoration: InputDecoration(labelText: 'Review Content'),
-                maxLines: 10,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.next,
-                focusNode: _contentFocusNode,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a reviews content.';
-                  } else {
-                    return null; // no error
-                  }
-                },
-                onSaved: (value) {
-                  _editedReview = Review(
-                    courseId: _editedReview.courseId,
-                    reviewsContent: value,
-                    starScore: _editedReview.starScore,
-                    createdAt: _editedReview.createdAt,
-                  );
-                },
-              ),
-              FormField<int>(
-                builder: (FormFieldState<int> state) {
-                  return InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Rate of Course',
-                      labelStyle: TextStyle(
-                        fontSize: 22,
+                    );
+                  },
+                  onSaved: (value) {
+                    _editedReview = Review(
+                      courseId: value.id.toString(),
+                      reviewsContent: _editedReview.reviewsContent,
+                      starScore: _editedReview.starScore,
+                      createdAt: _editedReview.createdAt,
+                    );
+                  },
+                ),
+                TextFormField(
+                  initialValue: _initValues['reviewsContent'],
+                  decoration: InputDecoration(labelText: 'Review Content'),
+                  maxLines: 8,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  focusNode: _contentFocusNode,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a reviews content.';
+                    } else {
+                      return null; // no error
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedReview = Review(
+                      courseId: _editedReview.courseId,
+                      reviewsContent: value,
+                      starScore: _editedReview.starScore,
+                      createdAt: _editedReview.createdAt,
+                    );
+                  },
+                ),
+                FormField<int>(
+                  builder: (FormFieldState<int> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Rate of Course',
+                        labelStyle: TextStyle(
+                          fontSize: 22,
+                        ),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                        hintText: 'Please select rate of course',
                       ),
-                      errorStyle:
-                          TextStyle(color: Colors.redAccent, fontSize: 15.0),
-                      hintText: 'Please select rate of course',
-                    ),
-                    isEmpty: _currentSelectedValue2 == '',
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<int>(
-                        value: _currentSelectedValue2,
-                        isDense: true,
-                        onChanged: (int newValue) {
-                          setState(() {
-                            _currentSelectedValue2 = newValue;
-                            state.didChange(newValue);
-                          });
-                        },
-                        items: _starScore.map((int value) {
-                          return DropdownMenuItem<int>(
-                            value: value,
-                            child: Text('$value'),
-                          );
-                        }).toList(),
+                      isEmpty: _currentSelectedValue2 == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<int>(
+                          value: _currentSelectedValue2,
+                          isDense: true,
+                          onChanged: (int newValue) {
+                            setState(() {
+                              _currentSelectedValue2 = newValue;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: _starScore.map((int value) {
+                            return DropdownMenuItem<int>(
+                              value: value,
+                              child: Text('$value'),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                onSaved: (value) {
-                  _editedReview = Review(
-                    courseId: _editedReview.courseId,
-                    reviewsContent: _editedReview.reviewsContent,
-                    starScore: value,
-                    createdAt: _editedReview.createdAt,
-                  );
-                },
-              ),
-              // Raised Button
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: ButtonTheme(
-                  minWidth: double.infinity,
-                  child: RaisedButton(
-                    onPressed: _saveForm,
-                    child: Text(
-                      "Save Review",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                    );
+                  },
+                  onSaved: (value) {
+                    _editedReview = Review(
+                      courseId: _editedReview.courseId,
+                      reviewsContent: _editedReview.reviewsContent,
+                      starScore: value,
+                      createdAt: _editedReview.createdAt,
+                    );
+                  },
+                ),
+                // Raised Button
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ButtonTheme(
+                    minWidth: double.infinity,
+                    child: RaisedButton(
+                      onPressed: _saveForm,
+                      child: Text(
+                        "Save Review",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    color: Colors.purple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                   ),
+                  // to do, add clear form button
+                  // to do, add save and add another button
                 ),
-                // to do, add clear form button
-                // to do, add save and add another button
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
