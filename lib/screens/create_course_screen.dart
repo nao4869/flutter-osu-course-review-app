@@ -190,15 +190,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     //final majorsMap = majors.forEach((mj) => print(mj.majorName));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create New Course'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _saveForm,
-          ),
-        ],
-      ),
       drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16),

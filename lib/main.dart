@@ -6,6 +6,7 @@ import './screens/list_courses_screen.dart';
 import './screens/create_course_screen.dart';
 import './screens/create_review_screen.dart';
 import './screens/list_majors_screen.dart';
+import './screens/tabs_screen.dart';
 
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 )),
           ),
-          home: ListMajorsScreen(),
+          home: TabScreen(),
           // home: Consumer<Courses>(
           //   builder: (ctx, courses, _) => ListCoursesScreen(),
           // ),

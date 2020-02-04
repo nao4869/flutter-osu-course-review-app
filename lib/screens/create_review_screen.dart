@@ -139,15 +139,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create New Review'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _saveForm,
-          ),
-        ],
-      ),
       drawer: MainDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -182,7 +173,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         items: courses.map((Course value) {
                           return DropdownMenuItem<Course>(
                             value: value,
-                            
                             child: Text(
                               value.courseName.toString(),
                               style: TextStyle(

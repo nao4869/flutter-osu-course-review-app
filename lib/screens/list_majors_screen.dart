@@ -59,9 +59,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     final majors = majorList.majors;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('OSU Course Search'),
-      ),
       drawer: MainDrawer(),
       body: _isLoading
           ? Center(
