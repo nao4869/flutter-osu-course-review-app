@@ -421,7 +421,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     proctoredexams: _editedCourse.proctoredexams,
                     groupwork: _editedCourse.groupwork,
                     textbook: _editedCourse.textbook,
-                    language: value.toString(),
+                    language: value.languageName.toString(),
                     major: _editedCourse.major,
                     id: _editedCourse.id,
                   );
