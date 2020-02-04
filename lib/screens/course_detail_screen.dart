@@ -28,8 +28,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
 
       final courseId = ModalRoute.of(context).settings.arguments as String;
       print(courseId);
-      // retrieving ID from routes passed
-      //final loadedCourse = Provider.of<Courses>(context).findById(courseId);
 
       Provider.of<Reviews>(context).retrieveReviewData(courseId).then((_) {
         setState(() {
@@ -68,10 +66,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
 
     // retrieve sum of star score
     final sum = total.fold(0, (a, b) => a + b);
-    // print(sum);
 
     // round to decimal 2 point
     final scoreToDisplay = (sum / reviews.length);
+    var intScore = int.tryParse(scoreToDisplay.toStringAsFixed(1)) ?? 5;
     final finalScore = num.parse(scoreToDisplay.toStringAsFixed(1));
 
     return Scaffold(
@@ -112,7 +110,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   ),
                 ),
                 Expanded(
-                  //margin: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     '/ ' + loadedCourse.courseName + ' review',
                     style: TextStyle(
@@ -153,7 +150,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                         alignment: Alignment.topLeft,
                         padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
                         child: StarDisplayWidget(
-                          value: 5,
+                          value: intScore,
                           filledStar:
                               Icon(Icons.star, color: Colors.amber, size: 20),
                           unfilledStar:

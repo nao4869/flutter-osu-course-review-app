@@ -3,14 +3,60 @@ import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/course.dart';
-import '../models/review.dart';
+import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
 
-class CourseListItem extends StatelessWidget {
+class CourseListItem extends StatefulWidget {
+  @override
+  _CourseListItemState createState() => _CourseListItemState();
+}
+
+class _CourseListItemState extends State<CourseListItem> {
+  var _isLoading = false;
+
+  // @override
+  // void initState() {
+  //   Future.delayed(Duration.zero).then((_) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+
+  //     // retrieving providers objects
+  //     final course = Provider.of<Course>(context, listen: false);
+
+  //     final courseId = course.id;
+  //     print('print course id in initState = ' + '$courseId');
+
+  //     Provider.of<Reviews>(context).retrieveReviewData(courseId).then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   });
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     // retrieving providers objects
     final course = Provider.of<Course>(context, listen: false);
+
+    // final reviewList = Provider.of<Reviews>(context);
+    // //print('length of reviews = ' + '$reviewList');
+    // final reviews = reviewList.reviews;
+    // //print(reviews);
+    // // print('reviews = ' + '$reviews');
+
+    // // map to obtain each reviews star score
+    // final total = reviews.map((rv) => rv.starScore).toList();
+
+    // // retrieve sum of star score
+    // final sum = total.fold(0, (a, b) => a + b);
+
+    // // round to decimal 2 point
+    // final scoreToDisplay = (sum / reviews.length);
+    // var intScore = int.tryParse(scoreToDisplay.toStringAsFixed(1)) ?? 5;
+    // final finalScore = num.parse(scoreToDisplay.toStringAsFixed(1));
 
     return Container(
       padding: EdgeInsets.only(bottom: 10),
@@ -52,14 +98,34 @@ class CourseListItem extends StatelessWidget {
                   ],
                 ),
                 // Star display
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.fromLTRB(17, 5, 0, 0),
-                  child: StarDisplayWidget(
-                    value: 5,
-                    filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
-                    unfilledStar: Icon(Icons.star_border, color: Colors.grey),
-                  ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.fromLTRB(17, 5, 0, 0),
+                      child: StarDisplayWidget(
+                        value: 5,
+                        filledStar:
+                            Icon(Icons.star, color: Colors.amber, size: 20),
+                        unfilledStar:
+                            Icon(Icons.star_border, color: Colors.grey),
+                      ),
+                    ),
+                    Container(
+                      //width: double.infinity,
+                      padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                      child: Text(
+                        '4.5',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'roboto',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 // Language display
                 Row(
