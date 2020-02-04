@@ -143,7 +143,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
         child: Form(
           // setting global key in the form
           key: _form,
-          child: ListView(
+          child: Column(
             children: <Widget>[
               FormField<Course>(
                 builder: (FormFieldState<Course> state) {
@@ -258,6 +258,24 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     createdAt: _editedReview.createdAt,
                   );
                 },
+              ),
+              // Raised Button
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    _saveForm();
+                  },
+                  child: Text(
+                    "Save Review",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  color: Colors.purple,
+                ),
               ),
             ],
           ),

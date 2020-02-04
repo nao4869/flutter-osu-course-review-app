@@ -193,7 +193,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         child: Form(
           // setting global key in the form
           key: _form,
-          child: ListView(
+          child: Column(
             children: <Widget>[
               TextFormField(
                 initialValue: _initValues['courseName'],
@@ -461,6 +461,24 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     id: _editedCourse.id,
                   );
                 },
+              ),
+              // Raised Button
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    _saveForm();
+                  },
+                  child: Text(
+                    "Save Course",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  color: Colors.purple,
+                ),
               ),
             ],
           ),
