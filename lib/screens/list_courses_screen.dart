@@ -113,39 +113,22 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                 ),
               ),
             ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   unselectedItemColor: Colors.white,
-      //   selectedItemColor: Colors.white,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       backgroundColor: Theme.of(context).primaryColor,
-      //       icon: IconButton(
-      //         icon: Icon(Icons.home),
-      //         onPressed: () {},
-      //       ),
-      //       title: Text('Home'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       backgroundColor: Theme.of(context).primaryColor,
-      //       icon: IconButton(
-      //         icon: Icon(Icons.class_),
-      //         onPressed: () {},
-      //       ),
-      //       title: Text('New Course'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       backgroundColor: Theme.of(context).primaryColor,
-      //       icon: IconButton(
-      //         icon: Icon(Icons.create),
-      //         onPressed: () {
-      //           //Navigator.of(context).pushNamed('/major-list');
-      //         },
-      //       ),
-      //       title: Text('New Review'),
-      //     ),
-      //   ],
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+        },
+        label: Text(
+          'New-Review',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        icon: Icon(
+          Icons.create,
+          color: Colors.white,
+        ),
+      ), //
     );
   }
 }

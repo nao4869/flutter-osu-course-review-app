@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/widgets/main_drawer.dart';
 
 import '../screens/list_majors_screen.dart';
 import '../screens/create_course_screen.dart';
@@ -48,6 +49,7 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text('OSU Course Search'),
       ),
+      drawer: MainDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
