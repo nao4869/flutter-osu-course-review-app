@@ -468,9 +468,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 child: ButtonTheme(
                   minWidth: double.infinity,
                   child: RaisedButton(
-                    onPressed: () {
-                      _saveForm();
-                    },
+                    onPressed: _saveForm,
                     child: Text(
                       "Save Course",
                       style: TextStyle(

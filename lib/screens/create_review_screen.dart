@@ -265,9 +265,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                 child: ButtonTheme(
                   minWidth: double.infinity,
                   child: RaisedButton(
-                    onPressed: () {
-                      _saveForm();
-                    },
+                    onPressed: _saveForm,
                     child: Text(
                       "Save Review",
                       style: TextStyle(

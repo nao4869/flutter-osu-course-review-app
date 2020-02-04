@@ -16,8 +16,14 @@ import "package:intl/intl.dart";
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   var createdAt = DateFormat("y/m/d").format(new DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
