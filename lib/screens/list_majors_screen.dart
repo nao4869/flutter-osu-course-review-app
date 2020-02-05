@@ -67,40 +67,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
       appBar: AppBar(
         title: Text('University Course Search'),
         actions: <Widget>[
-          Container(
-            child: DropdownButton<Major>(
-              value: ddv,
-              icon: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              ),
-              elevation: 0,
-              underline: null,
-              onChanged: (Major newValue) {
-                setState(() {
-                  ddv = newValue;
-                  Navigator.of(context)
-                      .pushNamed(ListMajorsScreen.routeName, arguments: ddv.id);
-                });
-              },
-              items: loadedInstitutionMajors.map((Major value) {
-                return DropdownMenuItem<Major>(
-                  value: value,
-                  child: Text(
-                    value.majorName.toString(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 13,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
           IconButton(
             icon: Icon(
               Icons.add,
