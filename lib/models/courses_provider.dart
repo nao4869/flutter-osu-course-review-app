@@ -53,7 +53,7 @@ class Courses with ChangeNotifier {
           textbook: courseData['textbook'],
           language: courseData['language'],
           major: courseData['major'],
-          institutionId: courseData['institutionId'],
+          institutionName: courseData['institutionName'],
         ));
       });
       _courses = loadedCourses;
@@ -78,7 +78,7 @@ class Courses with ChangeNotifier {
           'textbook': course.textbook,
           'language': course.language,
           'major': course.major,
-          'institutionId': course.institutionId,
+          'institutionName': course.institutionName,
         }),
       );
 
@@ -91,7 +91,7 @@ class Courses with ChangeNotifier {
         textbook: course.textbook,
         language: course.language,
         major: course.major,
-        institutionId: course.institutionId,
+        institutionName: course.institutionName,
         id: json.decode(response.body)['name'],
       );
       _courses.add(newCourse);
@@ -118,7 +118,7 @@ class Courses with ChangeNotifier {
             'textbook': newCourse.textbook,
             'language': newCourse.language,
             'major': newCourse.major,
-            'institutionId': newCourse.institutionId,
+            'institutionName': newCourse.institutionName,
           }));
       _courses[courseIdenx] = newCourse;
       notifyListeners();
