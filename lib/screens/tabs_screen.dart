@@ -60,6 +60,10 @@ class _TabScreenState extends State<TabScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.white,
         selectedItemColor: Theme.of(context).accentColor,
+        elevation: 0.0,
+        selectedFontSize: 12.0,
+        unselectedFontSize: 12.0,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
@@ -75,7 +79,7 @@ class _TabScreenState extends State<TabScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.school),
             title: Text(
-              'Create New School',
+              'School',
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -85,7 +89,7 @@ class _TabScreenState extends State<TabScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.class_),
             title: Text(
-              'Create New Course',
+              'Course',
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -95,7 +99,7 @@ class _TabScreenState extends State<TabScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.create),
             title: Text(
-              'Create New Review',
+              'Review',
               style: TextStyle(
                 fontSize: 12,
               ),
