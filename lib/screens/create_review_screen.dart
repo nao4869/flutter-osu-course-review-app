@@ -123,10 +123,10 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context)
-        .pushNamed(CourseDetailScreen.routeName, arguments: _editedReview.courseId);
-
-    
+    // navigate to specific course detail screen when save review
+    Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
+        arguments: _editedReview.courseId);
+    _form.currentState?.reset();
   }
 
   @override

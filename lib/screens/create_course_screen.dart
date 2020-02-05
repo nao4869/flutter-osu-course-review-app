@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/course.dart';
@@ -148,7 +149,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pop();
+     // navigate to specific course detail screen when save review
+    Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
+        arguments: _editedCourse.major);
+    _form.currentState?.reset();
   }
 
   @override
