@@ -8,6 +8,8 @@ import '../models/major.dart';
 import '../models/major_provider.dart';
 import '../models/language.dart';
 import '../models/language_provider.dart';
+import '../models/institution.dart';
+import '../models/institution_provider.dart';
 
 class CreateCourseScreen extends StatefulWidget {
   static const routeName = '/create-new-course';
@@ -39,6 +41,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     textbook: '',
     language: '',
     major: '',
+    institutionId: '',
   );
 
   var _initValues = {
@@ -50,6 +53,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'textbook': '',
     'language': '',
     'major': '',
+    'institutionId': '',
   };
 
   var _isInit = true;
@@ -66,9 +70,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
       // retrieve major data from FB
       Provider.of<Majors>(context).retrieveMajorData();
-
-      // retrieve language data from FB
-      Provider.of<Languages>(context).retrieveLanguageData().then((_) {
+      Provider.of<Languages>(context).retrieveLanguageData();
+      Provider.of<Institutions>(context).retrieveInstitutionData().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -93,6 +96,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           'textbook': _editedCourse.textbook,
           'language': _editedCourse.language,
           'major': _editedCourse.major,
+          'institutionId': _editedCourse.institutionId,
         };
       }
     }
@@ -197,6 +201,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     final languageList = Provider.of<Languages>(context);
     final languages = languageList.languages;
 
+    final institutionList = Provider.of<Institutions>(context);
+    final institutions = institutionList.institutions;
+
     // need List<String> type to be able to map
     // final majorsList = Provider.of<Majors>(context);
     // final majors = majorsList.majors;
@@ -241,6 +248,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -270,6 +278,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -300,6 +309,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -329,6 +339,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -358,6 +369,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -387,6 +399,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: value,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -435,6 +448,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: value.languageName.toString(),
                       major: _editedCourse.major,
+                      institutionId: _editedCourse.institutionId,
                       id: _editedCourse.id,
                     );
                   },
@@ -482,6 +496,55 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: value.majorName.toString(),
+                      institutionId: _editedCourse.institutionId,
+                      id: _editedCourse.id,
+                    );
+                  },
+                ),
+                FormField<Institution>(
+                  builder: (FormFieldState<Institution> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Major of course',
+                        labelStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                        hintText: 'Please select major of course',
+                      ),
+                      isEmpty: _currentSelectedValue2 == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Institution>(
+                          value: _currentSelectedValue2,
+                          isDense: true,
+                          onChanged: (Institution newValue) {
+                            setState(() {
+                              _currentSelectedValue2 = newValue;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: institutions.map((Institution value) {
+                            return DropdownMenuItem<Institution>(
+                              value: value,
+                              child: Text(value.name.toString()),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
+                  onSaved: (value) {
+                    _editedCourse = Course(
+                      courseName: _editedCourse.courseName,
+                      courseContent: _editedCourse.courseContent,
+                      prerequisite: _editedCourse.prerequisite,
+                      proctoredexams: _editedCourse.proctoredexams,
+                      groupwork: _editedCourse.groupwork,
+                      textbook: _editedCourse.textbook,
+                      language: _editedCourse.language,
+                      major: _editedCourse.major,
+                      institutionId: value.name.toString(),
                       id: _editedCourse.id,
                     );
                   },
