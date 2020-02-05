@@ -115,7 +115,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).pushNamed(CreateReviewScreen.routeName);
+          Navigator.of(context).pushNamed('/');
         },
         label: Text(
           'New-Review',

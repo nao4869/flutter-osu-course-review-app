@@ -149,9 +149,30 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     setState(() {
       _isLoading = false;
     });
-     // navigate to specific course detail screen when save review
-    Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
-        arguments: _editedCourse.major);
+    // navigate to specific course detail screen when save review
+    Navigator.of(context)
+        .pushNamed(ListCoursesScreen.routeName, arguments: _editedCourse.major);
+
+    // pop up message when course successfully added
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'New activity',
+        ),
+        content: Text(
+          'New Review created',
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
     _form.currentState?.reset();
   }
 

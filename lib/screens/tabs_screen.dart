@@ -28,6 +28,7 @@ class _TabScreenState extends State<TabScreen> {
 
   int _defaultIndex = 0;
   int _selectedIndex;
+  // String retrievedIndex;
 
   int _selectedPageIndex;
 
@@ -41,13 +42,17 @@ class _TabScreenState extends State<TabScreen> {
   void initState() {
     super.initState();
     _selectedIndex = _defaultIndex;
+    // retrievedIndex = ModalRoute.of(context).settings.arguments as String;
+    // retrievedIndex == null
+    //     ? _selectedIndex = _defaultIndex
+    //     : _selectedIndex = int.parse(retrievedIndex);
   }
 
-  void _selectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
-  }
+  // void _selectPage(int index) {
+  //   setState(() {
+  //     _selectedPageIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

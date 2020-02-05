@@ -123,9 +123,27 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     setState(() {
       _isLoading = false;
     });
+
     // navigate to specific course detail screen when save review
     Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
         arguments: _editedReview.courseId);
+
+    // pop up message when course successfully added
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('New activity'),
+        content: Text('New Review created'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
     _form.currentState?.reset();
   }
 
@@ -142,6 +160,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
+      
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
