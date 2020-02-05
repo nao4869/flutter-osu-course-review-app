@@ -133,7 +133,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('New activity'),
-        content: Text('New Review created'),
+        content: Text('New Review has been created'),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),

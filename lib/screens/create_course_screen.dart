@@ -167,7 +167,7 @@ institutionName: '',
           'New activity',
         ),
         content: Text(
-          'New Review created',
+          'New course has been created',
         ),
         actions: <Widget>[
           FlatButton(

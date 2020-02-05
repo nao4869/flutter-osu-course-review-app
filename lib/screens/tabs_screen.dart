@@ -3,6 +3,7 @@ import 'package:osu_course_review/widgets/main_drawer.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../screens/list_institutions_screen.dart';
+import '../screens/create_institution_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../screens/create_review_screen.dart';
 
@@ -22,7 +23,7 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   List<Widget> _widgets = <Widget>[
     ListInstitutionScreen(),
-    ListInstitutionScreen(),
+    CreateInstitutionScreen(),
     CreateCourseScreen(),
     CreateReviewScreen(),
     ListInstitutionScreen(),
@@ -72,9 +73,9 @@ class _TabScreenState extends State<TabScreen> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.create),
+            icon: Icon(Icons.school),
             title: Text(
-              'New School',
+              'Create New School',
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -84,7 +85,7 @@ class _TabScreenState extends State<TabScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.class_),
             title: Text(
-              'New Course',
+              'Create New Course',
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -94,7 +95,7 @@ class _TabScreenState extends State<TabScreen> {
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.create),
             title: Text(
-              'New Review',
+              'Create New Review',
               style: TextStyle(
                 fontSize: 12,
               ),

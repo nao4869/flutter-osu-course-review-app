@@ -47,4 +47,35 @@ class Institutions with ChangeNotifier {
       throw (error);
     }
   }
+
+  Future<void> addInstitution(Institution institution) async {
+    const url = 'https://osu-course-search.firebaseio.com/institutions.json';
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'name': institution.name,
+          'country': institution.country,
+          'state': institution.state,
+          'city': institution.city,
+          'logo': institution.logo,
+        }),
+      );
+
+      final newCourse = Institution(
+        name: institution.name,
+        country: institution.country,
+        state: institution.state,
+        city: institution.city,
+        logo: institution.logo,
+        id: json.decode(response.body)['name'],
+      );
+      _institutions.add(newCourse);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
 }
