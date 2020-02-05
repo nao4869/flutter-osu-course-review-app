@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/tabs_screen.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
-import '../screens/list_courses_screen.dart';
-import '../screens/tabs_screen.dart';
+
+import '../screens/course_detail_screen.dart';
 
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
@@ -120,12 +119,14 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                 ],
               ));
     }
-    //}
 
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pushNamed(ListCoursesScreen.routeName);
+    Navigator.of(context)
+        .pushNamed(CourseDetailScreen.routeName, arguments: _editedReview.courseId);
+
+    
   }
 
   @override
