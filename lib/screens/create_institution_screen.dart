@@ -15,7 +15,10 @@ class CreateInstitutionScreen extends StatefulWidget {
 }
 
 class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
-  //final _contentFocusNode = FocusNode();
+  final _countryFocusNode = FocusNode();
+  final _stateFocusNode = FocusNode();
+  final _cityFocusNode = FocusNode();
+  final _logoFocusNode = FocusNode();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -152,7 +155,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   @override
   void dispose() {
     // avoid momery leaks
-    //_contentFocusNode.dispose();
+    _countryFocusNode.dispose();
+    _stateFocusNode.dispose();
+    _cityFocusNode.dispose();
+    _logoFocusNode.dispose();
     super.dispose();
   }
 
@@ -170,56 +176,155 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                FormField<Institution>(
-                  builder: (FormFieldState<Institution> state) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                        labelText: 'Institution Name',
-                        labelStyle: TextStyle(
-                          fontSize: 20,
-                        ),
-                        errorStyle:
-                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
-                        hintText: 'Please select institution name',
-                      ),
-                      isEmpty: _currentSelectedValue == '',
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<Institution>(
-                          value: _currentSelectedValue,
-                          isDense: true,
-                          onChanged: (Institution newValue) {
-                            setState(() {
-                              _currentSelectedValue = newValue;
-                              state.didChange(newValue);
-                            });
-                          },
-                          items: institutions.map((Institution value) {
-                            return DropdownMenuItem<Institution>(
-                              value: value,
-                              child: Text(
-                                value.name.toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    );
+                TextFormField(
+                  initialValue: _initValues['name'],
+                  decoration: InputDecoration(labelText: 'Institution name'),
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_countryFocusNode);
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter an institution name.';
+                    } else {
+                      return null; // no error
+                    }
                   },
                   onSaved: (value) {
                     _editedInstitution = Institution(
-                      id: value.id.toString(),
-                      name: _editedInstitution.name,
+                      id: _editedInstitution.id,
+                      name: value,
                       country: _editedInstitution.country,
                       state: _editedInstitution.state,
                       city: _editedInstitution.city,
                       logo: _editedInstitution.logo,
                     );
                   },
+                ),
+                TextFormField(
+                  initialValue: _initValues['country'],
+                  decoration: InputDecoration(labelText: 'Country'),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _countryFocusNode,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_stateFocusNode);
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a country of institution name.';
+                    } else {
+                      return null; // no error
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedInstitution = Institution(
+                      id: _editedInstitution.id,
+                      name: _editedInstitution.name,
+                      country: value,
+                      state: _editedInstitution.state,
+                      city: _editedInstitution.city,
+                      logo: _editedInstitution.logo,
+                    );
+                  },
+                ),
+                TextFormField(
+                  initialValue: _initValues['state'],
+                  decoration: InputDecoration(labelText: 'State'),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _stateFocusNode,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_cityFocusNode);
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a state of institution.';
+                    } else {
+                      return null; // no error
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedInstitution = Institution(
+                      id: _editedInstitution.id,
+                      name: _editedInstitution.name,
+                      country: _editedInstitution.country,
+                      state: value,
+                      city: _editedInstitution.city,
+                      logo: _editedInstitution.logo,
+                    );
+                  },
+                ),
+                TextFormField(
+                  initialValue: _initValues['city'],
+                  decoration: InputDecoration(labelText: 'City'),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _cityFocusNode,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_logoFocusNode);
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a city of institution.';
+                    } else {
+                      return null; // no error
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedInstitution = Institution(
+                      id: _editedInstitution.id,
+                      name: _editedInstitution.name,
+                      country: _editedInstitution.country,
+                      state: _editedInstitution.state,
+                      city: value,
+                      logo: _editedInstitution.logo,
+                    );
+                  },
+                ),
+                TextFormField(
+                  initialValue: _initValues['logo'],
+                  decoration: InputDecoration(labelText: 'Logo'),
+                  textInputAction: TextInputAction.done,
+                  focusNode: _logoFocusNode,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a logo of institution.';
+                    } else {
+                      return null; // no error
+                    }
+                  },
+                  onSaved: (value) {
+                    _editedInstitution = Institution(
+                      id: _editedInstitution.id,
+                      name: _editedInstitution.name,
+                      country: _editedInstitution.country,
+                      state: _editedInstitution.state,
+                      city: _editedInstitution.city,
+                      logo: value,
+                    );
+                  },
+                ),
+                // Raised Button
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: ButtonTheme(
+                    minWidth: double.infinity,
+                    child: RaisedButton(
+                      onPressed: _saveForm,
+                      child: Text(
+                        "Save Institution",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      color: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                  // to do, add clear form button
+                  // to do, add save and add another button
                 ),
               ],
             ),
