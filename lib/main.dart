@@ -12,6 +12,7 @@ import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
 import './models/major_provider.dart';
 import './models/language_provider.dart';
+import './models/institution_provider.dart';
 import "package:intl/intl.dart";
 
 void main() => runApp(MyApp());
@@ -36,6 +37,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider.value(
           value: Languages(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Institutions(),
         ),
         ChangeNotifierProxyProvider<Courses, Reviews>(
           builder: (ctx, courses, previousReviews) => Reviews(
