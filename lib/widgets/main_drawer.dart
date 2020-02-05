@@ -43,17 +43,11 @@ class MainDrawer extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          buildListTile('List of Majors', Icons.settings, () {
-            Navigator.of(context)
-                .pushReplacementNamed(ListMajorsScreen.routeName);
+          buildListTile('Login', Icons.settings, () {
+            Navigator.of(context).pushNamed('/');
           }),
-          buildListTile('Create New Course', Icons.settings, () {
-            Navigator.of(context)
-                .pushReplacementNamed(CreateCourseScreen.routeName);
-          }),
-          buildListTile('Create New Review', Icons.settings, () {
-            Navigator.of(context)
-                .pushReplacementNamed(CreateReviewScreen.routeName);
+          buildListTile('Sign up / Sign in', Icons.settings, () {
+            Navigator.of(context).pushNamed('/');
           }),
         ],
       ),
