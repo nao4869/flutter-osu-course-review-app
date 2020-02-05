@@ -168,6 +168,23 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Create New Review',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 FormField<Course>(
                   builder: (FormFieldState<Course> state) {
                     return InputDecorator(

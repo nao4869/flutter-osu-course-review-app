@@ -138,7 +138,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('New activity'),
-        content: Text('New Review has been created'),
+        content: Text('New institution has been created'),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),
@@ -164,9 +164,6 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final courseList = Provider.of<Institutions>(context);
-    final institutions = courseList.institutions;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -176,6 +173,23 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Create New Institution',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 TextFormField(
                   initialValue: _initValues['name'],
                   decoration: InputDecoration(labelText: 'Institution name'),

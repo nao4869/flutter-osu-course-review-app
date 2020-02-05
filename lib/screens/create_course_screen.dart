@@ -41,7 +41,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     textbook: '',
     language: '',
     major: '',
-institutionName: '',
+    institutionName: '',
   );
 
   var _initValues = {
@@ -70,7 +70,6 @@ institutionName: '',
       });
 
       // retrieve major data from FB
-      Provider.of<Institutions>(context).retrieveInstitutionData();
       Provider.of<Majors>(context).retrieveMajorData();
       Provider.of<Languages>(context).retrieveLanguageData();
       Provider.of<Institutions>(context).retrieveInstitutionData().then((_) {
@@ -226,6 +225,23 @@ institutionName: '',
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Create New Course',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 FormField<Institution>(
                   builder: (FormFieldState<Institution> state) {
                     return InputDecorator(
@@ -298,7 +314,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -328,7 +344,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -359,7 +375,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -389,7 +405,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -419,7 +435,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -449,7 +465,7 @@ institutionName: '',
                       textbook: value,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -498,7 +514,7 @@ institutionName: '',
                       textbook: _editedCourse.textbook,
                       language: value.languageName.toString(),
                       major: _editedCourse.major,
-                  institutionName: _editedCourse.institutionName,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
