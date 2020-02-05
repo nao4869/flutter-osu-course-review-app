@@ -22,8 +22,10 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   List<Widget> _widgets = <Widget>[
     ListInstitutionScreen(),
+    ListInstitutionScreen(),
     CreateCourseScreen(),
-    CreateReviewScreen()
+    CreateReviewScreen(),
+    ListInstitutionScreen(),
   ];
 
   int _defaultIndex = 0;
@@ -47,7 +49,7 @@ class _TabScreenState extends State<TabScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OSU Course Search'),
+        title: Text('University Course Search'),
       ),
       drawer: MainDrawer(),
       body: _widgets[_selectedIndex],
@@ -61,17 +63,52 @@ class _TabScreenState extends State<TabScreen> {
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.class_),
-            title: Text('New Course'),
+            title: Text(
+              'Home',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.create),
-            title: Text('New Review'),
+            title: Text(
+              'New School',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.class_),
+            title: Text(
+              'New Course',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.create),
+            title: Text(
+              'New Review',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.people),
+            title: Text(
+              'User',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
           ),
         ],
       ),

@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           title: 'OSU Course Review',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
+            primarySwatch: Colors.red,
             accentColor: Colors.amber,
             canvasColor: Color.fromRGBO(250, 245, 240, 1),
             fontFamily: 'Raleway',

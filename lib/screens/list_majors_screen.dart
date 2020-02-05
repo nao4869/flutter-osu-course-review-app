@@ -65,6 +65,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text('University Course Search'),
         actions: <Widget>[
           Container(
             child: DropdownButton<Major>(
@@ -232,7 +233,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -313,7 +314,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -394,7 +395,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

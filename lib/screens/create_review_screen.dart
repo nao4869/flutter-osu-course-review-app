@@ -160,7 +160,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
-      
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -298,7 +297,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),

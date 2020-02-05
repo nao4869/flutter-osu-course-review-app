@@ -80,7 +80,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
