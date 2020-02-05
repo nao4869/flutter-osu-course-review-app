@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/widgets/main_drawer.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../screens/list_majors_screen.dart';
+import '../screens/list_institutions_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../screens/create_review_screen.dart';
 
@@ -21,14 +21,13 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   List<Widget> _widgets = <Widget>[
-    ListMajorsScreen(),
+    ListInstitutionScreen(),
     CreateCourseScreen(),
     CreateReviewScreen()
   ];
 
   int _defaultIndex = 0;
   int _selectedIndex;
-  // String retrievedIndex;
 
   int _selectedPageIndex;
 
@@ -42,17 +41,7 @@ class _TabScreenState extends State<TabScreen> {
   void initState() {
     super.initState();
     _selectedIndex = _defaultIndex;
-    // retrievedIndex = ModalRoute.of(context).settings.arguments as String;
-    // retrievedIndex == null
-    //     ? _selectedIndex = _defaultIndex
-    //     : _selectedIndex = int.parse(retrievedIndex);
   }
-
-  // void _selectPage(int index) {
-  //   setState(() {
-  //     _selectedPageIndex = index;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

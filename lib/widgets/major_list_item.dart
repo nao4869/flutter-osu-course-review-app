@@ -63,7 +63,6 @@ class _MajorListItemState extends State<MajorListItem> {
               onTap: () {
                 Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
                     arguments: major.majorName);
-                //print(major.majorName);
               },
               splashColor: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(15),

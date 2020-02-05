@@ -26,6 +26,11 @@ class Courses with ChangeNotifier {
     return [..._courses.where((mj) => mj.major == majorName)];
   }
 
+  // //Comparing major name of each courses with majorName of the arguments
+  // List<Course> findBySchool(String schoolName) {
+  //   return [..._courses.where((sc) => sc.institutionName == schoolName)];
+  // }
+
   String get courseId {
     return _courseId;
   }

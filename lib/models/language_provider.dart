@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http; // for http request
 import 'package:osu_course_review/models/language.dart';
-import '../models/http_exception.dart';
 
 class Languages with ChangeNotifier {
   List<Language> _languages = [

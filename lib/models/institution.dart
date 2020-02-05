@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../models/review.dart';
 
 class Institution with ChangeNotifier {
   final String id;

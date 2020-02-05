@@ -79,7 +79,7 @@ class _CourseListItemState extends State<CourseListItem> {
                       child: GestureDetector(
                         onTap: () {},
                         child: Icon(
-                          Icons.school,
+                          Icons.class_,
                           color: Colors.black,
                         ),
                       ),
