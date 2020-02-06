@@ -4,6 +4,7 @@ import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/institution.dart';
+import '../models/institution_provider.dart';
 
 class InstitutionListItem extends StatefulWidget {
   @override
@@ -11,8 +12,6 @@ class InstitutionListItem extends StatefulWidget {
 }
 
 class _InstitutionListItemState extends State<InstitutionListItem> {
-  var _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     // retrieving providers objects
@@ -63,7 +62,9 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                       ),
-                      child: Image.network(institution.logo),
+                      child: Image.network(
+                        institution.logo,
+                      ),
                     ),
                   ),
                   Expanded(

@@ -50,55 +50,37 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
-                        child: Text(
-                          'Search course by Institution',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+          : Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
+                      child: Text(
+                        'Search course by Institution',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 500,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(25),
-                      itemCount: institutions.length,
-                      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                        value: institutions[i],
-                        child: InstitutionListItem(),
-                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 500,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(25),
+                    itemCount: institutions.length,
+                    itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                      value: institutions[i],
+                      child: InstitutionListItem(),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/');
-        },
-        label: Text(
-          'New-Course',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        icon: Icon(
-          Icons.create,
-          color: Colors.white,
-        ),
-      ), //
     );
   }
 }
