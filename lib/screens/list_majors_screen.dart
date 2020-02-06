@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../models/star_display.dart';
 import '../models/major_provider.dart';
+import '../models/major.dart';
 import '../widgets/major_list_item.dart';
 
 class ListMajorsScreen extends StatefulWidget {
@@ -58,23 +59,12 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
         institutionName); // findByMajor returns list of courses where condition match
 
     final majorList = Provider.of<Majors>(context);
-    // final majors = majorList.majors;
+    var ddv;
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('University Course Search'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add,
-            ),
-            iconSize: 24,
-            onPressed: () {
-              // Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
-            },
-          )
-        ],
       ),
       body: _isLoading
           ? Center(
@@ -107,7 +97,6 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 500,
                     child: GridView.builder(
                       padding: const EdgeInsets.all(25),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -127,6 +116,43 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                 ],
               ),
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('Button pressed');
+          Container(
+            child: DropdownButton<Major>(
+              value: ddv,
+              elevation: 0,
+              underline: null,
+              onChanged: (Major newValue) {
+                setState(() {
+                  ddv = newValue;
+                  Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
+                      arguments: ddv.id);
+                });
+              },
+              items: loadedInstitutionMajors.map((Major value) {
+                return DropdownMenuItem<Major>(
+                  value: value,
+                  child: Text(
+                    value.majorName.toString(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
     );
   }
 }

@@ -94,7 +94,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             ),
             iconSize: 24,
             onPressed: () {
-              Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
+              //Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
             },
           )
         ],
