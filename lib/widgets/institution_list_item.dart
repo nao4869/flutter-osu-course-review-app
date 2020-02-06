@@ -18,76 +18,146 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
     // retrieving providers objects
     final institution = Provider.of<Institution>(context, listen: false);
 
-    return Container(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 15),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            width: double.infinity,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.school,
-                          color: Colors.black,
-                        ),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ListMajorsScreen.routeName, arguments: institution.name);
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        width: double.infinity,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 5, 5),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      institution.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(15, 8, 0, 0),
-                      width: 300,
-                      child: Text(
-                        institution.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
-                  child: ButtonTheme(
-                    minWidth: double.infinity,
-                    height: 30.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
-                    ),
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            ListMajorsScreen.routeName,
-                            arguments: institution.name);
-                      },
-                      child: Text(
-                        "Search Institution's courses",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      color: Theme.of(context).primaryColor,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            Divider(
+              color: Colors.grey,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // これで両端に寄せる
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: Image.network(institution.logo),
+                    ),
+                  ),
+                  Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Icon(
+                                      Icons.location_on,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    institution.country,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Icon(
+                                      Icons.location_searching,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    institution.state,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Icon(
+                                      Icons.location_city,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    institution.city,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
