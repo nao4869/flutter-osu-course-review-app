@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/create_review_screen.dart';
 import '../models/star_display.dart';
 import '../models/major_provider.dart';
-import '../models/courses_provider.dart';
+import '../models/major.dart';
 import '../widgets/major_list_item.dart';
 
 class ListMajorsScreen extends StatefulWidget {
@@ -27,7 +26,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
       setState(() {
         _isLoading = true;
       });
-
+      //Provider.of<Institutions>(context).retrieveInstitutionData();
       Provider.of<Majors>(context).retrieveMajorData().then((_) {
         setState(() {
           _isLoading = false;
@@ -54,10 +53,31 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final institutionName = ModalRoute.of(context).settings.arguments
+        as String; // retrieving majorName passed from list majors screen
+    final loadedInstitutionMajors = Provider.of<Majors>(context).findBySchool(
+        institutionName); // findByMajor returns list of courses where condition match
+
     final majorList = Provider.of<Majors>(context);
-    final majors = majorList.majors;
+    // final majors = majorList.majors;
+
+    var ddv;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('University Course Search'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.add,
+            ),
+            iconSize: 24,
+            onPressed: () {
+              // Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
+            },
+          )
+        ],
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -99,9 +119,9 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                         mainAxisSpacing: 0,
                       ),
                       // temporary data for categories
-                      itemCount: majors.length,
+                      itemCount: loadedInstitutionMajors.length,
                       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                        value: majors[i],
+                        value: loadedInstitutionMajors[i],
                         child: MajorListItem(),
                       ),
                     ),
@@ -179,7 +199,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -260,7 +280,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -341,7 +361,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              color: Colors.purple,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

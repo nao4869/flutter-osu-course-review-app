@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import '../models/review.dart';
 
 class Course with ChangeNotifier {
   final String id;
@@ -12,6 +11,7 @@ class Course with ChangeNotifier {
   final String textbook;
   final String language;
   final String major;
+  final String institutionName;
 
   //String _courseId;
 
@@ -25,5 +25,6 @@ class Course with ChangeNotifier {
     @required this.textbook,
     this.language,
     @required this.major,
+    @required this.institutionName,
   });
 }

@@ -26,6 +26,11 @@ class Courses with ChangeNotifier {
     return [..._courses.where((mj) => mj.major == majorName)];
   }
 
+  // //Comparing major name of each courses with majorName of the arguments
+  // List<Course> findBySchool(String schoolName) {
+  //   return [..._courses.where((sc) => sc.institutionName == schoolName)];
+  // }
+
   String get courseId {
     return _courseId;
   }
@@ -53,6 +58,7 @@ class Courses with ChangeNotifier {
           textbook: courseData['textbook'],
           language: courseData['language'],
           major: courseData['major'],
+          institutionName: courseData['institutionName'],
         ));
       });
       _courses = loadedCourses;
@@ -77,6 +83,7 @@ class Courses with ChangeNotifier {
           'textbook': course.textbook,
           'language': course.language,
           'major': course.major,
+          'institutionName': course.institutionName,
         }),
       );
 
@@ -89,6 +96,7 @@ class Courses with ChangeNotifier {
         textbook: course.textbook,
         language: course.language,
         major: course.major,
+        institutionName: course.institutionName,
         id: json.decode(response.body)['name'],
       );
       _courses.add(newCourse);
@@ -115,6 +123,7 @@ class Courses with ChangeNotifier {
             'textbook': newCourse.textbook,
             'language': newCourse.language,
             'major': newCourse.major,
+            'institutionName': newCourse.institutionName,
           }));
       _courses[courseIdenx] = newCourse;
       notifyListeners();

@@ -133,7 +133,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('New activity'),
-        content: Text('New Review created'),
+        content: Text('New Review has been created'),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),
@@ -160,7 +160,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
-      
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -169,6 +168,23 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Create New Review',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 FormField<Course>(
                   builder: (FormFieldState<Course> state) {
                     return InputDecorator(
@@ -298,7 +314,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),

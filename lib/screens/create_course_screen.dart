@@ -8,6 +8,8 @@ import '../models/major.dart';
 import '../models/major_provider.dart';
 import '../models/language.dart';
 import '../models/language_provider.dart';
+import '../models/institution.dart';
+import '../models/institution_provider.dart';
 
 class CreateCourseScreen extends StatefulWidget {
   static const routeName = '/create-new-course';
@@ -39,6 +41,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     textbook: '',
     language: '',
     major: '',
+    institutionName: '',
   );
 
   var _initValues = {
@@ -50,12 +53,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     'textbook': '',
     'language': '',
     'major': '',
+    'insinstitutionName': '',
   };
 
   var _isInit = true;
   var _isLoading = false;
   var _currentSelectedValue;
   var _currentSelectedValue2;
+  var _currentSelectedValue3;
 
   @override
   void initState() {
@@ -66,9 +71,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
       // retrieve major data from FB
       Provider.of<Majors>(context).retrieveMajorData();
-
-      // retrieve language data from FB
-      Provider.of<Languages>(context).retrieveLanguageData().then((_) {
+      Provider.of<Languages>(context).retrieveLanguageData();
+      Provider.of<Institutions>(context).retrieveInstitutionData().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -93,6 +97,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           'textbook': _editedCourse.textbook,
           'language': _editedCourse.language,
           'major': _editedCourse.major,
+          'institutionName': _editedCourse.institutionName,
         };
       }
     }
@@ -161,7 +166,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           'New activity',
         ),
         content: Text(
-          'New Review created',
+          'New course has been created',
         ),
         actions: <Widget>[
           FlatButton(
@@ -197,6 +202,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     final languageList = Provider.of<Languages>(context);
     final languages = languageList.languages;
 
+    final institutionList = Provider.of<Institutions>(context);
+    final institutions = institutionList.institutions;
+
     // need List<String> type to be able to map
     // final majorsList = Provider.of<Majors>(context);
     // final majors = majorsList.majors;
@@ -217,6 +225,71 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Create New Course',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                FormField<Institution>(
+                  builder: (FormFieldState<Institution> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Institution name',
+                        labelStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                        hintText: 'Please select institution of course',
+                      ),
+                      isEmpty: _currentSelectedValue3 == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Institution>(
+                          value: _currentSelectedValue3,
+                          isDense: true,
+                          onChanged: (Institution newValue) {
+                            setState(() {
+                              _currentSelectedValue3 = newValue;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: institutions.map((Institution value) {
+                            return DropdownMenuItem<Institution>(
+                              value: value,
+                              child: Text(value.name.toString()),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
+                  onSaved: (value) {
+                    _editedCourse = Course(
+                      courseName: _editedCourse.courseName,
+                      courseContent: _editedCourse.courseContent,
+                      prerequisite: _editedCourse.prerequisite,
+                      proctoredexams: _editedCourse.proctoredexams,
+                      groupwork: _editedCourse.groupwork,
+                      textbook: _editedCourse.textbook,
+                      language: _editedCourse.language,
+                      major: _editedCourse.major,
+                      institutionName: value.name.toString(),
+                      id: _editedCourse.id,
+                    );
+                  },
+                ),
                 TextFormField(
                   initialValue: _initValues['courseName'],
                   decoration: InputDecoration(labelText: 'Course Name'),
@@ -241,6 +314,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -270,6 +344,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -300,6 +375,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -329,6 +405,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -358,6 +435,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -387,6 +465,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: value,
                       language: _editedCourse.language,
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -435,6 +514,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: value.languageName.toString(),
                       major: _editedCourse.major,
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -482,6 +562,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       textbook: _editedCourse.textbook,
                       language: _editedCourse.language,
                       major: value.majorName.toString(),
+                      institutionName: _editedCourse.institutionName,
                       id: _editedCourse.id,
                     );
                   },
@@ -501,7 +582,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),

@@ -6,12 +6,14 @@ import './screens/list_courses_screen.dart';
 import './screens/create_course_screen.dart';
 import './screens/create_review_screen.dart';
 import './screens/list_majors_screen.dart';
+import './screens/list_institutions_screen.dart';
 import './screens/tabs_screen.dart';
 
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
 import './models/major_provider.dart';
 import './models/language_provider.dart';
+import './models/institution_provider.dart';
 import "package:intl/intl.dart";
 
 void main() => runApp(MyApp());
@@ -37,6 +39,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(
           value: Languages(),
         ),
+        ChangeNotifierProvider.value(
+          value: Institutions(),
+        ),
         ChangeNotifierProxyProvider<Courses, Reviews>(
           builder: (ctx, courses, previousReviews) => Reviews(
               courses.courseId,
@@ -47,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           title: 'OSU Course Review',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
+            primarySwatch: Colors.red,
             accentColor: Colors.amber,
             canvasColor: Color.fromRGBO(250, 245, 240, 1),
             fontFamily: 'Raleway',
@@ -69,6 +74,7 @@ class _MyAppState extends State<MyApp> {
             CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
             CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
             CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
+            ListInstitutionScreen.routeName: (context) => ListInstitutionScreen(),
             ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
             ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
           }),

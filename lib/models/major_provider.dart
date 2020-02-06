@@ -20,6 +20,11 @@ class Majors with ChangeNotifier {
     return _majors.firstWhere((mj) => mj.id == id);
   }
 
+  //Comparing major name of each courses with majorName of the arguments
+  List<Major> findBySchool(String schoolName) {
+    return [..._majors.where((sc) => sc.institutionName == schoolName)];
+  }
+
   Future<void> retrieveMajorData() async {
     const url = 'https://osu-course-search.firebaseio.com/majors.json';
     try {
@@ -35,8 +40,8 @@ class Majors with ChangeNotifier {
       extractedData.forEach((majorId, majorData) {
         loadedMajors.add(Major(
           id: majorId,
-          //color: majorData['color'],
           majorName: majorData['majorName'],
+          institutionName: majorData['institutionName'],
         ));
       });
       _majors = loadedMajors;
@@ -45,29 +50,4 @@ class Majors with ChangeNotifier {
       throw (error);
     }
   }
-
-  // Future<void> addMajor(Major major) async {
-  //   final url = 'https://osu-course-search.firebaseio.com/majors.json?';
-
-  //   try {
-  //     final response = await http.post(
-  //       url,
-  //       body: json.encode({
-  //         'majorName': major.majorName,
-  //         'color': major.color,
-  //       }),
-  //     );
-
-  //     final newMajor = Major(
-  //       id: json.decode(response.body)['name'],
-  //       majorName: major.majorName,
-  //       //color: major.color,
-  //     );
-  //     _majors.add(newMajor); // add to reviews list
-  //     notifyListeners(); // reflect results to children widget
-  //   } catch (error) {
-  //     print(error);
-  //     throw error;
-  //   }
-  // }
 }
