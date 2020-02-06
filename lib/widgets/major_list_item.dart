@@ -34,9 +34,14 @@ class _MajorListItemState extends State<MajorListItem> {
         borderRadius: BorderRadius.circular(15),
         child: Column(
           children: <Widget>[
-            Image.network(
-              'https://augstudy.com/studytour/wp-content/uploads/2018/03/Oregon-State-University.jpg',
-              fit: BoxFit.fitHeight,
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Image.network(
+                major.logo,
+                fit: BoxFit.contain,
+              ),
             ),
             Expanded(
               child: Text(
