@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 import '../models/major.dart';
 
@@ -48,6 +47,7 @@ class _MajorListItemState extends State<MajorListItem> {
                 '${major.majorName}',
                 style: TextStyle(
                   fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
