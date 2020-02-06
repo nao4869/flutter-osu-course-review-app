@@ -61,9 +61,8 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     final majorList = Provider.of<Majors>(context);
     // final majors = majorList.majors;
 
-    var ddv;
-
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('University Course Search'),
         actions: <Widget>[
@@ -107,18 +106,19 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                       ),
                     ],
                   ),
+
                   Container(
                     width: double.infinity,
-                    height: 400,
+                    height: 500,
                     child: GridView.builder(
                       padding: const EdgeInsets.all(25),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 0,
+                        childAspectRatio: 1.3,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
                       ),
-                      // temporary data for categories
+                      shrinkWrap: true,
                       itemCount: loadedInstitutionMajors.length,
                       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                         value: loadedInstitutionMajors[i],
