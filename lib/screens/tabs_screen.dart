@@ -102,6 +102,7 @@ class _TabScreenState extends State<TabScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         activeColor: Theme.of(context).accentColor,
         inactiveColor: Colors.white,
+        iconSize: 25,
       ),
       tabBuilder: (context, index) {
         switch (index) {
@@ -109,10 +110,6 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    leading: Icon(Icons.home),
-                  ),
                   child: ListInstitutionScreen(),
                 );
               },
@@ -121,10 +118,6 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    leading: Icon(Icons.school),
-                  ),
                   child: CreateInstitutionScreen(),
                 );
               },
@@ -133,10 +126,6 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    leading: Icon(Icons.class_),
-                  ),
                   child: CreateCourseScreen(),
                 );
               },
@@ -145,10 +134,6 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    leading: Icon(Icons.create),
-                  ),
                   child: CreateReviewScreen(),
                 );
               },
@@ -157,10 +142,6 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    leading: Icon(Icons.people),
-                  ),
                   child: ListInstitutionScreen(),
                 );
               },
@@ -170,10 +151,6 @@ class _TabScreenState extends State<TabScreen> {
               return CupertinoTabView(
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      leading: Icon(Icons.home),
-                    ),
                     child: ListInstitutionScreen(),
                   );
                 },

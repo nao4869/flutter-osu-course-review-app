@@ -46,6 +46,9 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
     final institutions = institutionList.institutions;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('University Course Search'),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -166,7 +169,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
+        leading: Icon(Icons.school),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
           Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
@@ -188,7 +191,7 @@ class DataSearch extends SearchDelegate<Institution> {
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
+        leading: Icon(Icons.school),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
           Navigator.of(context).pushNamed(ListMajorsScreen.routeName,

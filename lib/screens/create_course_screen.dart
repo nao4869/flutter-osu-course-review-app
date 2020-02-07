@@ -217,6 +217,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     //final majorsMap = majors.forEach((mj) => print(mj.majorName));
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('University Course Search'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
