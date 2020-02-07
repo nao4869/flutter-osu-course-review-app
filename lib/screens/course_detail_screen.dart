@@ -285,8 +285,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             child: CircularProgressIndicator(),
                           )
                         : Container(
-                            width: double.infinity,
-                            height: 750,
                             child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
