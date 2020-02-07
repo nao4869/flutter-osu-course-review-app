@@ -151,6 +151,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 // class to search majors from all list
 class DataSearch extends SearchDelegate<Major> {
   final List<Major> majors;
+  final String searchFieldLabel = 'Search course by major';
 
   DataSearch(this.majors);
 

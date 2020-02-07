@@ -135,6 +135,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 // class to search courses from all list
 class DataSearch extends SearchDelegate<Course> {
   final List<Course> courses;
+  final String searchFieldLabel = 'Search course name';
 
   DataSearch(this.courses);
 
