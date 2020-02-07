@@ -101,7 +101,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                             children: <Widget>[
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
+                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).pushNamed(

@@ -85,6 +85,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   minHeight: viewportConstraints.maxHeight,
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -283,6 +285,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             child: CircularProgressIndicator(),
                           )
                         : Container(
+                            width: double.infinity,
+                            height: 750,
                             child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,

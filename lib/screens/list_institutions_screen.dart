@@ -81,7 +81,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
                           ),
                           Container(
                             width: double.infinity,
-                            height: 500,
+                            height: 750,
                             child: ListView.builder(
                               padding: const EdgeInsets.all(25),
                               itemCount: institutions.length,
