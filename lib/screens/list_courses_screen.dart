@@ -1,6 +1,8 @@
 // Control the entire contents of the first screens
 // Displays lsit of loadedMajorCourses for the application
 
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/tabs_screen.dart';
 import 'package:provider/provider.dart';
@@ -39,17 +41,15 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final majorName = ModalRoute.of(context).settings.arguments
         as String; // retrieving majorName passed from list majors screen
     final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(
         majorName); // findByMajor returns list of courses where condition match
     // var ddv;
+
+    //print(loadedMajorCourses);
+    //print(majorName);
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +59,12 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
               Icons.search,
             ),
             iconSize: 24,
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: DataSearch(loadedMajorCourses),
+              );
+            },
           )
         ],
       ),
@@ -97,51 +102,60 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 }
 
-class DataSearch extends SearchDelegate<String> {
-  final cities = [
-    'Yokohama',
-    'Tokyo',
-    'Tsurumi',
-    'Keiou',
-    'Horinouchi',
-  ];
+class DataSearch extends SearchDelegate<Course> {
+  final List<Course> courses;
 
-  final recentCities = [
-    'Yokohama',
-    'Tsurumi',
-  ];
+  DataSearch(this.courses);
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme;
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
     // actions for app bar
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () {})];
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     // leading icon on the left of app bar
     return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {},
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // show some result based on the selection
+    return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // show when someone searches for something
-    final sugestionList = query.isEmpty ? recentCities : cities;
+    final sugestionList = query.isEmpty ? [] : courses;
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.location_city),
-        title: Text(sugestionList[index]),
+        leading: Icon(Icons.school),
+        title: Text(sugestionList[index].courseName.toString()),
+        onTap: () {
+          Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
+              arguments: sugestionList[index].id);
+        },
       ),
       itemCount: sugestionList.length,
     );
