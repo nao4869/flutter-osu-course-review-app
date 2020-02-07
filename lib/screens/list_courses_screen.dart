@@ -1,14 +1,9 @@
 // Control the entire contents of the first screens
 // Displays lsit of loadedMajorCourses for the application
 
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/create_review_screen.dart';
-import '../screens/create_course_screen.dart';
 import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
@@ -46,10 +41,6 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         as String; // retrieving majorName passed from list majors screen
     final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(
         majorName); // findByMajor returns list of courses where condition match
-    // var ddv;
-
-    //print(loadedMajorCourses);
-    //print(majorName);
 
     return Scaffold(
       appBar: AppBar(
@@ -102,6 +93,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 }
 
+// class to search courses from all list
 class DataSearch extends SearchDelegate<Course> {
   final List<Course> courses;
 
@@ -147,10 +139,14 @@ class DataSearch extends SearchDelegate<Course> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // show when someone searches for something
-    final sugestionList = query.isEmpty ? [] : courses;
+    final sugestionList = query.isEmpty
+        ? courses
+        : courses
+            .where((cs) => cs.courseName.toString().contains(query))
+            .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.school),
+        leading: Icon(Icons.class_),
         title: Text(sugestionList[index].courseName.toString()),
         onTap: () {
           Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
