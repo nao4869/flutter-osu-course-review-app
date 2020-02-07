@@ -75,20 +75,22 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                ListCoursesScreen.routeName,
-                                arguments: majorList.majors);
-                          },
-                          child: Text(
-                            'Search course by Major',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  ListCoursesScreen.routeName,
+                                  arguments: majorList.majors);
+                            },
+                            child: Text(
+                              '$institutionName\'s majors',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),

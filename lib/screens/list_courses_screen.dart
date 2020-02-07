@@ -132,3 +132,4 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     );
   }
 }
+
