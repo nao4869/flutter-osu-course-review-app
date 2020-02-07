@@ -49,53 +49,17 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         as String; // retrieving majorName passed from list majors screen
     final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(
         majorName); // findByMajor returns list of courses where condition match
-    var ddv;
+    // var ddv;
 
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          Container(
-            child: DropdownButton<Course>(
-              value: ddv,
-              icon: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 5, 0),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              ),
-              elevation: 0,
-              underline: null,
-              onChanged: (Course newValue) {
-                setState(() {
-                  ddv = newValue;
-                  Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
-                      arguments: ddv.id);
-                });
-              },
-              items: loadedMajorCourses.map((Course value) {
-                return DropdownMenuItem<Course>(
-                  value: value,
-                  child: Text(
-                    value.courseName.toString(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 13,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
           IconButton(
             icon: Icon(
-              Icons.add,
+              Icons.search,
             ),
             iconSize: 24,
-            onPressed: () {
-              //Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -133,3 +97,53 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 }
 
+class DataSearch extends SearchDelegate<String> {
+  final cities = [
+    'Yokohama',
+    'Tokyo',
+    'Tsurumi',
+    'Keiou',
+    'Horinouchi',
+  ];
+
+  final recentCities = [
+    'Yokohama',
+    'Tsurumi',
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // actions for app bar
+    return [IconButton(icon: Icon(Icons.clear), onPressed: () {})];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // leading icon on the left of app bar
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {},
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // show some result based on the selection
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // show when someone searches for something
+    final sugestionList = query.isEmpty ? recentCities : cities;
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.location_city),
+        title: Text(sugestionList[index]),
+      ),
+      itemCount: sugestionList.length,
+    );
+  }
+}
