@@ -44,6 +44,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text('University Course Search'),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -73,22 +74,19 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                 ),
               ),
             ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/');
+          showSearch(
+            context: context,
+            delegate: DataSearch(loadedMajorCourses),
+          );
         },
-        label: Text(
-          'New-Review',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
         backgroundColor: Theme.of(context).primaryColor,
-        icon: Icon(
-          Icons.create,
+        child: Icon(
+          Icons.search,
           color: Colors.white,
         ),
-      ), //
+      ),
     );
   }
 }
@@ -135,8 +133,11 @@ class DataSearch extends SearchDelegate<Course> {
   Widget buildResults(BuildContext context) {
     final sugestionList = query.isEmpty
         ? courses
-        : courses.where((cs) => cs.courseName.toLowerCase().contains(query.toLowerCase())).toList();
-    
+        : courses
+            .where((cs) =>
+                cs.courseName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.class_),
