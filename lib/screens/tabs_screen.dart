@@ -48,25 +48,10 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('University Course Search'),
-      ),
-      drawer: MainDrawer(),
-      body: _widgets[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTapHandler,
-        currentIndex: _selectedIndex,
-        backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).accentColor,
-        elevation: 0.0,
-        selectedFontSize: 12.0,
-        unselectedFontSize: 12.0,
-        type: BottomNavigationBarType.fixed,
-        items: [
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.home),
             title: Text(
               'Home',
@@ -76,7 +61,6 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.school),
             title: Text(
               'School',
@@ -86,7 +70,6 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.class_),
             title: Text(
               'Course',
@@ -96,7 +79,6 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.create),
             title: Text(
               'Review',
@@ -106,7 +88,6 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(Icons.people),
             title: Text(
               'User',
@@ -116,46 +97,90 @@ class _TabScreenState extends State<TabScreen> {
             ),
           ),
         ],
+        onTap: _onTapHandler,
+        currentIndex: _selectedIndex,
+        backgroundColor: Theme.of(context).primaryColor,
+        activeColor: Theme.of(context).accentColor,
+        inactiveColor: Colors.white,
       ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    leading: Icon(Icons.home),
+                  ),
+                  child: ListInstitutionScreen(),
+                );
+              },
+            );
+          case 1:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    leading: Icon(Icons.school),
+                  ),
+                  child: CreateInstitutionScreen(),
+                );
+              },
+            );
+          case 2:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    leading: Icon(Icons.class_),
+                  ),
+                  child: CreateCourseScreen(),
+                );
+              },
+            );
+          case 3:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    leading: Icon(Icons.create),
+                  ),
+                  child: CreateReviewScreen(),
+                );
+              },
+            );
+          case 4:
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    leading: Icon(Icons.people),
+                  ),
+                  child: ListInstitutionScreen(),
+                );
+              },
+            );
+          default:
+            {
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      leading: Icon(Icons.home),
+                    ),
+                    child: ListInstitutionScreen(),
+                  );
+                },
+              );
+            }
+        }
+      },
     );
   }
 }
-
-// return CupertinoTabScaffold(
-//       tabBar: CupertinoTabBar(
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             //backgroundColor: Theme.of(context).primaryColor,
-//             icon: Icon(Icons.home),
-//             title: Text('Home'),
-//           ),
-//           BottomNavigationBarItem(
-//             //backgroundColor: Theme.of(context).primaryColor,
-//             icon: Icon(Icons.class_),
-//             title: Text('New Course'),
-//           ),
-//           BottomNavigationBarItem(
-//             //backgroundColor: Theme.of(context).primaryColor,
-//             icon: Icon(Icons.create),
-//             title: Text('New Review'),
-//           ),
-//         ],
-//         onTap: _onTapHandler, // 実は無くても動く
-//         currentIndex: _selectedIndex, // 実は無くても動く
-//       ),
-//       tabBuilder: (context, index) {
-//         switch (index) {
-//           case 0: // 1番左のタブが選ばれた時の画面
-//             return CupertinoTabView(
-//               builder: (context) {
-//                 return CupertinoPageScaffold(
-//                   navigationBar: CupertinoNavigationBar(
-//                     leading: Icon(Icons.home), // ページのヘッダ左のアイコン
-//                   ),
-//                   child: ListMajorsScreen(), // 表示したい画面のWidget
-//                 );
-//               },
-//             );
-//         }
-//       },
-//     );
