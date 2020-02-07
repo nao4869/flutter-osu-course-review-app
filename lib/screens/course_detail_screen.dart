@@ -1,6 +1,5 @@
 // This file will display the meals for the chosen category
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/create_review_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:core';
 
@@ -76,219 +75,232 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       appBar: AppBar(
         title: Text(loadedCourse.courseName),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(5, 5, 0, 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/');
-                    },
-                    child: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
-                  ),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(3, 0, 0, 0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/');
-                    },
-                    child: Text(
-                      'HOME ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.fromLTRB(5, 5, 0, 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/');
+                            },
+                            child: Icon(
+                              Icons.home,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/');
+                            },
+                            child: Text(
+                              'HOME ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '/ ' + loadedCourse.courseName + ' review',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                      ),
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(5),
+                      width: double.infinity,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Text(
+                              loadedCourse.courseName,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // display language
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.topLeft,
+                                padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
+                                child: StarDisplayWidget(
+                                  value: intScore,
+                                  filledStar: Icon(Icons.star,
+                                      color: Colors.amber, size: 20),
+                                  unfilledStar: Icon(Icons.star_border,
+                                      color: Colors.grey),
+                                ),
+                              ),
+                              Container(
+                                //width: double.infinity,
+                                padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                child: Text(
+                                  '$finalScore',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'roboto',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
+                            child: Text(
+                              '${loadedCourse.courseContent}',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+
+                          // display language
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.topLeft,
+                                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                child: Text(
+                                  'Language: ',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.purple),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  '${loadedCourse.language}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                            child: Text(
+                              'Pre-requisite: ${loadedCourse.prerequisite}',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                            child: Text(
+                              'Proctored Exams: ${loadedCourse.proctoredexams}',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                            child: Text(
+                              'Group Work: ${loadedCourse.groupwork}',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                            child: Text(
+                              'Textbook: ${loadedCourse.textbook}',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                    buildSectionTitle(context, 'Course Reviews'),
+                    _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Container(
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                              itemCount: reviews.length,
+                              itemBuilder: (ctx, i) =>
+                                  ChangeNotifierProvider.value(
+                                value: reviews[i],
+                                child: CourseReviewItem(),
+                              ),
+                            ),
+                          ),
+                  ],
                 ),
-                Expanded(
-                  child: Text(
-                    '/ ' + loadedCourse.courseName + ' review',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromRGBO(255, 255, 255, 1),
               ),
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(5),
-              width: double.infinity,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Text(
-                      loadedCourse.courseName,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  // display language
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topLeft,
-                        padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
-                        child: StarDisplayWidget(
-                          value: intScore,
-                          filledStar:
-                              Icon(Icons.star, color: Colors.amber, size: 20),
-                          unfilledStar:
-                              Icon(Icons.star_border, color: Colors.grey),
-                        ),
-                      ),
-                      Container(
-                        //width: double.infinity,
-                        padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text(
-                          '$finalScore',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'roboto',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
-                    child: Text(
-                      '${loadedCourse.courseContent}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-
-                  // display language
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topLeft,
-                        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Text(
-                          'Language: ',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Text(
-                          '${loadedCourse.language}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                    child: Text(
-                      'Pre-requisite: ${loadedCourse.prerequisite}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                    child: Text(
-                      'Proctored Exams: ${loadedCourse.proctoredexams}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                    child: Text(
-                      'Group Work: ${loadedCourse.groupwork}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
-                    child: Text(
-                      'Textbook: ${loadedCourse.textbook}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
-            buildSectionTitle(context, 'Course Reviews'),
-            _isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      itemCount: reviews.length,
-                      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                        value: reviews[i],
-                        child: CourseReviewItem(),
-                      ),
-                    ),
-                  ),
-          ],
-        ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
