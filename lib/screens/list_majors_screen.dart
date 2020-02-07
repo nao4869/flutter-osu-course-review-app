@@ -83,53 +83,70 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                  ListCoursesScreen.routeName,
-                                  arguments: majorList.majors);
-                            },
-                            child: Text(
-                              '$institutionName\'s majors',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+          : LayoutBuilder(
+              builder:
+                  (BuildContext context, BoxConstraints viewportConstraints) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          ListCoursesScreen.routeName,
+                                          arguments: majorList.majors);
+                                    },
+                                    child: Text(
+                                      '$institutionName\'s majors',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: GridView.builder(
+                              padding: const EdgeInsets.all(25),
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                childAspectRatio: 1.3,
+                                crossAxisSpacing: 10.0,
+                                mainAxisSpacing: 10.0,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: loadedInstitutionMajors.length,
+                              itemBuilder: (ctx, i) =>
+                                  ChangeNotifierProvider.value(
+                                value: loadedInstitutionMajors[i],
+                                child: MajorListItem(),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(25),
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 1.3,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                      ),
-                      shrinkWrap: true,
-                      itemCount: loadedInstitutionMajors.length,
-                      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                        value: loadedInstitutionMajors[i],
-                        child: MajorListItem(),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

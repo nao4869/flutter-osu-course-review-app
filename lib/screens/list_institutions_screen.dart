@@ -50,36 +50,54 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
-                      child: Text(
-                        'Search course by Institution',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+          : LayoutBuilder(
+              builder:
+                  (BuildContext context, BoxConstraints viewportConstraints) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                child: Text(
+                                  'Search course by Institution',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 750,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(25),
+                              itemCount: institutions.length,
+                              itemBuilder: (ctx, i) =>
+                                  ChangeNotifierProvider.value(
+                                value: institutions[i],
+                                child: InstitutionListItem(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 500,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(25),
-                    itemCount: institutions.length,
-                    itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                      value: institutions[i],
-                      child: InstitutionListItem(),
-                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
