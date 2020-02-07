@@ -10,7 +10,7 @@ import '../models/institution.dart';
 import '../widgets/institution_list_item.dart';
 
 class ListInstitutionScreen extends StatefulWidget {
-  static const routeName = '/list-courses-screen';
+  static const routeName = '/list-institutions-screen';
 
   @override
   _ListInstitutionScreenState createState() => _ListInstitutionScreenState();
@@ -81,6 +81,102 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
                 ),
               ],
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showSearch(
+            context: context,
+            delegate: DataSearch(institutions),
+          );
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+// class to search institutions from all list
+class DataSearch extends SearchDelegate<Institution> {
+  final List<Institution> institutions;
+
+  DataSearch(this.institutions);
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme;
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // actions for app bar
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // leading icon on the left of app bar
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final sugestionList = query.isEmpty
+        ? institutions
+        : institutions
+            .where(
+                (ins) => ins.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.class_),
+        title: Text(sugestionList[index].name.toString()),
+        onTap: () {
+          Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
+              arguments: sugestionList[index].name);
+        },
+      ),
+      itemCount: sugestionList.length,
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // show when someone searches for something
+    final sugestionList = query.isEmpty
+        ? institutions
+        : institutions
+            .where(
+                (ins) => ins.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.class_),
+        title: Text(sugestionList[index].name.toString()),
+        onTap: () {
+          Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
+              arguments: sugestionList[index].name);
+        },
+      ),
+      itemCount: sugestionList.length,
     );
   }
 }
