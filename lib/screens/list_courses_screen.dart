@@ -64,15 +64,56 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Container(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(25),
-                itemCount: loadedMajorCourses.length,
-                itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                  value: loadedMajorCourses[i],
-                  child: CourseListItem(),
-                ),
-              ),
+          : LayoutBuilder(
+              builder:
+                  (BuildContext context, BoxConstraints viewportConstraints) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: Text(
+                                    '$majorName\'s courses',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 650,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(25),
+                              itemCount: loadedMajorCourses.length,
+                              itemBuilder: (ctx, i) =>
+                                  ChangeNotifierProvider.value(
+                                value: loadedMajorCourses[i],
+                                child: CourseListItem(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
