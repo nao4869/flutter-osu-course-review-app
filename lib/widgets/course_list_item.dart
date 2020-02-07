@@ -125,9 +125,13 @@ class _CourseListItemState extends State<CourseListItem> {
                 ),
                 child: RaisedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(
-                        CourseDetailScreen.routeName,
-                        arguments: course.id);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CourseDetailScreen(),
+                        settings: RouteSettings(arguments: course.id),
+                      ),
+                    );
                   },
                   child: Text(
                     "Check all reviews",
