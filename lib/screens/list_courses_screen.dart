@@ -133,7 +133,21 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    final sugestionList = query.isEmpty
+        ? courses
+        : courses.where((cs) => cs.courseName.toLowerCase().contains(query.toLowerCase())).toList();
+    
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.class_),
+        title: Text(sugestionList[index].courseName.toString()),
+        onTap: () {
+          Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
+              arguments: sugestionList[index].id);
+        },
+      ),
+      itemCount: sugestionList.length,
+    );
   }
 
   @override
@@ -142,7 +156,8 @@ class DataSearch extends SearchDelegate<Course> {
     final sugestionList = query.isEmpty
         ? courses
         : courses
-            .where((cs) => cs.courseName.toString().contains(query))
+            .where((cs) =>
+                cs.courseName.toLowerCase().contains(query.toLowerCase()))
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
