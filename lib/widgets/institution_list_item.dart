@@ -68,92 +68,93 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                     ),
                   ),
                   Expanded(
-                      flex: 3,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Icon(
-                                      Icons.location_on,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
+                    flex: 3,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.black,
+                                    size: 20,
                                   ),
                                 ),
-                                Container(
-                                  child: Text(
-                                    institution.country,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
+                              ),
+                              Container(
+                                child: Text(
+                                  institution.country,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Icon(
-                                      Icons.location_searching,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.location_searching,
+                                    color: Colors.black,
+                                    size: 20,
                                   ),
                                 ),
-                                Container(
-                                  child: Text(
-                                    institution.state,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
+                              ),
+                              Container(
+                                child: Text(
+                                  institution.state,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Icon(
-                                      Icons.location_city,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.location_city,
+                                    color: Colors.black,
+                                    size: 20,
                                   ),
                                 ),
-                                Container(
-                                  child: Text(
-                                    institution.city,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
+                              ),
+                              Container(
+                                child: Text(
+                                  institution.city,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
