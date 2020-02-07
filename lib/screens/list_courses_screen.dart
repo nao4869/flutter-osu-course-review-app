@@ -84,7 +84,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Text(
-                                    '$majorName\'s courses',
+                                    '$majorName courses',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                           ),
                           Container(
                             width: double.infinity,
-                            height: 650,
+                            height: 700,
                             child: ListView.builder(
                               padding: const EdgeInsets.all(25),
                               itemCount: loadedMajorCourses.length,
@@ -135,6 +135,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 // class to search courses from all list
 class DataSearch extends SearchDelegate<Course> {
   final List<Course> courses;
+  final String searchFieldLabel = 'Search course name';
 
   DataSearch(this.courses);
 
