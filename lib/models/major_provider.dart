@@ -42,6 +42,7 @@ class Majors with ChangeNotifier {
           id: majorId,
           majorName: majorData['majorName'],
           institutionName: majorData['institutionName'],
+          logo: majorData['logo'],
         ));
       });
       _majors = loadedMajors;

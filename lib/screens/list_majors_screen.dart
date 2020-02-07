@@ -59,24 +59,12 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
         institutionName); // findByMajor returns list of courses where condition match
 
     final majorList = Provider.of<Majors>(context);
-    // final majors = majorList.majors;
-
     var ddv;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('University Course Search'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add,
-            ),
-            iconSize: 24,
-            onPressed: () {
-              // Navigator.of(context).pushNamed(CreateCourseScreen.routeName);
-            },
-          )
-        ],
       ),
       body: _isLoading
           ? Center(
@@ -87,20 +75,22 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                ListCoursesScreen.routeName,
-                                arguments: majorList.majors);
-                          },
-                          child: Text(
-                            'Search course by Major',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(20, 25, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  ListCoursesScreen.routeName,
+                                  arguments: majorList.majors);
+                            },
+                            child: Text(
+                              '$institutionName\'s majors',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -109,16 +99,15 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 400,
                     child: GridView.builder(
                       padding: const EdgeInsets.all(25),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 0,
+                        childAspectRatio: 1.3,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
                       ),
-                      // temporary data for categories
+                      shrinkWrap: true,
                       itemCount: loadedInstitutionMajors.length,
                       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                         value: loadedInstitutionMajors[i],
@@ -126,251 +115,46 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                       ),
                     ),
                   ),
-                  buildSectionTitle(context, 'Reviews Ranking'),
-
-                  // 1st review
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    width: double.infinity,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.looks_one,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              width: 350,
-                              child: Text(
-                                'CS162 - Intro to computer Science2',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
-                          child: StarDisplayWidget(
-                            value: 5,
-                            filledStar:
-                                Icon(Icons.star, color: Colors.amber, size: 20),
-                            unfilledStar:
-                                Icon(Icons.star_border, color: Colors.grey),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
-                          child: ButtonTheme(
-                            minWidth: double.infinity,
-                            height: 30.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0),
-                            ),
-                            child: RaisedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    ListCoursesScreen.routeName,
-                                    arguments: "Computer Science");
-                              },
-                              child: Text(
-                                "Check all reviews",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // 2nd review
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    width: double.infinity,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('/');
-                                },
-                                child: Icon(
-                                  Icons.looks_two,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              width: 350,
-                              child: Text(
-                                'CS290 - Web Development',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
-                          child: StarDisplayWidget(
-                            value: 5,
-                            filledStar:
-                                Icon(Icons.star, color: Colors.amber, size: 20),
-                            unfilledStar:
-                                Icon(Icons.star_border, color: Colors.grey),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
-                          child: ButtonTheme(
-                            minWidth: double.infinity,
-                            height: 30.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0),
-                            ),
-                            child: RaisedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    ListCoursesScreen.routeName,
-                                    arguments: "Computer Science");
-                              },
-                              child: Text(
-                                "Check all reviews",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // 3rd review
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    width: double.infinity,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed('/');
-                                },
-                                child: Icon(
-                                  Icons.looks_3,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              width: 350,
-                              child: Text(
-                                'CS261 - Data Structures',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
-                          child: StarDisplayWidget(
-                            value: 5,
-                            filledStar:
-                                Icon(Icons.star, color: Colors.amber, size: 20),
-                            unfilledStar:
-                                Icon(Icons.star_border, color: Colors.grey),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
-                          child: ButtonTheme(
-                            minWidth: double.infinity,
-                            height: 30.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0),
-                            ),
-                            child: RaisedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    ListCoursesScreen.routeName,
-                                    arguments: "Computer Science");
-                              },
-                              child: Text(
-                                "Check all reviews",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('Button pressed');
+          Container(
+            child: DropdownButton<Major>(
+              value: ddv,
+              elevation: 0,
+              underline: null,
+              onChanged: (Major newValue) {
+                setState(() {
+                  ddv = newValue;
+                  Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
+                      arguments: ddv.id);
+                });
+              },
+              items: loadedInstitutionMajors.map((Major value) {
+                return DropdownMenuItem<Major>(
+                  value: value,
+                  child: Text(
+                    value.majorName.toString(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
     );
   }
 }
