@@ -138,7 +138,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     FlatButton(
                       child: Text('Okay'),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context, rootNavigator: true)
+                            .pop('dialog');
                       },
                     ),
                   ],
@@ -154,9 +155,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     setState(() {
       _isLoading = false;
     });
-    // navigate to specific course detail screen when save review
-    Navigator.of(context)
-        .pushNamed(ListCoursesScreen.routeName, arguments: _editedCourse.major);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ListCoursesScreen(),
+        settings: RouteSettings(arguments: _editedCourse.major),
+      ),
+    );
 
     // pop up message when course successfully added
     showDialog(
@@ -172,7 +178,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           FlatButton(
             child: Text('Okay'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).pop('dialog');
             },
           ),
         ],
