@@ -12,8 +12,6 @@ class CourseListItem extends StatefulWidget {
 }
 
 class _CourseListItemState extends State<CourseListItem> {
-  var _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     // retrieving providers objects
@@ -79,36 +77,6 @@ class _CourseListItemState extends State<CourseListItem> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'roboto',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // Language display
-            Row(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.fromLTRB(20, 5, 5, 0),
-                  child: Icon(
-                    Icons.language,
-                    color: Colors.black,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.purple),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      course.language,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
                     ),
                   ),
                 ),
