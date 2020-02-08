@@ -38,8 +38,11 @@ class _CourseListItemState extends State<CourseListItem> {
                       course.courseName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
                     ),
                   ),
                 ],
