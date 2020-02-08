@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import '../models/course.dart';
 
 class Institution with ChangeNotifier {
   final String id;
@@ -8,6 +9,7 @@ class Institution with ChangeNotifier {
   final String state;
   final String city;
   final String logo;
+  List<Course> courses;
 
   Institution({
     @required this.id,
@@ -16,5 +18,6 @@ class Institution with ChangeNotifier {
     @required this.state,
     @required this.city,
     @required this.logo,
+    @required this.courses,
   });
 }

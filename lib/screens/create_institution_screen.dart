@@ -31,6 +31,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     state: '',
     city: '',
     logo: '',
+    courses: [],
   );
 
   @override
@@ -106,8 +107,11 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     //       .updateInstitution(_editedInstitution, _editedInstitution.courseId);
     // } else {
     try {
-      await Provider.of<Institutions>(context, listen: false)
-          .addInstitution(_editedInstitution);
+      await Provider.of<Institutions>(context, listen: false).addInstitution(
+        _editedInstitution,
+        //courses.values.toList(),
+        // to do, recieve list of courses
+      );
     } catch (error) {
       await showDialog(
           context: context,
@@ -215,6 +219,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       state: _editedInstitution.state,
                       city: _editedInstitution.city,
                       logo: _editedInstitution.logo,
+                      courses: _editedInstitution.courses,
                     );
                   },
                 ),
@@ -241,6 +246,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       state: _editedInstitution.state,
                       city: _editedInstitution.city,
                       logo: _editedInstitution.logo,
+                      courses: _editedInstitution.courses,
                     );
                   },
                 ),
@@ -267,6 +273,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       state: value,
                       city: _editedInstitution.city,
                       logo: _editedInstitution.logo,
+                      courses: _editedInstitution.courses,
                     );
                   },
                 ),
@@ -293,6 +300,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       state: _editedInstitution.state,
                       city: value,
                       logo: _editedInstitution.logo,
+                      courses: _editedInstitution.courses,
                     );
                   },
                 ),
@@ -316,6 +324,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       state: _editedInstitution.state,
                       city: _editedInstitution.city,
                       logo: value,
+                      courses: _editedInstitution.courses,
                     );
                   },
                 ),

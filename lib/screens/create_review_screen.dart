@@ -8,6 +8,8 @@ import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../models/course.dart';
 import '../models/courses_provider.dart';
+import '../models/institution.dart';
+import '../models/institution_provider.dart';
 
 class CreateReviewScreen extends StatefulWidget {
   static const routeName = '/create-new-review';
@@ -25,6 +27,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   // update this edited product when save form
   var _editedReview = Review(
     courseId: null,
+    institutionName: '',
     reviewsContent: '',
     starScore: 0,
     createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
@@ -57,6 +60,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _starScore = [1, 2, 3, 4, 5];
   var _currentSelectedValue;
   var _currentSelectedValue2;
+  var _currentSelectedValue3;
   var _isInit = true;
   var _isLoading = false;
 
@@ -70,6 +74,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
             Provider.of<Reviews>(context, listen: false).findById(courseId);
         _initValues = {
           'courseId': _editedReview.courseId,
+          'institutionName': _editedReview.institutionName,
           'reviewsContent': _editedReview.reviewsContent,
           'starScore': _editedReview.starScore.toString(),
           'createdAt': _editedReview.createdAt,
@@ -159,6 +164,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courseList = Provider.of<Courses>(context);
     final courses = courseList.courses;
 
+    final institutionList = Provider.of<Institutions>(context);
+    final institutions = institutionList.institutions;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('University Course Search'),
@@ -187,6 +195,56 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                       ),
                     ),
                   ],
+                ),
+                FormField<Institution>(
+                  builder: (FormFieldState<Institution> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Institution Name',
+                        labelStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        errorStyle:
+                            TextStyle(color: Colors.redAccent, fontSize: 15.0),
+                        hintText: 'Please select institution name',
+                      ),
+                      isEmpty: _currentSelectedValue3 == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Institution>(
+                          value: _currentSelectedValue3,
+                          isDense: true,
+                          onChanged: (Institution newValue) {
+                            setState(() {
+                              _currentSelectedValue3 = newValue;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: institutions.map((Institution value) {
+                            return DropdownMenuItem<Institution>(
+                              value: value,
+                              child: Text(
+                                value.name.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
+                  onSaved: (value) {
+                    _editedReview = Review(
+                      institutionName: value.name.toString(),
+                      courseId: _editedReview.courseId,
+                      reviewsContent: _editedReview.reviewsContent,
+                      starScore: _editedReview.starScore,
+                      createdAt: _editedReview.createdAt,
+                    );
+                  },
                 ),
                 FormField<Course>(
                   builder: (FormFieldState<Course> state) {
@@ -231,6 +289,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   onSaved: (value) {
                     _editedReview = Review(
                       courseId: value.id.toString(),
+                      institutionName: _editedReview.institutionName,
                       reviewsContent: _editedReview.reviewsContent,
                       starScore: _editedReview.starScore,
                       createdAt: _editedReview.createdAt,
@@ -254,6 +313,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   onSaved: (value) {
                     _editedReview = Review(
                       courseId: _editedReview.courseId,
+                      institutionName: _editedReview.institutionName,
                       reviewsContent: value,
                       starScore: _editedReview.starScore,
                       createdAt: _editedReview.createdAt,
@@ -296,6 +356,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   onSaved: (value) {
                     _editedReview = Review(
                       courseId: _editedReview.courseId,
+                      institutionName: _editedReview.institutionName,
                       reviewsContent: _editedReview.reviewsContent,
                       starScore: value,
                       createdAt: _editedReview.createdAt,
