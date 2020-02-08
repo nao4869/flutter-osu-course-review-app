@@ -12,9 +12,11 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
+  String institutionName;
   var createdAt = DateFormat("yyyy/MM/dd").format(new DateTime.now());
 
   Reviews(
+    this.institutionName,
     this.courseId,
     this.createdAt,
     this._reviews,
@@ -45,6 +47,7 @@ class Reviews with ChangeNotifier {
 
       extractedData.forEach((reviewId, reviewData) {
         loadedReviews.add(Review(
+          institutionName: reviewData['institutionName'],
           courseId: reviewId,
           reviewsContent: reviewData['reviewsContent'],
           starScore: reviewData['starScore'],
@@ -65,6 +68,7 @@ class Reviews with ChangeNotifier {
       final response = await http.post(
         url,
         body: json.encode({
+          'institutionName': review.institutionName,
           'courseId': courseId,
           'reviewsContent': review.reviewsContent,
           'starScore': starScore,
@@ -73,6 +77,7 @@ class Reviews with ChangeNotifier {
       );
 
       final newReview = Review(
+        institutionName: review.institutionName,
         courseId: json.decode(response.body)['name'],
         reviewsContent: review.reviewsContent,
         starScore: starScore,

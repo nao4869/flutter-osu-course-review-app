@@ -10,6 +10,7 @@ class Courses with ChangeNotifier {
   
   //String _courseId = '-LzKmxO3QJLd4R6kenZ9';
   String _courseId;
+  String _insitutionName;
 
   // getter for course
   List<Course> get courses {
@@ -33,6 +34,10 @@ class Courses with ChangeNotifier {
 
   String get courseId {
     return _courseId;
+  }
+
+   String get insitutionName {
+    return _insitutionName;
   }
 
   Future<void> retrieveCourseData() async {
