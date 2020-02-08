@@ -128,7 +128,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                               gridDelegate:
                                   SliverGridDelegateWithMaxCrossAxisExtent(
                                 maxCrossAxisExtent: 200,
-                                childAspectRatio: 1.2,
+                                childAspectRatio: 1.3,
                                 crossAxisSpacing: 10.0,
                                 mainAxisSpacing: 10.0,
                               ),
