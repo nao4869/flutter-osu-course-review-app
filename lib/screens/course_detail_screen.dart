@@ -45,7 +45,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 16,
         ),
       ),
     );
@@ -126,6 +126,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
+                            maxLines: 1,
                           ),
                         ),
                       ],
@@ -147,9 +148,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                               loadedCourse.courseName,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 17,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
+                              maxLines: 1,
                             ),
                           ),
                           // display language

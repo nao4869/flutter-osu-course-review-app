@@ -3,6 +3,7 @@ import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/course.dart';
+import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
 
@@ -12,8 +13,6 @@ class CourseListItem extends StatefulWidget {
 }
 
 class _CourseListItemState extends State<CourseListItem> {
-  var _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     // retrieving providers objects
@@ -31,30 +30,24 @@ class _CourseListItemState extends State<CourseListItem> {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.class_,
-                      color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      course.courseName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 8, 0, 0),
-                  width: 300,
-                  child: Text(
-                    course.courseName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             // Star display
             Row(
@@ -69,7 +62,6 @@ class _CourseListItemState extends State<CourseListItem> {
                   ),
                 ),
                 Container(
-                  //width: double.infinity,
                   padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                   child: Text(
                     '4.5',
@@ -84,36 +76,6 @@ class _CourseListItemState extends State<CourseListItem> {
                 ),
               ],
             ),
-            // Language display
-            Row(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.fromLTRB(20, 5, 5, 0),
-                  child: Icon(
-                    Icons.language,
-                    color: Colors.black,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.purple),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      course.language,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             Container(
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
@@ -121,7 +83,7 @@ class _CourseListItemState extends State<CourseListItem> {
                 minWidth: double.infinity,
                 height: 30.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: RaisedButton(
                   onPressed: () {

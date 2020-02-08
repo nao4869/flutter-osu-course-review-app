@@ -96,7 +96,6 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ],
                           ),
                           Container(
-                            width: double.infinity,
                             height: 700,
                             child: ListView.builder(
                               padding: const EdgeInsets.all(25),
