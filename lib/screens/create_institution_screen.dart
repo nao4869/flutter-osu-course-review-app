@@ -165,6 +165,9 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('University Course Search'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(

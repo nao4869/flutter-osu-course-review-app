@@ -19,8 +19,13 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
 
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(ListMajorsScreen.routeName, arguments: institution.name);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListMajorsScreen(),
+            settings: RouteSettings(arguments: institution.name),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(10, 0, 0, 10),

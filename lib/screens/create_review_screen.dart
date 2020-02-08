@@ -160,6 +160,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final courses = courseList.courses;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('University Course Search'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
