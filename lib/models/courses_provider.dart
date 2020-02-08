@@ -7,9 +7,10 @@ import '../models/http_exception.dart';
 
 class Courses with ChangeNotifier {
   List<Course> _courses = [];
-  
+
   //String _courseId = '-LzKmxO3QJLd4R6kenZ9';
   String _courseId;
+  String _insitutionName;
 
   // getter for course
   List<Course> get courses {
@@ -35,6 +36,10 @@ class Courses with ChangeNotifier {
     return _courseId;
   }
 
+  String get insitutionName {
+    return _insitutionName;
+  }
+
   Future<void> retrieveCourseData() async {
     const url = 'https://osu-course-search.firebaseio.com/courses.json';
     try {
@@ -44,7 +49,7 @@ class Courses with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      
+
       final List<Course> loadedCourses = [];
 
       extractedData.forEach((courseId, courseData) {

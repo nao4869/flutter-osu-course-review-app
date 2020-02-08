@@ -12,10 +12,12 @@ class Reviews with ChangeNotifier {
   List<Review> _reviews = [];
 
   String courseId;
+  String institutionName;
   var createdAt = DateFormat("yyyy/MM/dd").format(new DateTime.now());
 
   Reviews(
     this.courseId,
+    this.institutionName,
     this.createdAt,
     this._reviews,
   );
