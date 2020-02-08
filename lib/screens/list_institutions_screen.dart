@@ -172,8 +172,13 @@ class DataSearch extends SearchDelegate<Institution> {
         leading: Icon(Icons.school),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
-          Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
-              arguments: sugestionList[index].name);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListMajorsScreen(),
+              settings: RouteSettings(arguments: sugestionList[index].name),
+            ),
+          );
         },
       ),
       itemCount: sugestionList.length,
@@ -194,8 +199,13 @@ class DataSearch extends SearchDelegate<Institution> {
         leading: Icon(Icons.school),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
-          Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
-              arguments: sugestionList[index].name);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListMajorsScreen(),
+              settings: RouteSettings(arguments: sugestionList[index].name),
+            ),
+          );
         },
       ),
       itemCount: sugestionList.length,

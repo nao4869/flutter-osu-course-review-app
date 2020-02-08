@@ -184,8 +184,14 @@ class DataSearch extends SearchDelegate<Course> {
         leading: Icon(Icons.class_),
         title: Text(sugestionList[index].courseName.toString()),
         onTap: () {
-          Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
-              arguments: sugestionList[index].id);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CourseDetailScreen(),
+              settings:
+                  RouteSettings(arguments: sugestionList[index].id),
+            ),
+          );
         },
       ),
       itemCount: sugestionList.length,
@@ -206,8 +212,14 @@ class DataSearch extends SearchDelegate<Course> {
         leading: Icon(Icons.class_),
         title: Text(sugestionList[index].courseName.toString()),
         onTap: () {
-          Navigator.of(context).pushNamed(CourseDetailScreen.routeName,
-              arguments: sugestionList[index].id);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CourseDetailScreen(),
+              settings:
+                  RouteSettings(arguments: sugestionList[index].id),
+            ),
+          );
         },
       ),
       itemCount: sugestionList.length,
