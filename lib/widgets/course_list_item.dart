@@ -29,30 +29,21 @@ class _CourseListItemState extends State<CourseListItem> {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 8, 0, 0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.class_,
-                      color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      course.courseName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 8, 0, 0),
-                  width: 300,
-                  child: Text(
-                    course.courseName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             // Star display
             Row(
@@ -67,7 +58,6 @@ class _CourseListItemState extends State<CourseListItem> {
                   ),
                 ),
                 Container(
-                  //width: double.infinity,
                   padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                   child: Text(
                     '4.5',
@@ -89,7 +79,7 @@ class _CourseListItemState extends State<CourseListItem> {
                 minWidth: double.infinity,
                 height: 30.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: RaisedButton(
                   onPressed: () {
