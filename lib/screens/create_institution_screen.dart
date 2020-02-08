@@ -118,7 +118,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   FlatButton(
                     child: Text('Okay'),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context, rootNavigator: true).pop('dialog');
                     },
                   ),
                 ],
@@ -130,8 +130,13 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     });
 
     // navigate to specific course detail scInstitutionhen save Institution
-    Navigator.of(context).pushNamed(ListMajorsScreen.routeName,
-        arguments: _editedInstitution.name);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ListMajorsScreen(),
+        settings: RouteSettings(arguments: _editedInstitution.name),
+      ),
+    );
 
     // pop up message when course successfully added
     showDialog(
@@ -143,7 +148,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
           FlatButton(
             child: Text('Okay'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).pop('dialog');
             },
           ),
         ],
