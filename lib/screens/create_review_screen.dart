@@ -231,7 +231,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             setState(() {
                               _currentSelectedValue3 = newValue;
                               state.didChange(newValue);
-                              state.didChange(_currentSelectedValue3);
                             });
                           },
                           items: institutions.map((Institution value) {
@@ -253,7 +252,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   },
                   onSaved: (value) {
                     _editedReview = Review(
-                      institutionName: value.name.toString(),
+                      institutionName: value != null
+                          ? value.name.toString()
+                          : institutions.first.name.toString(),
                       courseId: _editedReview.courseId,
                       reviewsContent: _editedReview.reviewsContent,
                       starScore: _editedReview.starScore,
@@ -290,7 +291,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                     cs.institutionName.toLowerCase().contains(
                                           _currentSelectedValue3.name
                                               .toString()
-                                              //_currentSelectedValue3.name
                                               .toLowerCase(),
                                         ),
                               )
