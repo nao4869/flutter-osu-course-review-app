@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
@@ -26,8 +28,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
 
   // update this edited product when save form
   var _editedReview = Review(
-    courseId: null,
     institutionName: '',
+    courseId: null,
     reviewsContent: '',
     starScore: 0,
     createdAt: DateFormat("yyyy/MM/dd").format(DateTime.now()),
@@ -51,6 +53,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   }
 
   var _initValues = {
+    'institutionName': '',
     'courseId': '',
     'reviewsContent': '',
     'starScore': null,
@@ -61,6 +64,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _currentSelectedValue;
   var _currentSelectedValue2;
   var _currentSelectedValue3;
+  var insName;
   var _isInit = true;
   var _isLoading = false;
 
@@ -73,6 +77,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
         _editedReview =
             Provider.of<Reviews>(context, listen: false).findById(courseId);
         _initValues = {
+          'institutionName': _editedReview.institutionName,
           'courseId': _editedReview.courseId,
           'reviewsContent': _editedReview.reviewsContent,
           'starScore': _editedReview.starScore.toString(),
@@ -273,7 +278,18 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                               state.didChange(newValue);
                             });
                           },
-                          items: courses.map((Course value) {
+                          items: courses
+                              .where(
+                                (cs) =>
+                                    cs.institutionName.toLowerCase().contains(
+                                          _currentSelectedValue3.name
+                                              .toString()
+                                              //_currentSelectedValue3.name
+                                              .toLowerCase(),
+                                        ),
+                              )
+                              .toList()
+                              .map((Course value) {
                             return DropdownMenuItem<Course>(
                               value: value,
                               child: Text(
@@ -399,3 +415,17 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     );
   }
 }
+
+// items: _currentSelectedValue3 != null
+//                               ? courses
+//                                   .where(
+//                                     (cs) => cs.institutionName
+//                                         .toLowerCase()
+//                                         .contains(
+//                                           _editedReview.institutionName.toString()
+//                                           //_currentSelectedValue3.name
+//                                               .toLowerCase(),
+//                                         ),
+//                                   )
+//                                   .toList()
+//                               : courses.
