@@ -72,7 +72,12 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       final courseId = ModalRoute.of(context).settings.arguments as String;
-      //inal starScores = ModalRoute.of(context).settings.arguments as String;
+
+      // this line is to initialize _currentSelectedValue3 with first institution
+      final institutionList = Provider.of<Institutions>(context);
+      final institutions = institutionList.institutions;
+      _currentSelectedValue3 = institutions.first;
+
       if (courseId != null) {
         _editedReview =
             Provider.of<Reviews>(context, listen: false).findById(courseId);
@@ -226,6 +231,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             setState(() {
                               _currentSelectedValue3 = newValue;
                               state.didChange(newValue);
+                              state.didChange(_currentSelectedValue3);
                             });
                           },
                           items: institutions.map((Institution value) {
