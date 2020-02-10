@@ -64,8 +64,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   var _currentSelectedValue;
   var _currentSelectedValue2;
   var _currentSelectedValue3;
-  //var _tempInsName;
-  var insName;
   var _isInit = true;
   var _isLoading = false;
 
@@ -77,7 +75,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       // this line is to initialize _currentSelectedValue3 with first institution
       final institutionList = Provider.of<Institutions>(context);
       final institutions = institutionList.institutions;
-      //_tempInsName = institutions.first;
       if (_currentSelectedValue3 == null) {
         _currentSelectedValue3 = institutions.first;
       }
@@ -183,6 +180,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   Widget build(BuildContext context) {
     final courseList = Provider.of<Courses>(context);
     final courses = courseList.courses;
+    //print(courses);
 
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
@@ -245,6 +243,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             items: institutions.map((Institution value) {
                               return DropdownMenuItem<Institution>(
                                 value: value,
+                                //value: value != null ? value : null,
                                 child: Text(
                                   value.name.toString(),
                                   style: TextStyle(
@@ -261,10 +260,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     },
                     onSaved: (value) {
                       _editedReview = Review(
-                        institutionName: value.name.toString(),
-                        // institutionName: value != null
-                        //     ? value.name.toString()
-                        //     : institutions.first.name.toString(),
+                        institutionName: value == null
+                            ? _currentSelectedValue3.name.toString()
+                            : value.name.toString(),
                         courseId: _editedReview.courseId,
                         reviewsContent: _editedReview.reviewsContent,
                         starScore: _editedReview.starScore,
@@ -287,7 +285,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         isEmpty: _currentSelectedValue == '',
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Course>(
-                            value: _currentSelectedValue,
+                            value: _currentSelectedValue != null
+                                ? _currentSelectedValue
+                                : null,
                             isDense: true,
                             onChanged: (Course newValue) {
                               setState(() {
@@ -307,7 +307,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                 .toList()
                                 .map((Course value) {
                               return DropdownMenuItem<Course>(
-                                value: value,
+                                value: value != null ? value : null,
+                                //value: value,
                                 child: Text(
                                   value.courseName.toString(),
                                   style: TextStyle(
