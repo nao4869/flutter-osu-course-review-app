@@ -215,7 +215,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   decoration: InputDecoration(
                     labelText: 'Institution name',
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                      ),
                       onPressed: () {
                         _nameController.clear();
                       },
@@ -247,7 +250,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   decoration: InputDecoration(
                     labelText: 'Country',
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                      ),
                       onPressed: () {
                         _countryController.clear();
                       },
@@ -281,7 +287,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   decoration: InputDecoration(
                     labelText: 'State',
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                      ),
                       onPressed: () {
                         _stateController.clear();
                       },
@@ -315,7 +324,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   decoration: InputDecoration(
                     labelText: 'City',
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                      ),
                       onPressed: () {
                         _cityController.clear();
                       },
@@ -377,7 +389,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                         decoration: InputDecoration(
                           labelText: 'Logo or image of school',
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
+                            icon: Icon(
+                              Icons.clear,
+                              size: 20,
+                            ),
                             onPressed: () {
                               _logoController.clear();
                             },
