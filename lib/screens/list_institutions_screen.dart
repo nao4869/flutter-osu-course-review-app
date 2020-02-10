@@ -47,7 +47,12 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text('University Course Search'),
+        ),
       ),
       body: _isLoading
           ? Center(

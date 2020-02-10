@@ -63,7 +63,12 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: GestureDetector(
+          child: Text('University Course Search'),
+          onTap: () {
+            Navigator.of(context).pushNamed('/');
+          },
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(

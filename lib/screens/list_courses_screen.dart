@@ -44,7 +44,12 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text('University Course Search'),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -188,8 +193,7 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(arguments: sugestionList[index].id),
             ),
           );
         },
@@ -216,8 +220,7 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(arguments: sugestionList[index].id),
             ),
           );
         },
