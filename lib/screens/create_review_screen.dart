@@ -61,9 +61,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   };
 
   var _starScore = [1, 2, 3, 4, 5];
-  var _currentSelectedValue;
+  Course _currentSelectedValue;
   var _currentSelectedValue2;
-  var _currentSelectedValue3;
+  Institution _currentSelectedValue3;
   var _isInit = true;
   var _isLoading = false;
 
@@ -73,11 +73,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       final courseId = ModalRoute.of(context).settings.arguments as String;
 
       // this line is to initialize _currentSelectedValue3 with first institution
-      final institutionList = Provider.of<Institutions>(context);
-      final institutions = institutionList.institutions;
-      if (_currentSelectedValue3 == null) {
-        _currentSelectedValue3 = institutions.first;
-      }
+      // final institutionList = Provider.of<Institutions>(context);
+      // final institutions = institutionList.institutions;
+      // if (_currentSelectedValue3 == null) {
+      //   _currentSelectedValue3 = institutions.first;
+      // }
 
       if (courseId != null) {
         _editedReview =
@@ -180,7 +180,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   Widget build(BuildContext context) {
     final courseList = Provider.of<Courses>(context);
     final courses = courseList.courses;
-    //print(courses);
 
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
@@ -221,13 +220,13 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         decoration: InputDecoration(
                           labelText: 'Institution Name',
                           labelStyle: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
                           hintText: 'Please select institution name',
                         ),
-                        isEmpty: _currentSelectedValue3 == '',
+                        isEmpty: _currentSelectedValue3 == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Institution>(
                             value: _currentSelectedValue3 != null
@@ -240,7 +239,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                 state.didChange(newValue);
                               });
                             },
-                            items: institutions.map((Institution value) {
+                            items: institutions
+                                .map<DropdownMenuItem<Institution>>((value) {
                               return DropdownMenuItem<Institution>(
                                 value: value,
                                 //value: value != null ? value : null,
@@ -276,15 +276,16 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         decoration: InputDecoration(
                           labelText: 'Course Name',
                           labelStyle: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
                           hintText: 'Please select course name',
                         ),
-                        isEmpty: _currentSelectedValue == '',
+                        isEmpty: _currentSelectedValue == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Course>(
+                            //hint: Text('Please choose a course name'),
                             value: _currentSelectedValue != null
                                 ? _currentSelectedValue
                                 : null,
@@ -295,30 +296,48 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                 state.didChange(newValue);
                               });
                             },
-                            items: courses
-                                .where(
-                                  (cs) =>
-                                      cs.institutionName.toLowerCase().contains(
+                            items: _currentSelectedValue3 != null
+                                ? courses
+                                    .where(
+                                      (cs) => cs.institutionName
+                                          .toLowerCase()
+                                          .contains(
                                             _currentSelectedValue3.name
                                                 .toString()
                                                 .toLowerCase(),
                                           ),
-                                )
-                                .toList()
-                                .map((Course value) {
-                              return DropdownMenuItem<Course>(
-                                value: value != null ? value : null,
-                                //value: value,
-                                child: Text(
-                                  value.courseName.toString(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                                    )
+                                    .toList()
+                                    .map<DropdownMenuItem<Course>>(
+                                        (Course value) {
+                                    return DropdownMenuItem<Course>(
+                                      value: value != null ? value : null,
+                                      child: Text(
+                                        value.courseName.toString(),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList()
+                                : courses
+                                    .toList()
+                                    .map<DropdownMenuItem<Course>>(
+                                        (Course value) {
+                                    return DropdownMenuItem<Course>(
+                                      value: value != null ? value : null,
+                                      child: Text(
+                                        value.courseName.toString(),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                           ),
                         ),
                       );
