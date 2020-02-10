@@ -61,9 +61,10 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   };
 
   var _starScore = [1, 2, 3, 4, 5];
-  Course _currentSelectedValue;
-  var _currentSelectedValue2;
-  Institution _currentSelectedValue3;
+  Course currentSelectedValue;
+  int _currentSelectedValue2;
+  Institution currentSelectedValue3;
+
   var _isInit = true;
   var _isLoading = false;
 
@@ -72,11 +73,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     if (_isInit) {
       final courseId = ModalRoute.of(context).settings.arguments as String;
 
-      // this line is to initialize _currentSelectedValue3 with first institution
+      // this line is to initialize currentSelectedValue3 with first institution
       // final institutionList = Provider.of<Institutions>(context);
       // final institutions = institutionList.institutions;
-      // if (_currentSelectedValue3 == null) {
-      //   _currentSelectedValue3 = institutions.first;
+      // if (currentSelectedValue3 == null) {
+      //   currentSelectedValue3 = institutions.first;
       // }
 
       if (courseId != null) {
@@ -220,27 +221,24 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         decoration: InputDecoration(
                           labelText: 'Institution Name',
                           labelStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: 17,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
                           hintText: 'Please select institution name',
                         ),
-                        isEmpty: _currentSelectedValue3 == null,
+                        isEmpty: currentSelectedValue3 == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Institution>(
-                            value: _currentSelectedValue3 != null
-                                ? _currentSelectedValue3
-                                : null,
+                            value: null,
                             isDense: true,
                             onChanged: (Institution newValue) {
                               setState(() {
-                                _currentSelectedValue3 = newValue;
+                                currentSelectedValue3 = newValue;
                                 state.didChange(newValue);
                               });
                             },
-                            items: institutions
-                                .map<DropdownMenuItem<Institution>>((value) {
+                            items: institutions.map((value) {
                               return DropdownMenuItem<Institution>(
                                 value: value != null ? value : null,
                                 child: Text(
@@ -260,7 +258,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     onSaved: (value) {
                       _editedReview = Review(
                         institutionName: value == null
-                            ? _currentSelectedValue3.name.toString()
+                            ? currentSelectedValue3.name.toString()
                             : value.name.toString(),
                         courseId: _editedReview.courseId,
                         reviewsContent: _editedReview.reviewsContent,
@@ -275,39 +273,37 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         decoration: InputDecoration(
                           labelText: 'Course Name',
                           labelStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: 17,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
                           hintText: 'Please select course name',
                         ),
-                        isEmpty: _currentSelectedValue == null,
+                        isEmpty: currentSelectedValue == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Course>(
-                            value: _currentSelectedValue != null
-                                ? _currentSelectedValue
-                                : null,
+                            value: null,
                             isDense: true,
                             onChanged: (Course newValue) {
-                              setState(() {
-                                _currentSelectedValue = newValue;
-                                state.didChange(newValue);
-                              });
+                              setState(
+                                () {
+                                  currentSelectedValue = newValue;
+                                  state.didChange(newValue);                                },
+                              );
                             },
-                            items: _currentSelectedValue3 != null
+                            items: currentSelectedValue3 != null
                                 ? courses
                                     .where(
                                       (cs) => cs.institutionName
                                           .toLowerCase()
                                           .contains(
-                                            _currentSelectedValue3.name
+                                            currentSelectedValue3.name
                                                 .toString()
                                                 .toLowerCase(),
                                           ),
                                     )
                                     .toList()
-                                    .map<DropdownMenuItem<Course>>(
-                                        (Course value) {
+                                    .map((Course value) {
                                     return DropdownMenuItem<Course>(
                                       value: value != null ? value : null,
                                       child: Text(
@@ -320,10 +316,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                       ),
                                     );
                                   }).toList()
-                                : courses
-                                    .toList()
-                                    .map<DropdownMenuItem<Course>>(
-                                        (Course value) {
+                                : courses.toList().map((Course value) {
                                     return DropdownMenuItem<Course>(
                                       value: value != null ? value : null,
                                       child: Text(
