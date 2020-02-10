@@ -19,7 +19,11 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   final _stateFocusNode = FocusNode();
   final _cityFocusNode = FocusNode();
   final _logoFocusNode = FocusNode();
-  final _imageUrlController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _countryController = TextEditingController();
+  final _stateController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _logoController = TextEditingController();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -160,11 +164,18 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
 
   @override
   void dispose() {
-    // avoid momery leaks
+    // focus node
     _countryFocusNode.dispose();
     _stateFocusNode.dispose();
     _cityFocusNode.dispose();
     _logoFocusNode.dispose();
+
+    // controller
+    _nameController.dispose();
+    _countryController.dispose();
+    _stateController.dispose();
+    _cityController.dispose();
+    _logoController.dispose();
     super.dispose();
   }
 
@@ -200,8 +211,16 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   ],
                 ),
                 TextFormField(
-                  initialValue: _initValues['name'],
-                  decoration: InputDecoration(labelText: 'Institution name'),
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Institution name',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _nameController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_countryFocusNode);
@@ -225,8 +244,16 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['country'],
-                  decoration: InputDecoration(labelText: 'Country'),
+                  decoration: InputDecoration(
+                    labelText: 'Country',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _countryController.clear();
+                      },
+                    ),
+                  ),
+                  controller: _countryController,
                   textInputAction: TextInputAction.done,
                   focusNode: _countryFocusNode,
                   onFieldSubmitted: (_) {
@@ -251,8 +278,16 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['state'],
-                  decoration: InputDecoration(labelText: 'State'),
+                  decoration: InputDecoration(
+                    labelText: 'State',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _stateController.clear();
+                      },
+                    ),
+                  ),
+                  controller: _stateController,
                   textInputAction: TextInputAction.done,
                   focusNode: _stateFocusNode,
                   onFieldSubmitted: (_) {
@@ -277,8 +312,16 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['city'],
-                  decoration: InputDecoration(labelText: 'City'),
+                  decoration: InputDecoration(
+                    labelText: 'City',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _cityController.clear();
+                      },
+                    ),
+                  ),
+                  controller: _cityController,
                   textInputAction: TextInputAction.done,
                   focusNode: _cityFocusNode,
                   onFieldSubmitted: (_) {
@@ -317,25 +360,32 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                         width: 1,
                         color: Colors.grey,
                       )),
-                      child: _imageUrlController.text.isEmpty
+                      child: _logoController.text.isEmpty
                           ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Enter a URL'),
-                          )
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Enter a URL'),
+                            )
                           : FittedBox(
                               child: Image.network(
-                                _imageUrlController.text,
+                                _logoController.text,
                                 fit: BoxFit.cover,
                               ),
                             ),
                     ),
                     Expanded(
                       child: TextFormField(
-                        //initialValue: _initValues['logo'],
-                        decoration: InputDecoration(labelText: 'Logo or image of school'),
+                        decoration: InputDecoration(
+                          labelText: 'Logo or image of school',
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              _logoController.clear();
+                            },
+                          ),
+                        ),
                         keyboardType: TextInputType.url,
                         textInputAction: TextInputAction.done,
-                        controller: _imageUrlController,
+                        controller: _logoController,
                         focusNode: _logoFocusNode,
                         onFieldSubmitted: (_) {
                           _saveForm();
