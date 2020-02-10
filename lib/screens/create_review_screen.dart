@@ -242,8 +242,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             items: institutions
                                 .map<DropdownMenuItem<Institution>>((value) {
                               return DropdownMenuItem<Institution>(
-                                value: value,
-                                //value: value != null ? value : null,
+                                value: value != null ? value : null,
                                 child: Text(
                                   value.name.toString(),
                                   style: TextStyle(
@@ -285,7 +284,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         isEmpty: _currentSelectedValue == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Course>(
-                            //hint: Text('Please choose a course name'),
                             value: _currentSelectedValue != null
                                 ? _currentSelectedValue
                                 : null,
