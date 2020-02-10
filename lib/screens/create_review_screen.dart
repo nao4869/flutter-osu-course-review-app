@@ -61,9 +61,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   };
 
   var _starScore = [1, 2, 3, 4, 5];
-  Course currentSelectedValue;
+  var currentSelectedValue;
   int _currentSelectedValue2;
-  Institution currentSelectedValue3;
+  var currentSelectedValue3;
 
   var _isInit = true;
   var _isLoading = false;
@@ -219,7 +219,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     builder: (FormFieldState<Institution> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Institution Name',
+                          labelText: 'Please select Institution name',
                           labelStyle: TextStyle(
                             fontSize: 17,
                           ),
@@ -230,17 +230,18 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         isEmpty: currentSelectedValue3 == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Institution>(
-                            value: null,
+                            value: currentSelectedValue3,
                             isDense: true,
                             onChanged: (Institution newValue) {
                               setState(() {
                                 currentSelectedValue3 = newValue;
-                                state.didChange(newValue);
                               });
                             },
-                            items: institutions.map((value) {
+                            items: institutions
+                                .map<DropdownMenuItem<Institution>>(
+                                    (Institution value) {
                               return DropdownMenuItem<Institution>(
-                                value: value != null ? value : null,
+                                value: value,
                                 child: Text(
                                   value.name.toString(),
                                   style: TextStyle(
@@ -271,7 +272,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     builder: (FormFieldState<Course> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Course Name',
+                          labelText: 'Please select course name',
                           labelStyle: TextStyle(
                             fontSize: 17,
                           ),
@@ -282,14 +283,12 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         isEmpty: currentSelectedValue == null,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<Course>(
-                            value: null,
+                            value: currentSelectedValue,
                             isDense: true,
                             onChanged: (Course newValue) {
-                              setState(
-                                () {
-                                  currentSelectedValue = newValue;
-                                  state.didChange(newValue);                                },
-                              );
+                              setState(() {
+                                currentSelectedValue = newValue;
+                              });
                             },
                             items: currentSelectedValue3 != null
                                 ? courses
@@ -303,7 +302,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                           ),
                                     )
                                     .toList()
-                                    .map((Course value) {
+                                    .map<DropdownMenuItem<Course>>(
+                                        (Course value) {
                                     return DropdownMenuItem<Course>(
                                       value: value != null ? value : null,
                                       child: Text(
@@ -316,7 +316,10 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                                       ),
                                     );
                                   }).toList()
-                                : courses.toList().map((Course value) {
+                                : courses
+                                    .toList()
+                                    .map<DropdownMenuItem<Course>>(
+                                        (Course value) {
                                     return DropdownMenuItem<Course>(
                                       value: value != null ? value : null,
                                       child: Text(
@@ -336,7 +339,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     onSaved: (value) {
                       _editedReview = Review(
                         institutionName: _editedReview.institutionName,
-                        courseId: value.id.toString(),
+                        courseId: value == null
+                            ? currentSelectedValue.id.toString()
+                            : value.id.toString(),
                         reviewsContent: _editedReview.reviewsContent,
                         starScore: _editedReview.starScore,
                         createdAt: _editedReview.createdAt,
