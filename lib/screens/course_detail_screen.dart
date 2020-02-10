@@ -306,19 +306,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed('/');
         },
-        label: Text(
-          'New-Review',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
         backgroundColor: Theme.of(context).primaryColor,
-        icon: Icon(
-          Icons.create,
+        child: Icon(
+          Icons.home,
           color: Colors.white,
         ),
       ), //

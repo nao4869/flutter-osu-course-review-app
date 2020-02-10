@@ -19,6 +19,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   final _stateFocusNode = FocusNode();
   final _cityFocusNode = FocusNode();
   final _logoFocusNode = FocusNode();
+  final _imageUrlController = TextEditingController();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -301,28 +302,72 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                     );
                   },
                 ),
-                TextFormField(
-                  initialValue: _initValues['logo'],
-                  decoration: InputDecoration(labelText: 'Logo'),
-                  textInputAction: TextInputAction.done,
-                  focusNode: _logoFocusNode,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter a logo of institution.';
-                    } else {
-                      return null; // no error
-                    }
-                  },
-                  onSaved: (value) {
-                    _editedInstitution = Institution(
-                      id: _editedInstitution.id,
-                      name: _editedInstitution.name,
-                      country: _editedInstitution.country,
-                      state: _editedInstitution.state,
-                      city: _editedInstitution.city,
-                      logo: value,
-                    );
-                  },
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: EdgeInsets.only(
+                        top: 8,
+                        right: 10,
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      )),
+                      child: _imageUrlController.text.isEmpty
+                          ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Enter a URL'),
+                          )
+                          : FittedBox(
+                              child: Image.network(
+                                _imageUrlController.text,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        //initialValue: _initValues['logo'],
+                        decoration: InputDecoration(labelText: 'Logo or image of school'),
+                        keyboardType: TextInputType.url,
+                        textInputAction: TextInputAction.done,
+                        controller: _imageUrlController,
+                        focusNode: _logoFocusNode,
+                        onFieldSubmitted: (_) {
+                          _saveForm();
+                        },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter an image URL.';
+                          }
+                          if (!value.startsWith('http') ||
+                              !value.startsWith('https')) {
+                            return 'Please enter a valid URL.';
+                          }
+                          if (!value.endsWith('.png') &&
+                              !value.endsWith('.jpg') &&
+                              !value.endsWith('.jpeg')) {
+                            return 'Please enter a valid image URL.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _editedInstitution = Institution(
+                            id: _editedInstitution.id,
+                            name: _editedInstitution.name,
+                            country: _editedInstitution.country,
+                            state: _editedInstitution.state,
+                            city: _editedInstitution.city,
+                            logo: value,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 // Raised Button
                 Padding(
