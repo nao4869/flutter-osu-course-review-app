@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:intl/intl.dart";
@@ -22,6 +20,7 @@ class CreateReviewScreen extends StatefulWidget {
 
 class _CreateReviewScreen extends State<CreateReviewScreen> {
   final _contentFocusNode = FocusNode();
+  final _contentController = TextEditingController();
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -219,9 +218,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     builder: (FormFieldState<Institution> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Please select Institution name',
+                          labelText: 'Institution name',
                           labelStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
@@ -272,9 +271,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     builder: (FormFieldState<Course> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Please select course name',
+                          labelText: 'Course name',
                           labelStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
@@ -349,9 +348,23 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     },
                   ),
                   TextFormField(
-                    initialValue: _initValues['reviewsContent'],
-                    decoration: InputDecoration(labelText: 'Review Content'),
-                    maxLines: 8,
+                    controller: _contentController,
+                    decoration: InputDecoration(
+                      labelText: 'Review Content',
+                      suffixIcon: IconButton(
+                        icon: Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: Icon(
+                            Icons.clear,
+                            size: 18,
+                          ),
+                        ),
+                        onPressed: () {
+                          _contentController.clear();
+                        },
+                      ),
+                    ),
+                    maxLines: 10,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.done,
                     focusNode: _contentFocusNode,
@@ -376,9 +389,9 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     builder: (FormFieldState<int> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
-                          labelText: 'Rate of Course',
+                          labelText: 'Course rate',
                           labelStyle: TextStyle(
-                            fontSize: 22,
+                            fontSize: 15,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),
