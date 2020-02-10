@@ -27,6 +27,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   final _languageFocusNode = FocusNode();
   final _majorFocusNode = FocusNode();
 
+  final _nameController = TextEditingController();
+  final _contentController = TextEditingController();
+  final _prerequisiteController = TextEditingController();
+  final _proctoredexamsController = TextEditingController();
+  final _groupworkController = TextEditingController();
+  final _textbookController = TextEditingController();
+
   // global key
   final _form = GlobalKey<FormState>();
 
@@ -197,6 +204,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     _textBookFocusNode.dispose();
     _languageFocusNode.dispose();
     _majorFocusNode.dispose();
+
+    _nameController.dispose();
+    _contentController.dispose();
+    _prerequisiteController.dispose();
+    _proctoredexamsController.dispose();
+    _groupworkController.dispose();
+    _textbookController.dispose();
     super.dispose();
   }
 
@@ -300,8 +314,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['courseName'],
-                  decoration: InputDecoration(labelText: 'Course Name'),
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Course Name',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _nameController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_contentFocusNode);
@@ -329,8 +357,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['courseContent'],
-                  decoration: InputDecoration(labelText: 'Course Content'),
+                  controller: _contentController,
+                  decoration: InputDecoration(
+                    labelText: 'Course Content',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _contentController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   focusNode: _contentFocusNode,
                   onFieldSubmitted: (_) {
@@ -359,8 +401,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['prerequisite'],
-                  decoration: InputDecoration(labelText: 'Prerequisite'),
+                  controller: _prerequisiteController,
+                  decoration: InputDecoration(
+                    labelText: 'Prerequisite',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _prerequisiteController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   focusNode: _prerequisiteFocusNode,
                   onFieldSubmitted: (_) {
@@ -390,8 +446,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['proctoredexams'],
-                  decoration: InputDecoration(labelText: 'Proctored-Exams'),
+                  controller: _proctoredexamsController,
+                  decoration: InputDecoration(
+                    labelText: 'Proctored-Exams',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _proctoredexamsController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   focusNode: _proctoredExamsFocusNode,
                   onFieldSubmitted: (_) {
@@ -420,8 +490,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['groupwork'],
-                  decoration: InputDecoration(labelText: 'Groupwork'),
+                  controller: _groupworkController,
+                  decoration: InputDecoration(
+                    labelText: 'Groupwork',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _groupworkController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   focusNode: _groupWorkFocusNode,
                   onFieldSubmitted: (_) {
@@ -450,8 +534,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   },
                 ),
                 TextFormField(
-                  initialValue: _initValues['textbook'],
-                  decoration: InputDecoration(labelText: 'Textbook'),
+                  controller: _textbookController,
+                  decoration: InputDecoration(
+                    labelText: 'Textbook',
+                    suffixIcon: IconButton(
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Icon(
+                          Icons.clear,
+                          size: 20,
+                        ),
+                      ),
+                      onPressed: () {
+                        _textbookController.clear();
+                      },
+                    ),
+                  ),
                   textInputAction: TextInputAction.next,
                   focusNode: _textBookFocusNode,
                   onFieldSubmitted: (_) {
@@ -495,6 +593,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       isEmpty: _currentSelectedValue == '',
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<Language>(
+                          focusNode: _languageFocusNode,
                           value: _currentSelectedValue,
                           isDense: true,
                           onChanged: (Language newValue) {
@@ -543,6 +642,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       isEmpty: _currentSelectedValue2 == '',
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<Major>(
+                          focusNode: _majorFocusNode,
                           value: _currentSelectedValue2,
                           isDense: true,
                           onChanged: (Major newValue) {
