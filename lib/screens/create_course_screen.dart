@@ -271,7 +271,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       decoration: InputDecoration(
                         labelText: 'Institution name',
                         labelStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                         errorStyle:
                             TextStyle(color: Colors.redAccent, fontSize: 15.0),
@@ -317,6 +317,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'Course Name',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -360,6 +363,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _contentController,
                   decoration: InputDecoration(
                     labelText: 'Course Content',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -404,6 +410,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _prerequisiteController,
                   decoration: InputDecoration(
                     labelText: 'Prerequisite',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -449,6 +458,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _proctoredexamsController,
                   decoration: InputDecoration(
                     labelText: 'Proctored-Exams',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -493,6 +505,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _groupworkController,
                   decoration: InputDecoration(
                     labelText: 'Groupwork',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -537,6 +552,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   controller: _textbookController,
                   decoration: InputDecoration(
                     labelText: 'Textbook',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(left: 18.0),
@@ -583,7 +601,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       decoration: InputDecoration(
                         labelText: 'Programming language',
                         labelStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                         errorStyle:
                             TextStyle(color: Colors.redAccent, fontSize: 15.0),
@@ -633,7 +651,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       decoration: InputDecoration(
                         labelText: 'Major of course',
                         labelStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                         errorStyle:
                             TextStyle(color: Colors.redAccent, fontSize: 15.0),
