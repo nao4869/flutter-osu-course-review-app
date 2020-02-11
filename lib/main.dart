@@ -9,6 +9,7 @@ import './screens/list_majors_screen.dart';
 import './screens/list_institutions_screen.dart';
 import './screens/tabs_screen.dart';
 
+import './models/auth.dart';
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
 import './models/major_provider.dart';
@@ -30,6 +31,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider.value(
           value: Courses(),
         ),
