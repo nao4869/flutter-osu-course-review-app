@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/screens/your_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
 import '../models/http_exception.dart';
+import '../screens/your_courses_screen.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -17,6 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -185,21 +188,27 @@ class _AuthCardState extends State<AuthCard>
           _authData['password'],
         );
       }
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('New Activity'),
-          content: Text('Succesfully logged in'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => YourCourses(),
         ),
       );
+      // showDialog(
+      //   context: context,
+      //   builder: (ctx) => AlertDialog(
+      //     title: Text('New Activity'),
+      //     content: Text('Succesfully logged in'),
+      //     actions: <Widget>[
+      //       FlatButton(
+      //         child: Text('Okay'),
+      //         onPressed: () {
+      //           Navigator.of(ctx).pop();
+      //         },
+      //       )
+      //     ],
+      //   ),
+      // );
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
@@ -289,6 +298,7 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     suffixIcon: IconButton(
@@ -297,12 +307,11 @@ class _AuthCardState extends State<AuthCard>
                         size: 18,
                       ),
                       onPressed: () {
-                        _emailController.clear();
+                        _passwordController.clear();
                       },
                     ),
                   ),
                   obscureText: true,
-                  controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
