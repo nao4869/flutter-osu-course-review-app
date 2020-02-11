@@ -391,7 +391,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         decoration: InputDecoration(
                           labelText: 'Course rate',
                           labelStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: 18,
                           ),
                           errorStyle: TextStyle(
                               color: Colors.redAccent, fontSize: 15.0),

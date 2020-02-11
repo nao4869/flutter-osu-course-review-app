@@ -100,9 +100,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                               ),
                             ],
                           ),
-                          Container(
-                            height: 700,
-                            child: ListView.builder(
+                          Flexible(
+                            child: new ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
                               padding: const EdgeInsets.all(25),
                               itemCount: loadedMajorCourses.length,
                               itemBuilder: (ctx, i) =>

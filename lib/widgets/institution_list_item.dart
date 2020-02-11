@@ -34,7 +34,6 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        width: double.infinity,
         child: Column(
           children: <Widget>[
             Padding(
@@ -59,7 +58,6 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // これで両端に寄せる
                 children: <Widget>[
                   Expanded(
                     flex: 1,
@@ -91,7 +89,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Expanded(
                                 child: Text(
                                   institution.country,
                                   style: TextStyle(
@@ -118,7 +116,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Expanded(
                                 child: Text(
                                   institution.state,
                                   style: TextStyle(
@@ -145,7 +143,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Expanded(
                                 child: Text(
                                   institution.city,
                                   style: TextStyle(
