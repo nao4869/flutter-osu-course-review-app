@@ -44,7 +44,12 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text('University Course Search'),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -67,8 +72,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           : LayoutBuilder(
               builder:
                   (BuildContext context, BoxConstraints viewportConstraints) {
-                return SingleChildScrollView(
-                  child: Padding(
+                return Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -95,9 +99,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                               ),
                             ],
                           ),
-                          Container(
-                            height: 700,
-                            child: ListView.builder(
+                          Flexible(
+                            child: new ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
                               padding: const EdgeInsets.all(25),
                               itemCount: loadedMajorCourses.length,
                               itemBuilder: (ctx, i) =>
@@ -109,7 +114,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    
                   ),
                 );
               },
@@ -188,8 +193,7 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(arguments: sugestionList[index].id),
             ),
           );
         },
@@ -216,8 +220,7 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(arguments: sugestionList[index].id),
             ),
           );
         },

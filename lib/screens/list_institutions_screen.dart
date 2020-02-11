@@ -47,7 +47,12 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text('University Course Search'),
+        ),
       ),
       body: _isLoading
           ? Center(
@@ -56,47 +61,45 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           : LayoutBuilder(
               builder:
                   (BuildContext context, BoxConstraints viewportConstraints) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                child: Text(
-                                  'Search course by Institution',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: viewportConstraints.maxHeight,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                              child: Text(
+                                'Search course by Institution',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
                               ),
-                            ],
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 750,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.all(25),
-                              itemCount: institutions.length,
-                              itemBuilder: (ctx, i) =>
-                                  ChangeNotifierProvider.value(
-                                value: institutions[i],
-                                child: InstitutionListItem(),
-                              ),
+                            ),
+                          ],
+                        ),
+                        Flexible(
+                          child: new ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(25),
+                            itemCount: institutions.length,
+                            itemBuilder: (ctx, i) =>
+                                ChangeNotifierProvider.value(
+                              value: institutions[i],
+                              child: InstitutionListItem(),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );

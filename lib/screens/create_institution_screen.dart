@@ -214,8 +214,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'Institution name',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
                       onPressed: () {
                         _nameController.clear();
                       },
@@ -246,8 +252,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Country',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
                       onPressed: () {
                         _countryController.clear();
                       },
@@ -280,8 +292,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'State',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
                       onPressed: () {
                         _stateController.clear();
                       },
@@ -314,8 +332,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'City',
+                    labelStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
                       onPressed: () {
                         _cityController.clear();
                       },
@@ -376,8 +400,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       child: TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Logo or image of school',
+                          labelStyle: TextStyle(
+                            fontSize: 13,
+                          ),
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
+                            icon: Icon(
+                              Icons.clear,
+                              size: 18,
+                            ),
                             onPressed: () {
                               _logoController.clear();
                             },
