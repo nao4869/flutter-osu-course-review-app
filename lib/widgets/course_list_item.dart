@@ -3,8 +3,6 @@ import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/course.dart';
-import '../models/review.dart';
-import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
 
 class CourseListItem extends StatefulWidget {

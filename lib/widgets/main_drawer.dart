@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../screens/create_course_screen.dart';
-import '../screens/create_review_screen.dart';
-import '../screens/list_majors_screen.dart';
-
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, Function tapHandler) {
     return ListTile(

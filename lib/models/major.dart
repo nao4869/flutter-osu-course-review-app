@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:osu_course_review/models/institution.dart';
 
 class Major with ChangeNotifier {
   final String id;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/widgets/main_drawer.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../screens/list_institutions_screen.dart';

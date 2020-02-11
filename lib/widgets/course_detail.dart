@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:osu_course_review/widgets/course_list_item.dart';
-//import '../models/course.dart';
-//import '../screens/course_detail_screen.dart';
 
 class CourseDetail extends StatelessWidget {
   final String id;

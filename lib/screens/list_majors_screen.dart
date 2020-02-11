@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../models/star_display.dart';
 import '../models/major_provider.dart';
 import '../models/major.dart';
 import '../widgets/major_list_item.dart';

@@ -106,20 +106,3 @@ class Reviews with ChangeNotifier {
     existingReview = null;
   }
 }
-
-// Future<void> updateReview(Review review, String courseId) async {
-//   final reviewIndex = _reviews.indexWhere((rv) => rv.courseId == courseId);
-
-//   if (reviewIndex >= 0) {
-//     // target URL
-//     final url = 'https://osu-course-search.firebaseio.com/reviews/$courseId.json';
-//     await http.patch(url,
-//         body: json.encode({
-//           'reviewsContent': review.reviewsContent,
-//         }));
-//     _reviews[reviewIndex] = review;
-//     notifyListeners();
-//   } else {
-//     print('...');
-//   }
-// }

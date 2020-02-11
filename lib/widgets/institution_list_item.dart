@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/institution.dart';
-import '../models/institution_provider.dart';
 
 class InstitutionListItem extends StatefulWidget {
   @override

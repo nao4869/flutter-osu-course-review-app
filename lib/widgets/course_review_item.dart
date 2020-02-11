@@ -68,23 +68,3 @@ class CourseReviewItem extends StatelessWidget {
     );
   }
 }
-
-// IconButton(
-//   icon: Icon(Icons.edit),
-//   color: Theme.of(context).primaryColor,
-//   onPressed: () {
-//     Navigator.of(context).pushNamed(
-//         CreateReviewScreen.routeName,
-//         arguments: review.courseId);
-//   },
-// ),
-// IconButton(
-//   icon: Icon(Icons.delete),
-//   color: Theme.of(context).errorColor,
-//   onPressed: () {
-//     // retrieve the loaded course id
-//     final courseId = ModalRoute.of(context).settings.arguments as String;
-//     Provider.of<Reviews>(context, listen: false)
-//         .deleteReview(courseId);
-//   },
-// ),
