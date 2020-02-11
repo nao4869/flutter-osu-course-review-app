@@ -12,9 +12,23 @@ class Courses with ChangeNotifier {
   String _courseId;
   String _insitutionName;
 
+  final String authToken;
+  final String userId;
+
+  Courses(
+    this.authToken,
+    this.userId,
+    this._courses,
+  );
+
   // getter for course
   List<Course> get courses {
     return [..._courses];
+  }
+
+  // function to return user favorite course
+  List<Course> get favoriteItems {
+    return _courses.where((cs) => cs.isFavorite).toList();
   }
 
   //Comparing ID of each courses with id of the arguments

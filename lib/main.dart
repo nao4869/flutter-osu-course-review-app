@@ -34,8 +34,11 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Courses(),
+        ChangeNotifierProxyProvider<Auth, Courses>(
+          builder: (ctx, auth, previousCourses) => Courses(
+              auth.token,
+              auth.userId,
+              previousCourses == null ? [] : previousCourses.courses),
         ),
         ChangeNotifierProvider.value(
           value: Majors(),
