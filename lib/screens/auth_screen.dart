@@ -24,8 +24,8 @@ class _AuthScreenState extends State<AuthScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                  Color.fromRGBO(225, 257, 255, 1).withOpacity(0.9),
+                  Color.fromRGBO(255, 257, 157, 1).withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -139,6 +139,9 @@ class _AuthCardState extends State<AuthCard>
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 
   void _showErrorDialog(String message) {
