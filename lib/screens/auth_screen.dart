@@ -6,9 +6,14 @@ import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   static const routeName = '/auth';
 
+  @override
+  _AuthScreenState createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -89,13 +94,17 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
   var _isLoading = false;
-  final _passwordController = TextEditingController();
   AnimationController _controller;
   Animation<Offset> _slideAnimation;
   Animation<double> _opacityAnimation;
@@ -253,7 +262,19 @@ class _AuthCardState extends State<AuthCard>
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'E-Mail',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        _emailController.clear();
+                      },
+                    ),
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
@@ -265,7 +286,18 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        _emailController.clear();
+                      },
+                    ),
+                  ),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
@@ -289,9 +321,20 @@ class _AuthCardState extends State<AuthCard>
                     child: SlideTransition(
                       position: _slideAnimation,
                       child: TextFormField(
+                        controller: _confirmPasswordController,
                         enabled: _authMode == AuthMode.Signup,
-                        decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              size: 18,
+                            ),
+                            onPressed: () {
+                              _confirmPasswordController.clear();
+                            },
+                          ),
+                        ),
                         obscureText: true,
                         validator: _authMode == AuthMode.Signup
                             ? (value) {
