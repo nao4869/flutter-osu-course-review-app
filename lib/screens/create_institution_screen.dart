@@ -396,92 +396,95 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                     },
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 100,
-                      height: 100,
-                      margin: EdgeInsets.only(
-                        top: 8,
-                        right: 10,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        width: 100,
+                        height: 100,
+                        margin: EdgeInsets.only(
+                          top: 8,
+                          right: 10,
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          width: 1,
+                          color: Colors.grey,
+                        )),
+                        child: _logoController.text.isEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Enter a URL'),
+                              )
+                            : FittedBox(
+                                child: Image.network(
+                                  _logoController.text,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                       ),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        width: 1,
-                        color: Colors.grey,
-                      )),
-                      child: _logoController.text.isEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Enter a URL'),
-                            )
-                          : FittedBox(
-                              child: Image.network(
-                                _logoController.text,
-                                fit: BoxFit.cover,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Logo or image of school',
+                              labelStyle: TextStyle(
+                                fontSize: 13,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.clear,
+                                  size: 18,
+                                ),
+                                onPressed: () {
+                                  _logoController.clear();
+                                },
+                              ),
+                              contentPadding: const EdgeInsets.all(8.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
                             ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Logo or image of school',
-                            labelStyle: TextStyle(
-                              fontSize: 13,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                size: 18,
-                              ),
-                              onPressed: () {
-                                _logoController.clear();
-                              },
-                            ),
-                            contentPadding: const EdgeInsets.all(8.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
+                            keyboardType: TextInputType.url,
+                            textInputAction: TextInputAction.done,
+                            controller: _logoController,
+                            focusNode: _logoFocusNode,
+                            onFieldSubmitted: (_) {
+                              _saveForm();
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter an image URL.';
+                              }
+                              if (!value.startsWith('http') ||
+                                  !value.startsWith('https')) {
+                                return 'Please enter a valid URL.';
+                              }
+                              if (!value.endsWith('.png') &&
+                                  !value.endsWith('.jpg') &&
+                                  !value.endsWith('.jpeg')) {
+                                return 'Please enter a valid image URL.';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _editedInstitution = Institution(
+                                id: _editedInstitution.id,
+                                name: _editedInstitution.name,
+                                country: _editedInstitution.country,
+                                state: _editedInstitution.state,
+                                city: _editedInstitution.city,
+                                logo: value,
+                              );
+                            },
                           ),
-                          keyboardType: TextInputType.url,
-                          textInputAction: TextInputAction.done,
-                          controller: _logoController,
-                          focusNode: _logoFocusNode,
-                          onFieldSubmitted: (_) {
-                            _saveForm();
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter an image URL.';
-                            }
-                            if (!value.startsWith('http') ||
-                                !value.startsWith('https')) {
-                              return 'Please enter a valid URL.';
-                            }
-                            if (!value.endsWith('.png') &&
-                                !value.endsWith('.jpg') &&
-                                !value.endsWith('.jpeg')) {
-                              return 'Please enter a valid image URL.';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _editedInstitution = Institution(
-                              id: _editedInstitution.id,
-                              name: _editedInstitution.name,
-                              country: _editedInstitution.country,
-                              state: _editedInstitution.state,
-                              city: _editedInstitution.city,
-                              logo: value,
-                            );
-                          },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 // Raised Button
                 Padding(
