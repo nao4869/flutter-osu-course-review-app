@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 import '../screens/list_majors_screen.dart';
 
@@ -14,6 +15,7 @@ class CreateInstitutionScreen extends StatefulWidget {
 }
 
 class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
+  final _nameFocusNode = FocusNode();
   final _countryFocusNode = FocusNode();
   final _stateFocusNode = FocusNode();
   final _cityFocusNode = FocusNode();
@@ -23,6 +25,93 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   final _stateController = TextEditingController();
   final _cityController = TextEditingController();
   final _logoController = TextEditingController();
+
+  /// Creates the [KeyboardActionsConfig] to hook up the fields
+  /// and their focus nodes to our [FormKeyboardActions].
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+      keyboardBarColor: Colors.black,
+      nextFocus: true,
+      actions: [
+        KeyboardAction(
+          focusNode: _nameFocusNode,
+          closeWidget: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 33.0),
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        KeyboardAction(
+          focusNode: _countryFocusNode,
+          closeWidget: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 33.0),
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        KeyboardAction(
+          focusNode: _stateFocusNode,
+          closeWidget: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 33.0),
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        KeyboardAction(
+          focusNode: _cityFocusNode,
+          closeWidget: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 33.0),
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        KeyboardAction(
+          focusNode: _logoFocusNode,
+          closeWidget: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 33.0),
+              child: Text(
+                "CLOSE",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   // global key
   final _form = GlobalKey<FormState>();
@@ -164,6 +253,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   @override
   void dispose() {
     // focus node
+    _nameFocusNode.dispose();
     _countryFocusNode.dispose();
     _stateFocusNode.dispose();
     _cityFocusNode.dispose();
@@ -184,333 +274,337 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       appBar: AppBar(
         title: Text('University Course Search'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          // setting global key in the form
-          key: _form,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'Create New Institution',
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Institution name',
-                      labelStyle: TextStyle(
-                        fontSize: 13,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          size: 18,
-                        ),
-                        onPressed: () {
-                          _nameController.clear();
-                        },
-                      ),
-                      contentPadding: const EdgeInsets.all(8.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_countryFocusNode);
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter an institution name.';
-                      } else {
-                        return null; // no error
-                      }
-                    },
-                    onSaved: (value) {
-                      _editedInstitution = Institution(
-                        id: _editedInstitution.id,
-                        name: value,
-                        country: _editedInstitution.country,
-                        state: _editedInstitution.state,
-                        city: _editedInstitution.city,
-                        logo: _editedInstitution.logo,
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Country',
-                      labelStyle: TextStyle(
-                        fontSize: 13,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          size: 18,
-                        ),
-                        onPressed: () {
-                          _countryController.clear();
-                        },
-                      ),
-                      contentPadding: const EdgeInsets.all(8.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    controller: _countryController,
-                    textInputAction: TextInputAction.done,
-                    focusNode: _countryFocusNode,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_stateFocusNode);
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a country of institution name.';
-                      } else {
-                        return null; // no error
-                      }
-                    },
-                    onSaved: (value) {
-                      _editedInstitution = Institution(
-                        id: _editedInstitution.id,
-                        name: _editedInstitution.name,
-                        country: value,
-                        state: _editedInstitution.state,
-                        city: _editedInstitution.city,
-                        logo: _editedInstitution.logo,
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'State',
-                      labelStyle: TextStyle(
-                        fontSize: 13,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          size: 18,
-                        ),
-                        onPressed: () {
-                          _stateController.clear();
-                        },
-                      ),
-                      contentPadding: const EdgeInsets.all(8.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    controller: _stateController,
-                    textInputAction: TextInputAction.done,
-                    focusNode: _stateFocusNode,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_cityFocusNode);
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a state of institution.';
-                      } else {
-                        return null; // no error
-                      }
-                    },
-                    onSaved: (value) {
-                      _editedInstitution = Institution(
-                        id: _editedInstitution.id,
-                        name: _editedInstitution.name,
-                        country: _editedInstitution.country,
-                        state: value,
-                        city: _editedInstitution.city,
-                        logo: _editedInstitution.logo,
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'City',
-                      labelStyle: TextStyle(
-                        fontSize: 13,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          size: 18,
-                        ),
-                        onPressed: () {
-                          _cityController.clear();
-                        },
-                      ),
-                      contentPadding: const EdgeInsets.all(8.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    controller: _cityController,
-                    textInputAction: TextInputAction.done,
-                    focusNode: _cityFocusNode,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_logoFocusNode);
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a city of institution.';
-                      } else {
-                        return null; // no error
-                      }
-                    },
-                    onSaved: (value) {
-                      _editedInstitution = Institution(
-                        id: _editedInstitution.id,
-                        name: _editedInstitution.name,
-                        country: _editedInstitution.country,
-                        state: _editedInstitution.state,
-                        city: value,
-                        logo: _editedInstitution.logo,
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+      body: KeyboardActions(
+        config: _buildConfig(context),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            // setting global key in the form
+            key: _form,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Container(
-                        width: 100,
-                        height: 100,
-                        margin: EdgeInsets.only(
-                          top: 8,
-                          right: 10,
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          width: 1,
-                          color: Colors.grey,
-                        )),
-                        child: _logoController.text.isEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('Enter a URL'),
-                              )
-                            : FittedBox(
-                                child: Image.network(
-                                  _logoController.text,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Logo or image of school',
-                              labelStyle: TextStyle(
-                                fontSize: 13,
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.clear,
-                                  size: 18,
-                                ),
-                                onPressed: () {
-                                  _logoController.clear();
-                                },
-                              ),
-                              contentPadding: const EdgeInsets.all(8.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            keyboardType: TextInputType.url,
-                            textInputAction: TextInputAction.done,
-                            controller: _logoController,
-                            focusNode: _logoFocusNode,
-                            onFieldSubmitted: (_) {
-                              _saveForm();
-                            },
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter an image URL.';
-                              }
-                              if (!value.startsWith('http') ||
-                                  !value.startsWith('https')) {
-                                return 'Please enter a valid URL.';
-                              }
-                              if (!value.endsWith('.png') &&
-                                  !value.endsWith('.jpg') &&
-                                  !value.endsWith('.jpeg')) {
-                                return 'Please enter a valid image URL.';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _editedInstitution = Institution(
-                                id: _editedInstitution.id,
-                                name: _editedInstitution.name,
-                                country: _editedInstitution.country,
-                                state: _editedInstitution.state,
-                                city: _editedInstitution.city,
-                                logo: value,
-                              );
-                            },
+                        margin: EdgeInsets.all(10),
+                        child: Text(
+                          'Create New Institution',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                // Raised Button
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ButtonTheme(
-                    minWidth: double.infinity,
-                    child: RaisedButton(
-                      onPressed: _saveForm,
-                      child: Text(
-                        "Save Institution",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _nameController,
+                      focusNode: _nameFocusNode,
+                      decoration: InputDecoration(
+                        labelText: 'Institution name',
+                        labelStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            _nameController.clear();
+                          },
+                        ),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_countryFocusNode);
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter an institution name.';
+                        } else {
+                          return null; // no error
+                        }
+                      },
+                      onSaved: (value) {
+                        _editedInstitution = Institution(
+                          id: _editedInstitution.id,
+                          name: value,
+                          country: _editedInstitution.country,
+                          state: _editedInstitution.state,
+                          city: _editedInstitution.city,
+                          logo: _editedInstitution.logo,
+                        );
+                      },
                     ),
                   ),
-                  // to do, add clear form button
-                  // to do, add save and add another button
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Country',
+                        labelStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            _countryController.clear();
+                          },
+                        ),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      controller: _countryController,
+                      textInputAction: TextInputAction.done,
+                      focusNode: _countryFocusNode,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_stateFocusNode);
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a country of institution name.';
+                        } else {
+                          return null; // no error
+                        }
+                      },
+                      onSaved: (value) {
+                        _editedInstitution = Institution(
+                          id: _editedInstitution.id,
+                          name: _editedInstitution.name,
+                          country: value,
+                          state: _editedInstitution.state,
+                          city: _editedInstitution.city,
+                          logo: _editedInstitution.logo,
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'State',
+                        labelStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            _stateController.clear();
+                          },
+                        ),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      controller: _stateController,
+                      textInputAction: TextInputAction.done,
+                      focusNode: _stateFocusNode,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_cityFocusNode);
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a state of institution.';
+                        } else {
+                          return null; // no error
+                        }
+                      },
+                      onSaved: (value) {
+                        _editedInstitution = Institution(
+                          id: _editedInstitution.id,
+                          name: _editedInstitution.name,
+                          country: _editedInstitution.country,
+                          state: value,
+                          city: _editedInstitution.city,
+                          logo: _editedInstitution.logo,
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'City',
+                        labelStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            _cityController.clear();
+                          },
+                        ),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      controller: _cityController,
+                      textInputAction: TextInputAction.done,
+                      focusNode: _cityFocusNode,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_logoFocusNode);
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a city of institution.';
+                        } else {
+                          return null; // no error
+                        }
+                      },
+                      onSaved: (value) {
+                        _editedInstitution = Institution(
+                          id: _editedInstitution.id,
+                          name: _editedInstitution.name,
+                          country: _editedInstitution.country,
+                          state: _editedInstitution.state,
+                          city: value,
+                          logo: _editedInstitution.logo,
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          height: 100,
+                          margin: EdgeInsets.only(
+                            top: 8,
+                            right: 10,
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            width: 1,
+                            color: Colors.grey,
+                          )),
+                          child: _logoController.text.isEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('Enter a URL'),
+                                )
+                              : FittedBox(
+                                  child: Image.network(
+                                    _logoController.text,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Logo or image of school',
+                                labelStyle: TextStyle(
+                                  fontSize: 13,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.clear,
+                                    size: 18,
+                                  ),
+                                  onPressed: () {
+                                    _logoController.clear();
+                                  },
+                                ),
+                                contentPadding: const EdgeInsets.all(8.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              keyboardType: TextInputType.url,
+                              textInputAction: TextInputAction.done,
+                              controller: _logoController,
+                              focusNode: _logoFocusNode,
+                              onFieldSubmitted: (_) {
+                                _saveForm();
+                              },
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Please enter an image URL.';
+                                }
+                                if (!value.startsWith('http') ||
+                                    !value.startsWith('https')) {
+                                  return 'Please enter a valid URL.';
+                                }
+                                if (!value.endsWith('.png') &&
+                                    !value.endsWith('.jpg') &&
+                                    !value.endsWith('.jpeg')) {
+                                  return 'Please enter a valid image URL.';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _editedInstitution = Institution(
+                                  id: _editedInstitution.id,
+                                  name: _editedInstitution.name,
+                                  country: _editedInstitution.country,
+                                  state: _editedInstitution.state,
+                                  city: _editedInstitution.city,
+                                  logo: value,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Raised Button
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ButtonTheme(
+                      minWidth: double.infinity,
+                      child: RaisedButton(
+                        onPressed: _saveForm,
+                        child: Text(
+                          "Save Institution",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        color: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    // to do, add clear form button
+                    // to do, add save and add another button
+                  ),
+                ],
+              ),
             ),
           ),
         ),
