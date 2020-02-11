@@ -215,7 +215,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: FormField<Institution>(
                       builder: (FormFieldState<Institution> state) {
                         return InputDecorator(
@@ -275,7 +275,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: FormField<Course>(
                       builder: (FormFieldState<Course> state) {
                         return InputDecorator(
@@ -362,7 +362,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: TextFormField(
                       controller: _contentController,
                       decoration: InputDecoration(
@@ -407,7 +407,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: FormField<int>(
                       builder: (FormFieldState<int> state) {
                         return InputDecorator(
@@ -458,7 +458,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                   ),
                   // Raised Button
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: ButtonTheme(
                       minWidth: double.infinity,
                       child: RaisedButton(

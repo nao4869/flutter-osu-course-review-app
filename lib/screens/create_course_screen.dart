@@ -280,7 +280,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           hintText: 'Please select institution of course',
                           contentPadding: const EdgeInsets.all(8.0),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         isEmpty: _currentSelectedValue3 == '',
@@ -343,7 +343,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -396,7 +396,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -451,7 +451,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -506,7 +506,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -560,7 +560,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -614,7 +614,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.next,
@@ -661,7 +661,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               'Please select programming language of course',
                           contentPadding: const EdgeInsets.all(8.0),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         isEmpty: _currentSelectedValue == '',
@@ -717,7 +717,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           hintText: 'Please select major of course',
                           contentPadding: const EdgeInsets.all(8.0),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         isEmpty: _currentSelectedValue2 == '',
@@ -760,7 +760,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 ),
                 // Raised Button
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: ButtonTheme(
                     minWidth: double.infinity,
                     child: RaisedButton(

@@ -229,7 +229,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     textInputAction: TextInputAction.done,
@@ -274,7 +274,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     controller: _countryController,
@@ -321,7 +321,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     controller: _stateController,
@@ -368,7 +368,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       ),
                       contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     controller: _cityController,
@@ -445,7 +445,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                               ),
                               contentPadding: const EdgeInsets.all(8.0),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                             keyboardType: TextInputType.url,
