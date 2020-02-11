@@ -72,8 +72,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           : LayoutBuilder(
               builder:
                   (BuildContext context, BoxConstraints viewportConstraints) {
-                return SingleChildScrollView(
-                  child: Padding(
+                return Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -115,7 +114,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    
                   ),
                 );
               },
