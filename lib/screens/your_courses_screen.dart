@@ -21,8 +21,7 @@ class _YourCoursesState extends State<YourCourses> {
       setState(() {
         _isLoading = true;
       });
-
-      Provider.of<Courses>(context).retrieveCourseData(true).then((_) {
+      Provider.of<Courses>(context).retrieveUsersCourseData().then((_) {
         setState(() {
           _isLoading = false;
         });

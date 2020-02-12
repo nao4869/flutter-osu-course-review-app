@@ -40,7 +40,7 @@ class Course with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
     final url =
-        'https://osu-course-search.firebaseio.com/courses/userFavorites/$userId/$id.json?auth=$token';
+        'https://osu-course-search.firebaseio.com/userFavorites/$userId/$id.json?auth=$token';
 
     try {
       final response = await http.put(
