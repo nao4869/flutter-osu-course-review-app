@@ -3,6 +3,7 @@ import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/course.dart';
+import '../models/auth.dart';
 import '../models/star_display.dart';
 
 class CourseListItem extends StatefulWidget {
@@ -15,6 +16,7 @@ class _CourseListItemState extends State<CourseListItem> {
   Widget build(BuildContext context) {
     // retrieving providers objects
     final course = Provider.of<Course>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     return Container(
       padding: EdgeInsets.only(bottom: 10),
@@ -69,6 +71,19 @@ class _CourseListItemState extends State<CourseListItem> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'roboto',
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                  child: Consumer<Course>(
+                    builder: (ctx, course, child) => IconButton(
+                      icon: Icon(
+                          course.isFavorite ? Icons.favorite : Icons.favorite_border),
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        course.toggleFavoriteStatus(authData.token, authData.userId);
+                      },
                     ),
                   ),
                 ),

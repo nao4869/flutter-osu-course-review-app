@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:core';
 
+import '../models/course.dart';
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
+import '../models/auth.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {
@@ -56,6 +58,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     final courseId = ModalRoute.of(context).settings.arguments
         as String; // retrieving ID from routes passed
     final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+
+    final authData = Provider.of<Auth>(context, listen: false);
 
     final reviewList = Provider.of<Reviews>(context);
     final reviews = reviewList.reviews;
