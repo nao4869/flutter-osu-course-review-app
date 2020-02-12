@@ -7,7 +7,7 @@ import '../models/http_exception.dart';
 
 class Courses with ChangeNotifier {
   List<Course> _courses = [];
-  
+
   //String _courseId = '-LzKmxO3QJLd4R6kenZ9';
   String _courseId;
   String _insitutionName;
@@ -45,12 +45,12 @@ class Courses with ChangeNotifier {
     return _courseId;
   }
 
-   String get insitutionName {
+  String get insitutionName {
     return _insitutionName;
   }
 
-  Future<void> retrieveCourseData() async {
-    const url = 'https://osu-course-search.firebaseio.com/courses.json';
+  Future<void> retrieveCourseData([bool filterByUser = false]) async {
+    var url = 'https://osu-course-search.firebaseio.com/courses.json';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -58,7 +58,10 @@ class Courses with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      
+      url =
+          'https://osu-course-search.firebaseio.com/userFavoriteCourses/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
       final List<Course> loadedCourses = [];
 
       extractedData.forEach((courseId, courseData) {
@@ -73,6 +76,8 @@ class Courses with ChangeNotifier {
           language: courseData['language'],
           major: courseData['major'],
           institutionName: courseData['institutionName'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[courseId] ?? false,
         ));
       });
       _courses = loadedCourses;

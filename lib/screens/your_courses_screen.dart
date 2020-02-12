@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/courses_provider.dart';
 
 class YourCourses extends StatefulWidget {
   static const routeName = '/user-favorites';
@@ -8,6 +10,11 @@ class YourCourses extends StatefulWidget {
 }
 
 class _YourCoursesState extends State<YourCourses> {
+  // Future<void> _refreshCourses(BuildContext context) async {
+  //   await Provider.of<Courses>(context, listen: false)
+  //       .retrieveCourseData()(true);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
