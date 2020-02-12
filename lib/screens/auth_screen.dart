@@ -194,21 +194,6 @@ class _AuthCardState extends State<AuthCard>
           builder: (context) => YourCourses(),
         ),
       );
-      // showDialog(
-      //   context: context,
-      //   builder: (ctx) => AlertDialog(
-      //     title: Text('New Activity'),
-      //     content: Text('Succesfully logged in'),
-      //     actions: <Widget>[
-      //       FlatButton(
-      //         child: Text('Okay'),
-      //         onPressed: () {
-      //           Navigator.of(ctx).pop();
-      //         },
-      //       )
-      //     ],
-      //   ),
-      // );
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
       if (error.toString().contains('EMAIL_EXISTS')) {

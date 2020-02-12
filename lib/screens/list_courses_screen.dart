@@ -73,48 +73,47 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
               builder:
                   (BuildContext context, BoxConstraints viewportConstraints) {
                 return Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: Text(
-                                    '$majorName courses',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: viewportConstraints.maxHeight,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                child: Text(
+                                  '$majorName courses',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Flexible(
-                            child: new ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.all(25),
-                              itemCount: loadedMajorCourses.length,
-                              itemBuilder: (ctx, i) =>
-                                  ChangeNotifierProvider.value(
-                                value: loadedMajorCourses[i],
-                                child: CourseListItem(),
-                              ),
+                            ),
+                          ],
+                        ),
+                        Flexible(
+                          child: new ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(25),
+                            itemCount: loadedMajorCourses.length,
+                            itemBuilder: (ctx, i) =>
+                                ChangeNotifierProvider.value(
+                              value: loadedMajorCourses[i],
+                              child: CourseListItem(),
                             ),
                           ),
-                        ],
-                      ),
-                    
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

@@ -51,8 +51,8 @@ class Courses with ChangeNotifier {
 
   Future<void> retrieveCourseData([bool filterByUser = false]) async {
     final filterString =
-        filterByUser ? 'orderBy="courseId"&equalTo="$userId"' : '';
-    var url = 'https://osu-course-search.firebaseio.com/courses.json?$filterString';
+        filterByUser ? 'courses/userFavoriteCourses/$userId.json?auth=$authToken' : 'courses.json';
+    var url = 'https://osu-course-search.firebaseio.com/$filterString';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -60,6 +60,7 @@ class Courses with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      //final filterString = filterByUser ? 'orderBy="courseId"&equalTo="$userId"' : '';
       url =
           'https://osu-course-search.firebaseio.com/courses/userFavoriteCourses/$userId.json?auth=$authToken';
       final favoriteResponse = await http.get(url);
