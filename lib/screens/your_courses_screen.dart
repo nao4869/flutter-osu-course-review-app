@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/courses_provider.dart';
+import '../widgets/user_course_item.dart';
 
 class YourCourses extends StatefulWidget {
   static const routeName = '/user-favorites';
@@ -42,9 +43,7 @@ class _YourCoursesState extends State<YourCourses> {
                               UserCourseItem(
                                 courseData.courses[i].id,
                                 courseData.courses[i].courseName,
-                                courseData.courses[i].courseContent,
                               ),
-                              Divider(),
                             ],
                           ),
                         ),
