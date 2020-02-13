@@ -19,7 +19,7 @@ class _CourseListItemState extends State<CourseListItem> {
     final authData = Provider.of<Auth>(context, listen: false);
 
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.only(bottom: 5),
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(

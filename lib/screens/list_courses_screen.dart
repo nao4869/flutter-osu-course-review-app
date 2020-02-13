@@ -100,7 +100,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,
@@ -131,11 +131,40 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          child: Container(
+                            height: 30,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(10, 0, 17, 0),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                  child: Text(
+                                    'Search Results: ' +
+                                        '${loadedMajorCourses.length}' +
+                                        ' courses',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                    softWrap: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         Flexible(
                           child: new ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(15),
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                             itemCount: loadedMajorCourses.length,
                             itemBuilder: (ctx, i) =>
                                 ChangeNotifierProvider.value(
