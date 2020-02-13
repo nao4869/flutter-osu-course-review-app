@@ -166,16 +166,18 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final courseData = Provider.of<Courses>(context);
+    final favorite = courseData.favoriteItems;
     final sugestionList = query.isEmpty
-        ? courses
-        : courses
+        ? favorite
+        : favorite
             .where((cs) =>
                 cs.courseName.toLowerCase().contains(query.toLowerCase()))
             .toList();
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].courseName.toString()),
         onTap: () {
           Navigator.push(
@@ -193,16 +195,17 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final courseData = Provider.of<Courses>(context);
+    final favorite = courseData.favoriteItems;
     final sugestionList = query.isEmpty
-        ? courses
-        : courses
+        ? favorite
+        : favorite
             .where((cs) =>
                 cs.courseName.toLowerCase().contains(query.toLowerCase()))
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].courseName.toString()),
         onTap: () {
           Navigator.push(
