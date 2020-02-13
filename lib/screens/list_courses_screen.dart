@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
+import '../models/major.dart';
 import '../widgets/course_list_item.dart';
 
 class ListCoursesScreen extends StatefulWidget {
@@ -25,7 +26,6 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
       setState(() {
         _isLoading = true;
       });
-
       Provider.of<Courses>(context).retrieveCourseData().then((_) {
         setState(() {
           _isLoading = false;
@@ -86,7 +86,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                           children: <Widget>[
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Text(
                                   '$majorName courses',
                                   style: TextStyle(
@@ -99,11 +99,43 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ),
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                            height: 50,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.search),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '${loadedMajorCourses.first.institutionName} |' +
+                                        ' $majorName',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                    softWrap: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         Flexible(
                           child: new ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(25),
+                            padding: const EdgeInsets.all(15),
                             itemCount: loadedMajorCourses.length,
                             itemBuilder: (ctx, i) =>
                                 ChangeNotifierProvider.value(
