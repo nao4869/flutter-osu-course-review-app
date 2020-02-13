@@ -6,12 +6,7 @@ import '../models/course.dart';
 import '../models/auth.dart';
 import '../models/star_display.dart';
 
-class CourseListItem extends StatefulWidget {
-  @override
-  _CourseListItemState createState() => _CourseListItemState();
-}
-
-class _CourseListItemState extends State<CourseListItem> {
+class CourseItemDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // retrieving providers objects
@@ -19,7 +14,6 @@ class _CourseListItemState extends State<CourseListItem> {
     final authData = Provider.of<Auth>(context, listen: false);
 
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(

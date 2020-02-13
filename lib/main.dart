@@ -9,6 +9,7 @@ import './screens/list_majors_screen.dart';
 import './screens/list_institutions_screen.dart';
 import './screens/tabs_screen.dart';
 
+import './models/auth.dart';
 import './models/courses_provider.dart';
 import './models/reviews_provider.dart';
 import './models/major_provider.dart';
@@ -31,7 +32,13 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Courses(),
+          value: Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Courses>(
+          builder: (ctx, auth, previousCourses) => Courses(
+              auth.token,
+              auth.userId,
+              previousCourses == null ? [] : previousCourses.courses),
         ),
         ChangeNotifierProvider.value(
           value: Majors(),
@@ -80,13 +87,12 @@ class _MyAppState extends State<MyApp> {
             ),
             home: TabScreen(),
             routes: {
+              ListInstitutionScreen.routeName: (context) => ListInstitutionScreen(),
+              ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
+              ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
               CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
               CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
               CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
-              ListInstitutionScreen.routeName: (context) =>
-                  ListInstitutionScreen(),
-              ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
-              ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
             }),
       ),
     );

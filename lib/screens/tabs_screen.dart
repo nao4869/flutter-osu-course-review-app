@@ -5,6 +5,7 @@ import '../screens/list_institutions_screen.dart';
 import '../screens/create_institution_screen.dart';
 import '../screens/create_course_screen.dart';
 import '../screens/create_review_screen.dart';
+import '../screens/auth_screen.dart';
 
 class TabScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
@@ -25,7 +26,7 @@ class _TabScreenState extends State<TabScreen> {
     CreateInstitutionScreen(),
     CreateCourseScreen(),
     CreateReviewScreen(),
-    ListInstitutionScreen(),
+    AuthScreen(),
   ];
 
   int _defaultIndex = 0;
@@ -141,7 +142,7 @@ class _TabScreenState extends State<TabScreen> {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  child: ListInstitutionScreen(),
+                  child: AuthScreen(),
                 );
               },
             );

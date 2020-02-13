@@ -7,14 +7,27 @@ import '../models/http_exception.dart';
 
 class Courses with ChangeNotifier {
   List<Course> _courses = [];
-  
-  //String _courseId = '-LzKmxO3QJLd4R6kenZ9';
+
   String _courseId;
   String _insitutionName;
+
+  final String authToken;
+  final String userId;
+
+  Courses(
+    this.authToken,
+    this.userId,
+    this._courses,
+  );
 
   // getter for course
   List<Course> get courses {
     return [..._courses];
+  }
+
+  // function to return user favorite course
+  List<Course> get favoriteItems {
+    return _courses.where((cs) => cs.isFavorite == true).toList();
   }
 
   //Comparing ID of each courses with id of the arguments
@@ -31,12 +44,15 @@ class Courses with ChangeNotifier {
     return _courseId;
   }
 
-   String get insitutionName {
+  String get insitutionName {
     return _insitutionName;
   }
 
   Future<void> retrieveCourseData() async {
-    const url = 'https://osu-course-search.firebaseio.com/courses.json';
+    // print(filterByUser);
+    // final filterString =
+    //     filterByUser ? 'orderBy="courseId"&equalTo="/userFavorites/$userId.json"' : '';
+    var url = 'https://osu-course-search.firebaseio.com/courses.json';
     try {
       final response = await http.get(url); // get for fetching from DB
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -44,7 +60,11 @@ class Courses with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      
+      //final filterString = filterByUser ? 'orderBy="courseId"&equalTo="$userId"' : '';
+      url =
+          'https://osu-course-search.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
       final List<Course> loadedCourses = [];
 
       extractedData.forEach((courseId, courseData) {
@@ -59,6 +79,46 @@ class Courses with ChangeNotifier {
           language: courseData['language'],
           major: courseData['major'],
           institutionName: courseData['institutionName'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[courseId] ?? false,
+        ));
+      });
+      _courses = loadedCourses;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+  //test2@gmail.com
+  Future<void> retrieveUsersCourseData() async {
+    var url = 'https://osu-course-search.firebaseio.com/courses.json';
+    try {
+      final response = await http.get(url); // get for fetching from DB
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData == null) {
+        return;
+      }
+      url =
+          'https://osu-course-search.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+      final List<Course> loadedCourses = [];
+
+      extractedData.forEach((courseId, courseData) {
+        loadedCourses.add(Course(
+          id: courseId,
+          courseName: courseData['courseName'],
+          courseContent: courseData['courseContent'],
+          prerequisite: courseData['prerequisite'],
+          proctoredexams: courseData['proctoredexams'],
+          groupwork: courseData['groupwork'],
+          textbook: courseData['textbook'],
+          language: courseData['language'],
+          major: courseData['major'],
+          institutionName: courseData['institutionName'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[courseId] ?? false,
         ));
       });
       _courses = loadedCourses;
