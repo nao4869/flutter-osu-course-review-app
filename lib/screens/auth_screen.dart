@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/screens/your_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
@@ -191,7 +190,7 @@ class _AuthCardState extends State<AuthCard>
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => YourCourses(),
+          builder: (context) => YourCoursesScreen(),
         ),
       );
     } on HttpException catch (error) {

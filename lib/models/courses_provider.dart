@@ -27,7 +27,7 @@ class Courses with ChangeNotifier {
 
   // function to return user favorite course
   List<Course> get favoriteItems {
-    return _courses.where((cs) => cs.isFavorite).toList();
+    return _courses.where((cs) => cs.isFavorite == true).toList();
   }
 
   //Comparing ID of each courses with id of the arguments

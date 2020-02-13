@@ -27,7 +27,7 @@ class Course with ChangeNotifier {
     this.language,
     @required this.major,
     @required this.institutionName,
-    this.isFavorite,
+    this.isFavorite = false,
   });
 
   void _setFavValue(bool newValue) {
