@@ -45,9 +45,6 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
   Widget build(BuildContext context) {
     final courseData = Provider.of<Courses>(context);
     final courses = courseData.courses;
-    //final favoriteCourses = courseData.favoriteItems;
-
-    //print('length = ' + '${favoriteCourses.length}');
 
     return Scaffold(
       appBar: AppBar(
@@ -57,32 +54,6 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
           },
           child: Text('University Course Search'),
         ),
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: (FilterOptions selectedValue) {
-              setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
-                  _showOnlyFavorites = true;
-                } else {
-                  _showOnlyFavorites = false;
-                }
-              });
-            },
-            icon: Icon(
-              Icons.more_vert,
-            ),
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Only Favorites'),
-                value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text('Show all'),
-                value: FilterOptions.All,
-              ),
-            ],
-          ),
-        ],
       ),
       body: _isLoading
           ? Center(
@@ -107,7 +78,7 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                 child: Text(
-                                  'Your courses',
+                                  'Your subscribed courses',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -122,7 +93,7 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
                           child: new ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(25),
+                            padding: const EdgeInsets.all(15),
                             itemCount: 1,
                             itemBuilder: (ctx, i) =>
                                 ChangeNotifierProvider.value(
