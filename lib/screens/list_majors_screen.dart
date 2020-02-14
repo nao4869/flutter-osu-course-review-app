@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
-
+import '../screens/create_major_screen.dart';
 import '../models/major_provider.dart';
 import '../models/major.dart';
 import '../widgets/major_list_item.dart';
@@ -152,14 +152,16 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showSearch(
-            context: context,
-            delegate: DataSearch(loadedInstitutionMajors),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateMajorScreen(),
+            ),
           );
         },
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
-          Icons.search,
+          Icons.add,
           color: Colors.white,
         ),
       ),

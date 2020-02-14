@@ -1,16 +1,21 @@
-// The file which is to create new course from user input
+// The file which is to create new major from user input
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http; // for http request
-import './major.dart';
-import '../models/http_exception.dart';
+import 'package:osu_course_review/models/major.dart';
 
 class Majors with ChangeNotifier {
   List<Major> _majors = [
     // to do, add sample majors in here
   ];
 
-  // getter for course
+  // String institutionName;
+  // Majors(
+  //   this.institutionName,
+  //   this._majors,
+  // );
+
+  // getter for major
   List<Major> get majors {
     return [..._majors];
   }
@@ -40,8 +45,8 @@ class Majors with ChangeNotifier {
       extractedData.forEach((majorId, majorData) {
         loadedMajors.add(Major(
           id: majorId,
-          majorName: majorData['majorName'],
           institutionName: majorData['institutionName'],
+          majorName: majorData['majorName'],
           logo: majorData['logo'],
         ));
       });
@@ -49,6 +54,37 @@ class Majors with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       throw (error);
+    }
+  }
+
+  Future<void> addMajor(Major major) async {
+    const url = 'https://osu-course-search.firebaseio.com/majors.json';
+
+    print(major.institutionName);
+    print(major.majorName);
+    print(major.logo);
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'institutionName': major.institutionName,
+          'majorName': major.majorName,
+          'logo': major.logo,
+        }),
+      );
+
+      final newMajor = Major(
+        institutionName: major.institutionName,
+        majorName: major.majorName,
+        logo: major.logo,
+        id: json.decode(response.body)['name'],
+      );
+      _majors.add(newMajor);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
     }
   }
 }

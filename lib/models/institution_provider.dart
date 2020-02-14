@@ -9,6 +9,8 @@ class Institutions with ChangeNotifier {
     // to do, add sample majors in here
   ];
 
+  String _name;
+
   // getter for course
   List<Institution> get institutions {
     return [..._institutions];
@@ -17,6 +19,10 @@ class Institutions with ChangeNotifier {
   //Comparing ID of each products with id of the arguments
   Institution findById(String id) {
     return _institutions.firstWhere((ins) => ins.id == id);
+  }
+
+  String get name {
+    return _name;
   }
 
   Future<void> retrieveInstitutionData() async {
@@ -49,7 +55,7 @@ class Institutions with ChangeNotifier {
   }
 
   Future<void> addInstitution(Institution institution) async {
-    const url = 'https://osu-course-search.firebaseio.com/institutions.json';
+    const url = 'https://osu-course-search.firebaseio.com/institutions2.json';
 
     try {
       final response = await http.post(

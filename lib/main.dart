@@ -5,6 +5,7 @@ import './screens/course_detail_screen.dart';
 import './screens/list_courses_screen.dart';
 import './screens/create_course_screen.dart';
 import './screens/create_review_screen.dart';
+import './screens/create_major_screen.dart';
 import './screens/list_majors_screen.dart';
 import './screens/list_institutions_screen.dart';
 import './screens/tabs_screen.dart';
@@ -93,6 +94,7 @@ class _MyAppState extends State<MyApp> {
               CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
               CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
               CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
+              CreateMajorScreen.routeName: (context) => CreateMajorScreen(),
             }),
       ),
     );

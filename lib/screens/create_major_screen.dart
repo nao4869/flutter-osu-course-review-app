@@ -2,28 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
-import '../screens/list_majors_screen.dart';
+import '../screens/list_institutions_screen.dart';
+import '../screens/list_courses_screen.dart';
 
+import '../models/major.dart';
+import '../models/major_provider.dart';
 import '../models/institution.dart';
 import '../models/institution_provider.dart';
 
-class CreateInstitutionScreen extends StatefulWidget {
-  static const routeName = '/creaInstitution-Institution';
+class CreateMajorScreen extends StatefulWidget {
+  static const routeName = '/create-major-screen';
 
   @override
-  _CreateInstitutionScreen createState() => _CreateInstitutionScreen();
+  _CreateMajorScreen createState() => _CreateMajorScreen();
 }
 
-class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
-  final _nameFocusNode = FocusNode();
-  final _countryFocusNode = FocusNode();
-  final _stateFocusNode = FocusNode();
-  final _cityFocusNode = FocusNode();
+class _CreateMajorScreen extends State<CreateMajorScreen> {
+  final _majorNameFocusNode = FocusNode();
+  final _institutionNameFocusNode = FocusNode();
   final _logoFocusNode = FocusNode();
-  final _nameController = TextEditingController();
-  final _countryController = TextEditingController();
-  final _stateController = TextEditingController();
-  final _cityController = TextEditingController();
+  final _majorNameController = TextEditingController();
+  final _institutionNameController = TextEditingController();
   final _logoController = TextEditingController();
 
   /// Creates the [KeyboardActionsConfig] to hook up the fields
@@ -35,7 +34,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       nextFocus: true,
       actions: [
         KeyboardAction(
-          focusNode: _nameFocusNode,
+          focusNode: _majorNameFocusNode,
           closeWidget: Padding(
             padding: EdgeInsets.all(5.0),
             child: Padding(
@@ -50,37 +49,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
           ),
         ),
         KeyboardAction(
-          focusNode: _countryFocusNode,
-          closeWidget: Padding(
-            padding: EdgeInsets.all(5.0),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 33.0),
-              child: Text(
-                "CLOSE",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-        KeyboardAction(
-          focusNode: _stateFocusNode,
-          closeWidget: Padding(
-            padding: EdgeInsets.all(5.0),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 33.0),
-              child: Text(
-                "CLOSE",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-        KeyboardAction(
-          focusNode: _cityFocusNode,
+          focusNode: _institutionNameFocusNode,
           closeWidget: Padding(
             padding: EdgeInsets.all(5.0),
             child: Padding(
@@ -117,14 +86,18 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   final _form = GlobalKey<FormState>();
 
   // update this edited proInstitutionhen save form
-  var _editedInstitution = Institution(
+  var _editedMajor = Major(
     id: null,
-    name: '',
-    country: '',
-    state: '',
-    city: '',
+    institutionName: '',
+    majorName: '',
     logo: '',
   );
+
+  var _initValues = {
+    'institutionName': '',
+    'majorName': '',
+    'logo': '',
+  };
 
   @override
   void initState() {
@@ -134,7 +107,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       });
 
       // retrieve major data from FB
-      Provider.of<Institutions>(context).retrieveInstitutionData().then((_) {
+      Provider.of<Majors>(context).retrieveMajorData().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -143,15 +116,6 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     super.initState();
   }
 
-  var _initValues = {
-    'name': '',
-    'country': '',
-    'state': '',
-    'city': '',
-    'logo': '',
-  };
-
-  var _starScore = [1, 2, 3, 4, 5];
   var _currentSelectedValue;
   var _currentSelectedValue2;
   var _isInit = true;
@@ -160,17 +124,15 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final insId = ModalRoute.of(context).settings.arguments as String;
+      final majorId = ModalRoute.of(context).settings.arguments as String;
       //inal starScores = ModalRoute.of(context).settings.arguments as String;
-      if (insId != null) {
-        _editedInstitution =
-            Provider.of<Institutions>(context, listen: false).findById(insId);
+      if (majorId != null) {
+        _editedMajor =
+            Provider.of<Majors>(context, listen: false).findById(majorId);
         _initValues = {
-          'name': _editedInstitution.name,
-          'country': _editedInstitution.country,
-          'state': _editedInstitution.state,
-          'city': _editedInstitution.city,
-          'logo': _editedInstitution.logo,
+          'institutionName': _editedMajor.institutionName,
+          'majorName': _editedMajor.majorName,
+          'logo': _editedMajor.logo,
         };
       }
     }
@@ -194,13 +156,12 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     });
 
     // if existing items edited
-    // if (_editedInstitution.courseId != null) {
+    // if (_editedMajor.courseId != null) {
     // Provider.of<Institutions>(context, listen: false)
-    //       .updateInstitution(_editedInstitution, _editedInstitution.courseId);
+    //       .updateInstitution(_editedMajor, _editedMajor.courseId);
     // } else {
     try {
-      await Provider.of<Institutions>(context, listen: false)
-          .addInstitution(_editedInstitution);
+      await Provider.of<Majors>(context, listen: false).addMajor(_editedMajor);
     } catch (error) {
       await showDialog(
           context: context,
@@ -222,12 +183,11 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       _isLoading = false;
     });
 
-    // navigate to specific course detail scInstitutionhen save Institution
+    // navigate to specific course detail scInstitutionhen save Major
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ListMajorsScreen(),
-        settings: RouteSettings(arguments: _editedInstitution.name),
+        builder: (context) => ListInstitutionScreen(),
       ),
     );
 
@@ -236,7 +196,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('New activity'),
-        content: Text('New institution has been created'),
+        content: Text('New major has been created'),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),
@@ -253,23 +213,22 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   @override
   void dispose() {
     // focus node
-    _nameFocusNode.dispose();
-    _countryFocusNode.dispose();
-    _stateFocusNode.dispose();
-    _cityFocusNode.dispose();
+    _majorNameFocusNode.dispose();
+    _institutionNameFocusNode.dispose();
     _logoFocusNode.dispose();
 
     // controller
-    _nameController.dispose();
-    _countryController.dispose();
-    _stateController.dispose();
-    _cityController.dispose();
+    _majorNameController.dispose();
+    _institutionNameController.dispose();
     _logoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final institutionList = Provider.of<Institutions>(context);
+    final institutions = institutionList.institutions;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('University Course Search'),
@@ -290,7 +249,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       Container(
                         margin: EdgeInsets.all(10),
                         child: Text(
-                          'Create New Institution',
+                          'Create New Major',
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: Colors.black,
@@ -303,47 +262,49 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _nameController,
-                      focusNode: _nameFocusNode,
-                      decoration: InputDecoration(
-                        labelText: 'Institution name',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            size: 18,
+                    child: FormField<Institution>(
+                      builder: (FormFieldState<Institution> state) {
+                        return InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: 'Institution name',
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                            ),
+                            errorStyle: TextStyle(
+                                color: Colors.redAccent, fontSize: 15.0),
+                            hintText: 'Please select institution of course',
+                            contentPadding: const EdgeInsets.all(8.0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
-                          onPressed: () {
-                            _nameController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_countryFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter an institution name.';
-                        } else {
-                          return null; // no error
-                        }
+                          isEmpty: _currentSelectedValue == '',
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<Institution>(
+                              value: _currentSelectedValue,
+                              isDense: true,
+                              onChanged: (Institution newValue) {
+                                setState(() {
+                                  _currentSelectedValue = newValue;
+                                  state.didChange(newValue);
+                                });
+                              },
+                              items: institutions.map((Institution value) {
+                                return DropdownMenuItem<Institution>(
+                                  value: value,
+                                  child: Text(value.name.toString()),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        );
                       },
                       onSaved: (value) {
-                        _editedInstitution = Institution(
-                          id: _editedInstitution.id,
-                          name: value,
-                          country: _editedInstitution.country,
-                          state: _editedInstitution.state,
-                          city: _editedInstitution.city,
-                          logo: _editedInstitution.logo,
+                        _editedMajor = Major(
+                          id: _editedMajor.id,
+                          institutionName: value.name.toString(),
+                          majorName: _editedMajor.majorName,
+                          logo: _editedMajor.logo,
                         );
                       },
                     ),
@@ -351,8 +312,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: _majorNameController,
+                      focusNode: _majorNameFocusNode,
                       decoration: InputDecoration(
-                        labelText: 'Country',
+                        labelText: 'Major name',
                         labelStyle: TextStyle(
                           fontSize: 13,
                         ),
@@ -362,7 +325,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                             size: 18,
                           ),
                           onPressed: () {
-                            _countryController.clear();
+                            _majorNameController.clear();
                           },
                         ),
                         contentPadding: const EdgeInsets.all(8.0),
@@ -370,121 +333,23 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      controller: _countryController,
                       textInputAction: TextInputAction.done,
-                      focusNode: _countryFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_stateFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a country of institution name.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedInstitution = Institution(
-                          id: _editedInstitution.id,
-                          name: _editedInstitution.name,
-                          country: value,
-                          state: _editedInstitution.state,
-                          city: _editedInstitution.city,
-                          logo: _editedInstitution.logo,
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'State',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            size: 18,
-                          ),
-                          onPressed: () {
-                            _stateController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      controller: _stateController,
-                      textInputAction: TextInputAction.done,
-                      focusNode: _stateFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_cityFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a state of institution.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedInstitution = Institution(
-                          id: _editedInstitution.id,
-                          name: _editedInstitution.name,
-                          country: _editedInstitution.country,
-                          state: value,
-                          city: _editedInstitution.city,
-                          logo: _editedInstitution.logo,
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'City',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            size: 18,
-                          ),
-                          onPressed: () {
-                            _cityController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      controller: _cityController,
-                      textInputAction: TextInputAction.done,
-                      focusNode: _cityFocusNode,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_logoFocusNode);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter a city of institution.';
+                          return 'Please enter an major name.';
                         } else {
                           return null; // no error
                         }
                       },
                       onSaved: (value) {
-                        _editedInstitution = Institution(
-                          id: _editedInstitution.id,
-                          name: _editedInstitution.name,
-                          country: _editedInstitution.country,
-                          state: _editedInstitution.state,
-                          city: value,
-                          logo: _editedInstitution.logo,
+                        _editedMajor = Major(
+                          id: _editedMajor.id,
+                          institutionName: _editedMajor.institutionName,
+                          majorName: value,
+                          logo: _editedMajor.logo,
                         );
                       },
                     ),
@@ -559,12 +424,10 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                                 return null;
                               },
                               onSaved: (value) {
-                                _editedInstitution = Institution(
-                                  id: _editedInstitution.id,
-                                  name: _editedInstitution.name,
-                                  country: _editedInstitution.country,
-                                  state: _editedInstitution.state,
-                                  city: _editedInstitution.city,
+                                _editedMajor = Major(
+                                  id: _editedMajor.id,
+                                  institutionName: _editedMajor.institutionName,
+                                  majorName: _editedMajor.majorName,
                                   logo: value,
                                 );
                               },
@@ -574,6 +437,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       ],
                     ),
                   ),
+
                   // Raised Button
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -582,7 +446,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
                       child: RaisedButton(
                         onPressed: _saveForm,
                         child: Text(
-                          "Save Institution",
+                          "Save Major",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
