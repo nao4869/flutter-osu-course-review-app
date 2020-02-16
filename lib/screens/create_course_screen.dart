@@ -271,7 +271,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => ListCoursesScreen(),
-        settings: RouteSettings(arguments: _editedCourse.major),
+        settings: RouteSettings(
+          arguments: ScreenArguments(
+            'Extract Arguments Screen',
+            'This message is extracted in the build method.',
+          ),
+        ),
       ),
     );
 
@@ -898,4 +903,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       ),
     );
   }
+}
+
+class ScreenArguments {
+  final String institutionName;
+  final String majorName;
+
+  ScreenArguments(this.institutionName, this.majorName);
 }

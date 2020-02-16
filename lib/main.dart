@@ -30,6 +30,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final insitutionName = 'Oregon State University';
+    final majorName = 'Computer Science';
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

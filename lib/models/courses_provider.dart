@@ -10,6 +10,7 @@ class Courses with ChangeNotifier {
 
   String _courseId;
   String _insitutionName;
+  String _majorName;
 
   final String authToken;
   final String userId;
@@ -46,6 +47,10 @@ class Courses with ChangeNotifier {
 
   String get insitutionName {
     return _insitutionName;
+  }
+
+  String get majorName {
+    return _majorName;
   }
 
   Future<void> retrieveCourseData() async {

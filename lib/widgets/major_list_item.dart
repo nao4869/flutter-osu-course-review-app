@@ -27,12 +27,15 @@ class _MajorListItemState extends State<MajorListItem> {
       child: InkWell(
         onTap: () {
           Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ListCoursesScreen(),
-            settings: RouteSettings(arguments: major.majorName),
-          ),
-        );
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListCoursesScreen(),
+              settings: RouteSettings(
+                arguments:
+                    ScreenArguments(major.institutionName, major.majorName),
+              ),
+            ),
+          );
         },
         splashColor: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(15),
@@ -61,4 +64,11 @@ class _MajorListItemState extends State<MajorListItem> {
       ),
     );
   }
+}
+
+class ScreenArguments {
+  final institutionName;
+  final majorName;
+
+  ScreenArguments(this.institutionName, this.majorName);
 }

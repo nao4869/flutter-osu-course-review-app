@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 import '../screens/create_major_screen.dart';
+import '../screens/list_courses_screen.dart';
 import '../models/major_provider.dart';
 import '../models/major.dart';
 import '../widgets/major_list_item.dart';
@@ -150,6 +151,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                 );
               },
             ),
+      // Computer Science
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -226,8 +228,12 @@ class DataSearch extends SearchDelegate<Major> {
             context,
             MaterialPageRoute(
               builder: (context) => ListCoursesScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].majorName),
+              settings: RouteSettings(
+                arguments: ScreenArguments(
+                  'Extract Arguments Screen',
+                  'This message is extracted in the build method.',
+                ),
+              ),
             ),
           );
         },
@@ -254,8 +260,10 @@ class DataSearch extends SearchDelegate<Major> {
             context,
             MaterialPageRoute(
               builder: (context) => ListCoursesScreen(),
-              settings:
-                  RouteSettings(arguments: sugestionList[index].majorName),
+              settings: RouteSettings(
+                arguments: ScreenArguments(sugestionList[index].institutionName,
+                    sugestionList[index].majorName),
+              ),
             ),
           );
         },
@@ -263,4 +271,11 @@ class DataSearch extends SearchDelegate<Major> {
       itemCount: sugestionList.length,
     );
   }
+}
+
+class ScreenArguments {
+  final String institutionName;
+  final String majorName;
+
+  ScreenArguments(this.institutionName, this.majorName);
 }

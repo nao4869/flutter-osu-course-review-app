@@ -37,10 +37,12 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final majorName = ModalRoute.of(context).settings.arguments
-        as String; // retrieving majorName passed from list majors screen
-    final loadedMajorCourses = Provider.of<Courses>(context).findByMajor(
-        majorName); // findByMajor returns list of courses where condition match
+    dynamic args = ModalRoute.of(context).settings.arguments;
+    var loadedMajorCourses = Provider.of<Courses>(context).findByMajor(args
+        .majorName); // findByMajor returns list of courses where condition match
+
+    // print(args.majorName);
+    // print(args.institutionName);
 
     return Scaffold(
       appBar: AppBar(
@@ -88,7 +90,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                 child: Text(
-                                  '$majorName courses',
+                                  '${args.majorName} courses',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -116,8 +118,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '${loadedMajorCourses.first.institutionName} |' +
-                                        ' $majorName',
+                                    '${loadedMajorCourses.first.institutionName}  |' +
+                                        '  ${args.majorName}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
@@ -288,4 +290,11 @@ class DataSearch extends SearchDelegate<Course> {
       itemCount: sugestionList.length,
     );
   }
+}
+
+class ScreenArguments {
+  final institutionName;
+  final majorName;
+
+  ScreenArguments(this.institutionName, this.majorName);
 }
