@@ -221,7 +221,7 @@ class DataSearch extends SearchDelegate<Major> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.category),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].majorName.toString()),
         onTap: () {
           Navigator.push(
@@ -253,7 +253,7 @@ class DataSearch extends SearchDelegate<Major> {
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.category),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].majorName.toString()),
         onTap: () {
           Navigator.push(
