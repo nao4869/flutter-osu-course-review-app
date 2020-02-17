@@ -26,8 +26,8 @@ class _AuthScreenState extends State<AuthScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(225, 257, 255, 1).withOpacity(0.9),
-                  Color.fromRGBO(255, 257, 157, 1).withOpacity(0.9),
+                  Colors.red.withOpacity(1.0),
+                  Colors.red
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:core';
 
-import '../models/course.dart';
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';

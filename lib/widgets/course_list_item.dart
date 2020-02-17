@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../models/course.dart';
 import '../models/auth.dart';
-import '../models/star_display.dart';
 
 class CourseListItem extends StatefulWidget {
   @override
@@ -40,6 +39,7 @@ class _CourseListItemState extends State<CourseListItem> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
+                        fontFamily: 'Roboto',
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.clip,
@@ -96,10 +96,10 @@ class _CourseListItemState extends State<CourseListItem> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      'Textbook: ' + course.textbook,
+                      'Programming Language: ' + course.language,
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.black,
                         fontSize: 15,
                         fontFamily: 'Roboto',
                       ),
