@@ -115,11 +115,12 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ),
                             child: Row(
                               children: <Widget>[
-                                Icon(Icons.search),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: finalCourses.isEmpty
-                                      ? Text(
+                                Icon(
+                                  Icons.search,
+                                ),
+                                finalCourses.isEmpty
+                                    ? Expanded(
+                                        child: Text(
                                           '${args.institutionName} |' +
                                               '  ${args.majorName}',
                                           style: TextStyle(
@@ -129,8 +130,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                           softWrap: false,
-                                        )
-                                      : Text(
+                                        ),
+                                      )
+                                    : Expanded(
+                                        child: Text(
                                           '${finalCourses.first.institutionName}  |' +
                                               '  ${args.majorName}',
                                           style: TextStyle(
@@ -141,7 +144,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                                           overflow: TextOverflow.clip,
                                           softWrap: false,
                                         ),
-                                ),
+                                      ),
+                                //),
                               ],
                             ),
                           ),
