@@ -41,8 +41,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     var loadedMajorCourses = Provider.of<Courses>(context).findByMajor(args
         .majorName); // findByMajor returns list of courses where condition match
 
-    // print(args.majorName);
-    // print(args.institutionName);
+    final finalCourses = loadedMajorCourses
+        .where((cs) => cs.institutionName == args.institutionName)
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -114,21 +115,37 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ),
                             child: Row(
                               children: <Widget>[
-                                Icon(Icons.search),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${loadedMajorCourses.first.institutionName}  |' +
-                                        '  ${args.majorName}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    softWrap: false,
-                                  ),
+                                Icon(
+                                  Icons.search,
                                 ),
+                                finalCourses.isEmpty
+                                    ? Expanded(
+                                        child: Text(
+                                          '${args.institutionName} |' +
+                                              '  ${args.majorName}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          softWrap: false,
+                                        ),
+                                      )
+                                    : Expanded(
+                                        child: Text(
+                                          '${finalCourses.first.institutionName}  |' +
+                                              '  ${args.majorName}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          softWrap: false,
+                                        ),
+                                      ),
+                                //),
                               ],
                             ),
                           ),
@@ -146,7 +163,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                                       const EdgeInsets.fromLTRB(8, 0, 8, 0),
                                   child: Text(
                                     'Search Results: ' +
-                                        '${loadedMajorCourses.length}' +
+                                        '${finalCourses.length}' +
                                         ' courses',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -167,10 +184,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                            itemCount: loadedMajorCourses.length,
+                            itemCount: finalCourses.length,
                             itemBuilder: (ctx, i) =>
                                 ChangeNotifierProvider.value(
-                              value: loadedMajorCourses[i],
+                              value: finalCourses[i],
                               child: CourseListItem(),
                             ),
                           ),

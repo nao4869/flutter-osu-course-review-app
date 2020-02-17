@@ -172,7 +172,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.school),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
           Navigator.push(
@@ -199,7 +199,7 @@ class DataSearch extends SearchDelegate<Institution> {
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.school),
+        leading: Icon(Icons.chevron_right),
         title: Text(sugestionList[index].name.toString()),
         onTap: () {
           Navigator.push(

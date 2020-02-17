@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../models/course.dart';
 import '../models/auth.dart';
-import '../models/star_display.dart';
 
 class CourseListItem extends StatefulWidget {
   @override
@@ -40,6 +39,48 @@ class _CourseListItemState extends State<CourseListItem> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
+                        fontFamily: 'Roboto',
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                    ),
+                  ),
+                  Container(
+                    child: Consumer<Course>(
+                      builder: (ctx, course, child) => IconButton(
+                        icon: Icon(
+                          course.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 30,
+                          color: course.isFavorite == true
+                              ? Colors.pink
+                              : Colors.grey,
+                        ),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          course.toggleFavoriteStatus(
+                              authData.token, authData.userId);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      'Pre-requisite: ' + course.prerequisite,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.clip,
@@ -49,45 +90,26 @@ class _CourseListItemState extends State<CourseListItem> {
                 ],
               ),
             ),
-            // Star display
-            Row(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: EdgeInsets.fromLTRB(17, 5, 0, 0),
-                  child: StarDisplayWidget(
-                    value: 5,
-                    filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
-                    unfilledStar: Icon(Icons.star_border, color: Colors.grey),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                  child: Text(
-                    '4.5',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'roboto',
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      'Programming Language: ' + course.language,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
+                      ),
+                      maxLines: 2,
+                      // overflow: TextOverflow.clip,
+                      // softWrap: false,
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                  child: Consumer<Course>(
-                    builder: (ctx, course, child) => IconButton(
-                      icon: Icon(
-                          course.isFavorite ? Icons.favorite : Icons.favorite_border),
-                      color: Theme.of(context).accentColor,
-                      onPressed: () {
-                        course.toggleFavoriteStatus(authData.token, authData.userId);
-                      },
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             Container(
               alignment: Alignment.center,
