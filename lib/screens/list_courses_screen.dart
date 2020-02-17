@@ -179,24 +179,19 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                             ),
                           ),
                         ),
-                        finalCourses == null
-                            ? Center(
-                                child: Text('No courses exist with this major'),
-                              )
-                            : Flexible(
-                                child: new ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  itemCount: finalCourses.length,
-                                  itemBuilder: (ctx, i) =>
-                                      ChangeNotifierProvider.value(
-                                    value: finalCourses[i],
-                                    child: CourseListItem(),
-                                  ),
-                                ),
-                              ),
+                        Flexible(
+                          child: new ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            itemCount: finalCourses.length,
+                            itemBuilder: (ctx, i) =>
+                                ChangeNotifierProvider.value(
+                              value: finalCourses[i],
+                              child: CourseListItem(),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
