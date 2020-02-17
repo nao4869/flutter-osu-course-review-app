@@ -70,44 +70,47 @@ class _CourseListItemState extends State<CourseListItem> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      course.courseContent,
+                      'Pre-requisite: ' + course.prerequisite,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
+                        fontFamily: 'Roboto',
                       ),
-                      maxLines: 3,
-                      //overflow: TextOverflow.clip,
-                      //softWrap: false,
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
                     ),
                   ),
                 ],
               ),
             ),
-            // Row(
-            //   children: <Widget>[
-            //     Container(
-            //       padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-            //       child: Consumer<Course>(
-            //         builder: (ctx, course, child) => IconButton(
-            //           icon: Icon(course.isFavorite
-            //               ? Icons.favorite
-            //               : Icons.favorite_border),
-            //           color: Theme.of(context).accentColor,
-            //           onPressed: () {
-            //             course.toggleFavoriteStatus(
-            //                 authData.token, authData.userId);
-            //           },
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      'Textbook: ' + course.textbook,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
+                      ),
+                      maxLines: 2,
+                      // overflow: TextOverflow.clip,
+                      // softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Container(
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
