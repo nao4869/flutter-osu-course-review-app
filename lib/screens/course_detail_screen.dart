@@ -52,6 +52,55 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
+  Widget subHeader(BuildContext context, String text) {
+    final courseId = ModalRoute.of(context).settings.arguments
+        as String; // retrieving ID from routes passed
+    final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.fromLTRB(5, 5, 0, 10),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/');
+            },
+            child: Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.fromLTRB(3, 0, 0, 0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/');
+            },
+            child: Text(
+              'HOME ',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            '/ ' + loadedCourse.courseName + ' review',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+            maxLines: 1,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context).settings.arguments
@@ -90,49 +139,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(5, 5, 0, 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/');
-                          },
-                          child: Icon(
-                            Icons.home,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(3, 0, 0, 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/');
-                          },
-                          child: Text(
-                            'HOME ',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          '/ ' + loadedCourse.courseName + ' review',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                  ),
+                  subHeader(context, 'HOME'),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
