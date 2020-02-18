@@ -12,44 +12,6 @@ class CourseListItem extends StatefulWidget {
 
 class _CourseListItemState extends State<CourseListItem> {
   @override
-  Widget _buildScreenTitle(String text, Auth authData) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                fontFamily: 'Roboto',
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.clip,
-              softWrap: false,
-            ),
-          ),
-          Container(
-            child: Consumer<Course>(
-              builder: (ctx, course, child) => IconButton(
-                icon: Icon(
-                  course.isFavorite ? Icons.favorite : Icons.favorite_border,
-                  size: 30,
-                  color: course.isFavorite == true ? Colors.pink : Colors.grey,
-                ),
-                color: Theme.of(context).accentColor,
-                onPressed: () {
-                  course.toggleFavoriteStatus(authData.token, authData.userId);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget build(BuildContext context) {
     // retrieving providers objects
     final course = Provider.of<Course>(context, listen: false);
@@ -67,7 +29,46 @@ class _CourseListItemState extends State<CourseListItem> {
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            _buildScreenTitle(course.courseName, authData),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      course.courseName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        fontFamily: 'Roboto',
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                    ),
+                  ),
+                  Container(
+                    child: Consumer<Course>(
+                      builder: (ctx, course, child) => IconButton(
+                        icon: Icon(
+                          course.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 30,
+                          color: course.isFavorite == true
+                              ? Colors.pink
+                              : Colors.grey,
+                        ),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          course.toggleFavoriteStatus(
+                              authData.token, authData.userId);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
               child: Row(
