@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
-import '../models/major.dart';
 import '../widgets/course_list_item.dart';
 
 class ListCoursesScreen extends StatefulWidget {
@@ -35,8 +34,130 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     super.initState();
   }
 
+  Widget _progreeIndicator() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _displaySubHeader(String majorName) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+            child: Text(
+              majorName + ' courses',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displaySearchNavigator(List<Course> loadedMajorCourse,
+      String institutionName, String majorName) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
+      child: Container(
+        height: 50,
+        alignment: Alignment.center,
+        padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.search,
+            ),
+            loadedMajorCourse.isEmpty
+                ? Expanded(
+                    child: Text(
+                      institutionName + majorName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                    ),
+                  )
+                : Expanded(
+                    child: Text(
+                      '${loadedMajorCourse.first.institutionName}  |  ' +
+                          majorName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: false,
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _displaySearchResults(List<Course> loadedMajorCourse) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+      child: Container(
+        height: 30,
+        alignment: Alignment.center,
+        padding: EdgeInsets.fromLTRB(10, 0, 17, 0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Text(
+                'Search Results: ' + '${loadedMajorCourse.length}' + ' courses',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  fontFamily: 'Roboto',
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+                softWrap: false,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _displayListOfCourses(List<Course> loadedMajorCourse) {
+    return Flexible(
+      child: new ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+        itemCount: loadedMajorCourse.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: loadedMajorCourse[i],
+          child: CourseListItem(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+
     dynamic args = ModalRoute.of(context).settings.arguments;
     var loadedMajorCourses = Provider.of<Courses>(context).findByMajor(args
         .majorName); // findByMajor returns list of courses where condition match
@@ -51,7 +172,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           onTap: () {
             Navigator.of(context).pushNamed('/');
           },
-          child: Text('University Course Search'),
+          child: Text(title),
         ),
         actions: <Widget>[
           IconButton(
@@ -69,9 +190,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         ],
       ),
       body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? _progreeIndicator()
           : LayoutBuilder(
               builder:
                   (BuildContext context, BoxConstraints viewportConstraints) {
@@ -85,113 +204,11 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                child: Text(
-                                  '${args.majorName} courses',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
-                          child: Container(
-                            height: 50,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.search,
-                                ),
-                                finalCourses.isEmpty
-                                    ? Expanded(
-                                        child: Text(
-                                          '${args.institutionName} |' +
-                                              '  ${args.majorName}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                          softWrap: false,
-                                        ),
-                                      )
-                                    : Expanded(
-                                        child: Text(
-                                          '${finalCourses.first.institutionName}  |' +
-                                              '  ${args.majorName}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                          softWrap: false,
-                                        ),
-                                      ),
-                                //),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                          child: Container(
-                            height: 30,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.fromLTRB(10, 0, 17, 0),
-                            child: Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  child: Text(
-                                    'Search Results: ' +
-                                        '${finalCourses.length}' +
-                                        ' courses',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      fontFamily: 'Roboto',
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    softWrap: false,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          child: new ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                            itemCount: finalCourses.length,
-                            itemBuilder: (ctx, i) =>
-                                ChangeNotifierProvider.value(
-                              value: finalCourses[i],
-                              child: CourseListItem(),
-                            ),
-                          ),
-                        ),
+                        _displaySubHeader(args.majorName),
+                        _displaySearchNavigator(
+                            finalCourses, args.institutionName, args.majorName),
+                        _displaySearchResults(finalCourses),
+                        _displayListOfCourses(finalCourses),
                       ],
                     ),
                   ),
