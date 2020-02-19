@@ -6,7 +6,6 @@ import 'dart:core';
 import '../models/courses_provider.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
-import '../models/auth.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {
@@ -52,10 +51,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  Widget subHeader(BuildContext context, String text) {
-    final courseId = ModalRoute.of(context).settings.arguments
-        as String; // retrieving ID from routes passed
-    final loadedCourse = Provider.of<Courses>(context).findById(courseId);
+  Widget subHeader(String courseName, String text) {
     return Row(
       children: <Widget>[
         Container(
@@ -77,7 +73,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               Navigator.of(context).pushNamed('/');
             },
             child: Text(
-              'HOME ',
+              text + ' ',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -88,7 +84,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         ),
         Expanded(
           child: Text(
-            '/ ' + loadedCourse.courseName + ' review',
+            '/ ' + courseName + ' review',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -101,13 +97,77 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
+  Widget displayCourseName(String courseName) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: Text(
+        courseName,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        maxLines: 1,
+      ),
+    );
+  }
+
+  Widget displayStarAndScoreNumber(int starScore, scoreNumber) {
+    return Row(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
+          child: StarDisplayWidget(
+            value: starScore,
+            filledStar: Icon(Icons.star, color: Colors.amber, size: 20),
+            unfilledStar: Icon(Icons.star_border, color: Colors.grey),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+          child: Text(
+            '$scoreNumber',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'roboto',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget displayCourseDescription(String courseDescription) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
+      child: Text(
+        courseDescription,
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+          //fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+  }
+
+  Widget progreeIndicator() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context).settings.arguments
         as String; // retrieving ID from routes passed
     final loadedCourse = Provider.of<Courses>(context).findById(courseId);
-
-    final authData = Provider.of<Auth>(context, listen: false);
 
     final reviewList = Provider.of<Reviews>(context);
     final reviews = reviewList.reviews;
@@ -139,7 +199,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  subHeader(context, 'HOME'),
+                  subHeader(loadedCourse.courseName, 'HOME'),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
@@ -151,69 +211,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     width: double.infinity,
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: Text(
-                            loadedCourse.courseName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                          ),
-                        ),
-                        // display language
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: EdgeInsets.fromLTRB(30, 10, 0, 0),
-                              child: StarDisplayWidget(
-                                value: intScore,
-                                filledStar: Icon(Icons.star,
-                                    color: Colors.amber, size: 20),
-                                unfilledStar:
-                                    Icon(Icons.star_border, color: Colors.grey),
-                              ),
-                            ),
-                            Container(
-                              //width: double.infinity,
-                              padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              child: Text(
-                                '$finalScore',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'roboto',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
-                          child: Text(
-                            '${loadedCourse.courseContent}',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
+                        displayCourseName(loadedCourse.courseName),
+                        displayStarAndScoreNumber(intScore, finalScore),
+                        displayCourseDescription(loadedCourse.courseContent),
                       ],
                     ),
                   ),
                   buildSectionTitle(context, 'Course Reviews'),
                   _isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
+                      ? progreeIndicator()
                       : Flexible(
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
