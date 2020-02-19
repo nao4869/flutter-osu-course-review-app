@@ -171,7 +171,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   var _isLoading = false;
   var _currentSelectedValue;
   var _currentSelectedValue2;
-  var _currentSelectedValue3;
+  var currentSelectedValue3;
 
   @override
   void initState() {
@@ -410,6 +410,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+
     final majorList = Provider.of<Majors>(context);
     final majors = majorList.majors;
 
@@ -421,7 +423,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: Text(title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -452,14 +454,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          isEmpty: _currentSelectedValue3 == '',
+                          isEmpty: currentSelectedValue3 == '',
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<Institution>(
-                              value: _currentSelectedValue3,
+                              value: currentSelectedValue3,
                               isDense: true,
                               onChanged: (Institution newValue) {
                                 setState(() {
-                                  _currentSelectedValue3 = newValue;
+                                  currentSelectedValue3 = newValue;
                                   state.didChange(newValue);
                                 });
                               },
@@ -609,22 +611,54 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           isEmpty: _currentSelectedValue2 == '',
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<Major>(
-                              focusNode: _majorFocusNode,
-                              value: _currentSelectedValue2,
-                              isDense: true,
-                              onChanged: (Major newValue) {
-                                setState(() {
-                                  _currentSelectedValue2 = newValue;
-                                  state.didChange(newValue);
-                                });
-                              },
-                              items: majors.map((Major value) {
-                                return DropdownMenuItem<Major>(
-                                  value: value,
-                                  child: Text(value.majorName.toString()),
-                                );
-                              }).toList(),
-                            ),
+                                focusNode: _majorFocusNode,
+                                value: _currentSelectedValue2,
+                                isDense: true,
+                                onChanged: (Major newValue) {
+                                  setState(() {
+                                    _currentSelectedValue2 = newValue;
+                                    state.didChange(newValue);
+                                  });
+                                },
+                                items: currentSelectedValue3 != null
+                                    ? majors
+                                        .where(
+                                          (mj) => mj.institutionName
+                                              .toLowerCase()
+                                              .contains(
+                                                currentSelectedValue3.name
+                                                    .toString()
+                                                    .toLowerCase(),
+                                              ),
+                                        )
+                                        .toList()
+                                        .map<DropdownMenuItem<Major>>(
+                                            (Major value) {
+                                        return DropdownMenuItem<Major>(
+                                          value: value != null ? value : null,
+                                          child: Text(
+                                            value.majorName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                    : majors.map((Major value) {
+                                        return DropdownMenuItem<Major>(
+                                          value: value != null ? value : null,
+                                          child: Text(
+                                            value.majorName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()),
                           ),
                         );
                       },
