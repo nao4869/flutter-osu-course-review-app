@@ -408,6 +408,30 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     );
   }
 
+  Widget _createRaisedButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonTheme(
+        minWidth: double.infinity,
+        child: RaisedButton(
+          onPressed: _saveForm,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const title = 'University Course Search';
@@ -679,29 +703,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                   ),
                   // Raised Button
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ButtonTheme(
-                      minWidth: double.infinity,
-                      child: RaisedButton(
-                        onPressed: _saveForm,
-                        child: Text(
-                          "Save Course",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // to do, add clear form button
-                  // to do, add save and add another button
+                  _createRaisedButton('Save Review'),
                 ],
               ),
             ),
