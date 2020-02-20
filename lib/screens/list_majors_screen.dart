@@ -51,8 +51,57 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     );
   }
 
+  Widget _displaySubHeader(Majors majorList, String institutionName) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
+                    arguments: majorList.majors);
+              },
+              child: Text(
+                '$institutionName\'s majors',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displayGridView(List<Major> loadedInstitutionMajors) {
+    return Flexible(
+      child: new GridView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(25),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          childAspectRatio: 1.3,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+        ),
+        itemCount: loadedInstitutionMajors.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: loadedInstitutionMajors[i],
+          child: MajorListItem(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+
     final institutionName = ModalRoute.of(context).settings.arguments
         as String; // retrieving majorName passed from list majors screen
     final loadedInstitutionMajors = Provider.of<Majors>(context).findBySchool(
@@ -64,7 +113,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: GestureDetector(
-          child: Text('University Course Search'),
+          child: Text(title),
           onTap: () {
             Navigator.of(context).pushNamed('/');
           },
@@ -101,57 +150,14 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        ListCoursesScreen.routeName,
-                                        arguments: majorList.majors);
-                                  },
-                                  child: Text(
-                                    '$institutionName\'s majors',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Flexible(
-                          child: new GridView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(25),
-                            gridDelegate:
-                                SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 1.3,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                            ),
-                            itemCount: loadedInstitutionMajors.length,
-                            itemBuilder: (ctx, i) =>
-                                ChangeNotifierProvider.value(
-                              value: loadedInstitutionMajors[i],
-                              child: MajorListItem(),
-                            ),
-                          ),
-                        ),
+                        _displaySubHeader(majorList, institutionName),
+                        _displayGridView(loadedInstitutionMajors),
                       ],
                     ),
                   ),
                 );
               },
             ),
-      // Computer Science
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
