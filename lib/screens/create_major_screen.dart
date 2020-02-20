@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 import '../screens/list_institutions_screen.dart';
-import '../screens/list_courses_screen.dart';
 
 import '../models/major.dart';
 import '../models/major_provider.dart';
@@ -224,6 +223,105 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
     super.dispose();
   }
 
+  Widget _displaySubHeader(String title) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Text(
+            title,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
+      FocusNode nextFocusNode, String labelText, String formTitle) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontSize: 13,
+          ),
+          suffixIcon: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.clear,
+                size: 20,
+              ),
+            ),
+            onPressed: () {
+              controller.clear();
+            },
+          ),
+          contentPadding: const EdgeInsets.all(8.0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          FocusScope.of(context).requestFocus(nextFocusNode);
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter a course name.';
+          } else {
+            return null; // no error
+          }
+        },
+        onSaved: (value) {
+          _editedMajor = Major(
+            id: _editedMajor.id,
+            institutionName: formTitle == 'institutionName'
+                ? value
+                : _editedMajor.institutionName,
+            majorName:
+                formTitle == 'majorName' ? value : _editedMajor.majorName,
+            logo: formTitle == 'logo' ? value : _editedMajor.logo,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _createRaisedButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonTheme(
+        minWidth: double.infinity,
+        child: RaisedButton(
+          onPressed: _saveForm,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final institutionList = Provider.of<Institutions>(context);
@@ -243,23 +341,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        child: Text(
-                          'Create New Major',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  _displaySubHeader('Create new major'),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -309,51 +391,8 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _majorNameController,
-                      focusNode: _majorNameFocusNode,
-                      decoration: InputDecoration(
-                        labelText: 'Major name',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            size: 18,
-                          ),
-                          onPressed: () {
-                            _majorNameController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_logoFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter an major name.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedMajor = Major(
-                          id: _editedMajor.id,
-                          institutionName: _editedMajor.institutionName,
-                          majorName: value,
-                          logo: _editedMajor.logo,
-                        );
-                      },
-                    ),
-                  ),
+                  _createFormField(_majorNameController, _majorNameFocusNode,
+                      _logoFocusNode, 'Major name', 'majorName'),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -384,84 +423,19 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
                                 ),
                         ),
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Logo or image of school',
-                                labelStyle: TextStyle(
-                                  fontSize: 13,
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: 18,
-                                  ),
-                                  onPressed: () {
-                                    _logoController.clear();
-                                  },
-                                ),
-                                contentPadding: const EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              keyboardType: TextInputType.url,
-                              textInputAction: TextInputAction.done,
-                              controller: _logoController,
-                              focusNode: _logoFocusNode,
-                              onFieldSubmitted: (_) {
-                                _saveForm();
-                              },
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Please enter an image URL.';
-                                }
-                                if (!value.startsWith('http') ||
-                                    !value.startsWith('https')) {
-                                  return 'Please enter a valid URL.';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _editedMajor = Major(
-                                  id: _editedMajor.id,
-                                  institutionName: _editedMajor.institutionName,
-                                  majorName: _editedMajor.majorName,
-                                  logo: value,
-                                );
-                              },
-                            ),
-                          ),
+                          child: _createFormField(
+                              _logoController,
+                              _logoFocusNode,
+                              _logoFocusNode,
+                              'Logo or image of school',
+                              'logo'),
                         ),
                       ],
                     ),
                   ),
 
                   // Raised Button
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ButtonTheme(
-                      minWidth: double.infinity,
-                      child: RaisedButton(
-                        onPressed: _saveForm,
-                        child: Text(
-                          "Save Major",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    // to do, add clear form button
-                    // to do, add save and add another button
-                  ),
+                  _createRaisedButton('Save Major'),
                 ],
               ),
             ),
