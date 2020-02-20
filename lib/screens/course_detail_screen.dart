@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:core';
 
 import '../models/courses_provider.dart';
+import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
 import '../widgets/course_review_item.dart';
@@ -163,6 +164,22 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
+  Widget _displayListOfReviews(List<Review> reviews) {
+    return Flexible(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+        itemCount: reviews.length,
+        itemBuilder: (ctx, i) =>
+            ChangeNotifierProvider.value(
+          value: reviews[i],
+          child: CourseReviewItem(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context).settings.arguments
@@ -220,19 +237,20 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   buildSectionTitle(context, 'Course Reviews'),
                   _isLoading
                       ? progreeIndicator()
-                      : Flexible(
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                            itemCount: reviews.length,
-                            itemBuilder: (ctx, i) =>
-                                ChangeNotifierProvider.value(
-                              value: reviews[i],
-                              child: CourseReviewItem(),
-                            ),
-                          ),
-                        ),
+                      : _displayListOfReviews(reviews),
+                      // : Flexible(
+                      //     child: ListView.builder(
+                      //       scrollDirection: Axis.vertical,
+                      //       shrinkWrap: true,
+                      //       padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      //       itemCount: reviews.length,
+                      //       itemBuilder: (ctx, i) =>
+                      //           ChangeNotifierProvider.value(
+                      //         value: reviews[i],
+                      //         child: CourseReviewItem(),
+                      //       ),
+                      //     ),
+                      //   ),
                 ],
               ),
             ),
