@@ -202,6 +202,50 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     super.dispose();
   }
 
+  Widget _displaySubHeader(String title) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Text(
+            title,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _createRaisedButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonTheme(
+        minWidth: double.infinity,
+        child: RaisedButton(
+          onPressed: _saveForm,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseList = Provider.of<Courses>(context);
@@ -225,23 +269,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: Text(
-                            'Create New Review',
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    _displaySubHeader('Create new review'),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FormField<Institution>(
@@ -485,29 +513,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                       ),
                     ),
                     // Raised Button
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: ButtonTheme(
-                        minWidth: double.infinity,
-                        child: RaisedButton(
-                          onPressed: _saveForm,
-                          child: Text(
-                            "Save Review",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          color: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                      // to do, add clear form button
-                      // to do, add save and add another button
-                    ),
+                    _createRaisedButton('Save Review'),
                   ],
                 ),
               ),
