@@ -40,8 +40,44 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
     super.didChangeDependencies();
   }
 
+  Widget _displaySubHeader(String text) {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displayListOfInstitutions(
+      List<Institution> loadedInstitutionsCourse) {
+    return Flexible(
+      child: new ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(25),
+        itemCount: loadedInstitutionsCourse.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: loadedInstitutionsCourse[i],
+          child: InstitutionListItem(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+    const subheader = 'Search course by school';
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
@@ -51,7 +87,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           onTap: () {
             Navigator.of(context).pushNamed('/');
           },
-          child: Text('University Course Search'),
+          child: Text(title),
         ),
       ),
       body: _isLoading
@@ -71,34 +107,8 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                              child: Text(
-                                'Search course by Institution',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Flexible(
-                          child: new ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(25),
-                            itemCount: institutions.length,
-                            itemBuilder: (ctx, i) =>
-                                ChangeNotifierProvider.value(
-                              value: institutions[i],
-                              child: InstitutionListItem(),
-                            ),
-                          ),
-                        ),
+                        _displaySubHeader(subheader),
+                        _displayListOfInstitutions(institutions),
                       ],
                     ),
                   ),
