@@ -20,6 +20,7 @@ class CreateReviewScreen extends StatefulWidget {
 }
 
 class _CreateReviewScreen extends State<CreateReviewScreen> {
+  final _scoreFocusNode = FocusNode();
   final _contentFocusNode = FocusNode();
   final _contentController = TextEditingController();
 
@@ -222,6 +223,62 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     );
   }
 
+  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
+      FocusNode nextFocusNode, String labelText, String formTitle) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        maxLines: 10,
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontSize: 13,
+          ),
+          suffixIcon: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.clear,
+                size: 20,
+              ),
+            ),
+            onPressed: () {
+              controller.clear();
+            },
+          ),
+          contentPadding: const EdgeInsets.all(8.0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          FocusScope.of(context).requestFocus(nextFocusNode);
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter a course name.';
+          } else {
+            return null; // no error
+          }
+        },
+        onSaved: (value) {
+          _editedReview = Review(
+            institutionName: _editedReview.institutionName,
+            courseId: _editedReview.courseId,
+            reviewsContent: formTitle == 'reviewsContent'
+                ? value
+                : _editedReview.reviewsContent,
+            starScore: _editedReview.starScore,
+            createdAt: _editedReview.createdAt,
+          );
+        },
+      ),
+    );
+  }
+
   Widget _createRaisedButton(String title) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -417,51 +474,8 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: TextFormField(
-                        controller: _contentController,
-                        decoration: InputDecoration(
-                          labelText: 'Review Content',
-                          suffixIcon: IconButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Icon(
-                                Icons.clear,
-                                size: 18,
-                              ),
-                            ),
-                            onPressed: () {
-                              _contentController.clear();
-                            },
-                          ),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        maxLines: 10,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        focusNode: _contentFocusNode,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter a reviews content.';
-                          } else {
-                            return null; // no error
-                          }
-                        },
-                        onSaved: (value) {
-                          _editedReview = Review(
-                            institutionName: _editedReview.institutionName,
-                            courseId: _editedReview.courseId,
-                            reviewsContent: value,
-                            starScore: _editedReview.starScore,
-                            createdAt: _editedReview.createdAt,
-                          );
-                        },
-                      ),
-                    ),
+                    _createFormField(_contentController, _contentFocusNode,
+                        _scoreFocusNode, 'Review Content', 'reviewsContent'),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FormField<int>(
@@ -483,6 +497,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             isEmpty: _currentSelectedValue2 == '',
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<int>(
+                                focusNode: _scoreFocusNode,
                                 value: _currentSelectedValue2,
                                 isDense: true,
                                 onChanged: (int newValue) {
