@@ -327,8 +327,8 @@ class DataSearch extends SearchDelegate<Course> {
 }
 
 class ScreenArguments {
-  final institutionName;
-  final majorName;
+  final String institutionName;
+  final String majorName;
 
   ScreenArguments(this.institutionName, this.majorName);
 }
