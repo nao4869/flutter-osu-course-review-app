@@ -15,6 +15,30 @@ class _MajorListItemState extends State<MajorListItem> {
     super.didChangeDependencies();
   }
 
+  Widget _displayMajorLogo(String logo) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+      ),
+      child: Image.network(
+        logo,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Widget _displayMajorName(String majorName) {
+    return Expanded(
+      child: Text(
+        majorName,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final major = Provider.of<Major>(context, listen: false);
@@ -41,24 +65,8 @@ class _MajorListItemState extends State<MajorListItem> {
         borderRadius: BorderRadius.circular(15),
         child: Column(
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Image.network(
-                major.logo,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                '${major.majorName}',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            _displayMajorLogo(major.logo),
+            _displayMajorName(major.majorName),
           ],
         ),
       ),
@@ -67,8 +75,8 @@ class _MajorListItemState extends State<MajorListItem> {
 }
 
 class ScreenArguments {
-  final institutionName;
-  final majorName;
+  final String institutionName;
+  final String majorName;
 
   ScreenArguments(this.institutionName, this.majorName);
 }

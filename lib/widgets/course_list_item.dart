@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osu_course_review/models/language.dart';
 import 'package:osu_course_review/screens/course_detail_screen.dart';
 import 'package:provider/provider.dart';
 
