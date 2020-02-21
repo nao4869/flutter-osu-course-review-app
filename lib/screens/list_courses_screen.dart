@@ -81,7 +81,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             loadedMajorCourse.isEmpty
                 ? Expanded(
                     child: Text(
-                      institutionName + majorName,
+                      institutionName + ' | ' + majorName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
@@ -93,7 +93,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                   )
                 : Expanded(
                     child: Text(
-                      '${loadedMajorCourse.first.institutionName}  |  ' +
+                      '${loadedMajorCourse.first.institutionName} |' +
                           majorName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
