@@ -39,6 +39,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   /// Creates the [KeyboardActionsConfig] to hook up the fields
   /// and their focus nodes to our [FormKeyboardActions].
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const message = "CLOSE";
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -51,7 +52,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -66,7 +67,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -81,7 +82,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -96,7 +97,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -111,7 +112,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -126,7 +127,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -171,7 +172,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   var _isLoading = false;
   var _currentSelectedValue;
   var _currentSelectedValue2;
-  var _currentSelectedValue3;
+  var currentSelectedValue3;
 
   @override
   void initState() {
@@ -220,6 +221,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New course has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -243,11 +252,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         await showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-                  title: Text('An error occured!'),
-                  content: Text('Some error occured while adding courses'),
+                  title: Text(_errorMessageHead),
+                  content: Text(_errorMessageSub),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text('Okay'),
+                      child: Text(_popupButton),
                       onPressed: () {
                         Navigator.of(context, rootNavigator: true)
                             .pop('dialog');
@@ -255,12 +264,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                   ],
                 ));
-        // finally block always run no matter try, catch succeded or not
-        // } finally {
-        //   setState(() {
-        //     _isLoading = false;
-        //   });
-        //   Navigator.of(context).pop();
       }
     }
     setState(() {
@@ -273,26 +276,25 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         builder: (context) => ListCoursesScreen(),
         settings: RouteSettings(
           arguments: ScreenArguments(
-            'Extract Arguments Screen',
-            'This message is extracted in the build method.',
+            _editedCourse.institutionName,
+            _editedCourse.major,
           ),
         ),
       ),
     );
 
-    // pop up message when course successfully added
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          'New activity',
+          _popupHead,
         ),
         content: Text(
-          'New course has been created',
+          _popupSub,
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },
@@ -323,8 +325,121 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     super.dispose();
   }
 
+  Widget _displaySubHeader(String title) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Text(
+            title,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
+      FocusNode nextFocusNode, String labelText, String formTitle) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontSize: 13,
+          ),
+          suffixIcon: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.clear,
+                size: 20,
+              ),
+            ),
+            onPressed: () {
+              controller.clear();
+            },
+          ),
+          contentPadding: const EdgeInsets.all(8.0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          FocusScope.of(context).requestFocus(nextFocusNode);
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter a course name.';
+          } else {
+            return null; // no error
+          }
+        },
+        onSaved: (value) {
+          _editedCourse = Course(
+            courseName:
+                formTitle == 'CourseName' ? value : _editedCourse.courseName,
+            courseContent:
+                formTitle == 'courseContent' ? value : _editedCourse.courseName,
+            prerequisite: formTitle == 'prerequisite'
+                ? value
+                : _editedCourse.prerequisite,
+            proctoredexams: formTitle == 'proctoredexams'
+                ? value
+                : _editedCourse.proctoredexams,
+            groupwork:
+                formTitle == 'groupwork' ? value : _editedCourse.groupwork,
+            textbook: formTitle == 'textbook' ? value : _editedCourse.textbook,
+            language: _editedCourse.language,
+            major: _editedCourse.major,
+            institutionName: _editedCourse.institutionName,
+            id: _editedCourse.id,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _createRaisedButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonTheme(
+        minWidth: double.infinity,
+        child: RaisedButton(
+          onPressed: _saveForm,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+    const subHeadername = 'Create New Course';
+    const buttonName = 'Save Course';
+
     final majorList = Provider.of<Majors>(context);
     final majors = majorList.majors;
 
@@ -334,20 +449,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
-    // need List<String> type to be able to map
-    // final majorsList = Provider.of<Majors>(context);
-    // final majors = majorsList.majors;
-    // List<String> majorsStr = majors.cast();
-    // print(majorsStr.runtimeType);
-    // print(majorsStr);
-
-    //List<String> majorsStr = majors.cast();
-    //print(majorsStr.runtimeType);
-    //final majorsMap = majors.forEach((mj) => print(mj.majorName));
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: Text(title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -359,23 +463,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        child: Text(
-                          'Create New Course',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  _displaySubHeader(subHeadername),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -394,14 +482,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          isEmpty: _currentSelectedValue3 == '',
+                          isEmpty: currentSelectedValue3 == '',
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<Institution>(
-                              value: _currentSelectedValue3,
+                              value: currentSelectedValue3,
                               isDense: true,
                               onChanged: (Institution newValue) {
                                 setState(() {
-                                  _currentSelectedValue3 = newValue;
+                                  currentSelectedValue3 = newValue;
                                   state.didChange(newValue);
                                 });
                               },
@@ -431,332 +519,47 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _nameController,
-                      focusNode: _nameFocusNode,
-                      decoration: InputDecoration(
-                        labelText: 'Course Name',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _nameController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_contentFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a course name.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: value,
-                          courseContent: _editedCourse.courseContent,
-                          prerequisite: _editedCourse.prerequisite,
-                          proctoredexams: _editedCourse.proctoredexams,
-                          groupwork: _editedCourse.groupwork,
-                          textbook: _editedCourse.textbook,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _nameController,
+                    _nameFocusNode,
+                    _contentFocusNode,
+                    'Course Name',
+                    'CourseName',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _contentController,
-                      decoration: InputDecoration(
-                        labelText: 'Course Content',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _contentController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _contentFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_prerequisiteFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a course content.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: _editedCourse.courseName,
-                          courseContent: value,
-                          prerequisite: _editedCourse.prerequisite,
-                          proctoredexams: _editedCourse.proctoredexams,
-                          groupwork: _editedCourse.groupwork,
-                          textbook: _editedCourse.textbook,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _contentController,
+                    _contentFocusNode,
+                    _prerequisiteFocusNode,
+                    'Course Content',
+                    'CourseContent',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _prerequisiteController,
-                      decoration: InputDecoration(
-                        labelText: 'Prerequisite',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _prerequisiteController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _prerequisiteFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_proctoredExamsFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a course pre-requisite.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: _editedCourse.courseName,
-                          courseContent: _editedCourse.courseContent,
-                          prerequisite: value,
-                          proctoredexams: _editedCourse.proctoredexams,
-                          groupwork: _editedCourse.groupwork,
-                          textbook: _editedCourse.textbook,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _prerequisiteController,
+                    _prerequisiteFocusNode,
+                    _proctoredExamsFocusNode,
+                    'Prerequisite',
+                    'prerequisite',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _proctoredexamsController,
-                      decoration: InputDecoration(
-                        labelText: 'Proctored-Exams',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _proctoredexamsController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _proctoredExamsFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context)
-                            .requestFocus(_groupWorkFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter whether course have proctored-exams or not.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: _editedCourse.courseName,
-                          courseContent: _editedCourse.courseContent,
-                          prerequisite: _editedCourse.prerequisite,
-                          proctoredexams: value,
-                          groupwork: _editedCourse.groupwork,
-                          textbook: _editedCourse.textbook,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _proctoredexamsController,
+                    _proctoredExamsFocusNode,
+                    _groupWorkFocusNode,
+                    'Proctored-Exams',
+                    'proctoredexams',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _groupworkController,
-                      decoration: InputDecoration(
-                        labelText: 'Groupwork',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _groupworkController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _groupWorkFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_textBookFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter whether a course have groupwork or not.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: _editedCourse.courseName,
-                          courseContent: _editedCourse.courseContent,
-                          prerequisite: _editedCourse.prerequisite,
-                          proctoredexams: _editedCourse.proctoredexams,
-                          groupwork: value,
-                          textbook: _editedCourse.textbook,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _groupworkController,
+                    _groupWorkFocusNode,
+                    _textBookFocusNode,
+                    'Groupwork',
+                    'groupwork',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _textbookController,
-                      decoration: InputDecoration(
-                        labelText: 'Textbook',
-                        labelStyle: TextStyle(
-                          fontSize: 13,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                          onPressed: () {
-                            _textbookController.clear();
-                          },
-                        ),
-                        contentPadding: const EdgeInsets.all(8.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _textBookFocusNode,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_languageFocusNode);
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a textbook of course.';
-                        } else {
-                          return null; // no error
-                        }
-                      },
-                      onSaved: (value) {
-                        _editedCourse = Course(
-                          courseName: _editedCourse.courseName,
-                          courseContent: _editedCourse.courseContent,
-                          prerequisite: _editedCourse.prerequisite,
-                          proctoredexams: _editedCourse.proctoredexams,
-                          groupwork: _editedCourse.groupwork,
-                          textbook: value,
-                          language: _editedCourse.language,
-                          major: _editedCourse.major,
-                          institutionName: _editedCourse.institutionName,
-                          id: _editedCourse.id,
-                        );
-                      },
-                    ),
+                  _createFormField(
+                    _textbookController,
+                    _textBookFocusNode,
+                    _languageFocusNode,
+                    'Textbook',
+                    'textbook',
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -836,22 +639,54 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           isEmpty: _currentSelectedValue2 == '',
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<Major>(
-                              focusNode: _majorFocusNode,
-                              value: _currentSelectedValue2,
-                              isDense: true,
-                              onChanged: (Major newValue) {
-                                setState(() {
-                                  _currentSelectedValue2 = newValue;
-                                  state.didChange(newValue);
-                                });
-                              },
-                              items: majors.map((Major value) {
-                                return DropdownMenuItem<Major>(
-                                  value: value,
-                                  child: Text(value.majorName.toString()),
-                                );
-                              }).toList(),
-                            ),
+                                focusNode: _majorFocusNode,
+                                value: _currentSelectedValue2,
+                                isDense: true,
+                                onChanged: (Major newValue) {
+                                  setState(() {
+                                    _currentSelectedValue2 = newValue;
+                                    state.didChange(newValue);
+                                  });
+                                },
+                                items: currentSelectedValue3 != null
+                                    ? majors
+                                        .where(
+                                          (mj) => mj.institutionName
+                                              .toLowerCase()
+                                              .contains(
+                                                currentSelectedValue3.name
+                                                    .toString()
+                                                    .toLowerCase(),
+                                              ),
+                                        )
+                                        .toList()
+                                        .map<DropdownMenuItem<Major>>(
+                                            (Major value) {
+                                        return DropdownMenuItem<Major>(
+                                          value: value != null ? value : null,
+                                          child: Text(
+                                            value.majorName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                    : majors.map((Major value) {
+                                        return DropdownMenuItem<Major>(
+                                          value: value != null ? value : null,
+                                          child: Text(
+                                            value.majorName.toString(),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()),
                           ),
                         );
                       },
@@ -872,29 +707,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                   ),
                   // Raised Button
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ButtonTheme(
-                      minWidth: double.infinity,
-                      child: RaisedButton(
-                        onPressed: _saveForm,
-                        child: Text(
-                          "Save Course",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // to do, add clear form button
-                  // to do, add save and add another button
+                  _createRaisedButton(buttonName),
                 ],
               ),
             ),

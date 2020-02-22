@@ -20,10 +20,12 @@ class CreateReviewScreen extends StatefulWidget {
 }
 
 class _CreateReviewScreen extends State<CreateReviewScreen> {
+  final _scoreFocusNode = FocusNode();
   final _contentFocusNode = FocusNode();
   final _contentController = TextEditingController();
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const _message = 'CLOSE';
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -36,7 +38,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                _message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -98,13 +100,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     if (_isInit) {
       final courseId = ModalRoute.of(context).settings.arguments as String;
 
-      // this line is to initialize currentSelectedValue3 with first institution
-      // final institutionList = Provider.of<Institutions>(context);
-      // final institutions = institutionList.institutions;
-      // if (currentSelectedValue3 == null) {
-      //   currentSelectedValue3 = institutions.first;
-      // }
-
       if (courseId != null) {
         _editedReview =
             Provider.of<Reviews>(context, listen: false).findById(courseId);
@@ -125,6 +120,14 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New review has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -136,11 +139,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       _isLoading = true;
     });
 
-    // if existing items edited
-    // if (_editedReview.courseId != null) {
-    //   await Provider.of<Reviews>(context, listen: false)
-    //       .updateReview(_editedReview, _editedReview.courseId);
-    // } else {
     try {
       await Provider.of<Reviews>(context, listen: false).addReview(
           _editedReview, _editedReview.courseId, _editedReview.starScore);
@@ -148,11 +146,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('An error occured!'),
-                content: Text('Some error occured while adding review'),
+                title: Text(_errorMessageSub),
+                content: Text(_errorMessageSub),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Okay'),
+                    child: Text(_popupButton),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -179,11 +177,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('New activity'),
-        content: Text('New Review has been created'),
+        title: Text(_popupHead),
+        content: Text(_popupSub),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               // Navigator.of(context).pop();
               Navigator.of(context, rootNavigator: true).pop('dialog');
@@ -202,6 +200,106 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     super.dispose();
   }
 
+  Widget _displaySubHeader(String title) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Text(
+            title,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
+      FocusNode nextFocusNode, String labelText, String formTitle) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        maxLines: 10,
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontSize: 13,
+          ),
+          suffixIcon: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.clear,
+                size: 20,
+              ),
+            ),
+            onPressed: () {
+              controller.clear();
+            },
+          ),
+          contentPadding: const EdgeInsets.all(8.0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          FocusScope.of(context).requestFocus(nextFocusNode);
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter a course name.';
+          } else {
+            return null; // no error
+          }
+        },
+        onSaved: (value) {
+          _editedReview = Review(
+            institutionName: _editedReview.institutionName,
+            courseId: _editedReview.courseId,
+            reviewsContent: formTitle == 'reviewsContent'
+                ? value
+                : _editedReview.reviewsContent,
+            starScore: _editedReview.starScore,
+            createdAt: _editedReview.createdAt,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _createRaisedButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonTheme(
+        minWidth: double.infinity,
+        child: RaisedButton(
+          onPressed: _saveForm,
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final courseList = Provider.of<Courses>(context);
@@ -210,9 +308,17 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
+    const _title = 'University Course Search';
+    const _subHeader = 'Create new review';
+
+    const _formLabel1 = 'Review Content';
+    const _formTitle1 = 'reviewsContent';
+
+    const _buttonText = 'Save Review';
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: Text(_title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -220,28 +326,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
-              // setting global key in the form
               key: _form,
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: Text(
-                            'Create New Review',
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    _displaySubHeader(_subHeader),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FormField<Institution>(
@@ -389,50 +478,12 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: TextFormField(
-                        controller: _contentController,
-                        decoration: InputDecoration(
-                          labelText: 'Review Content',
-                          suffixIcon: IconButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Icon(
-                                Icons.clear,
-                                size: 18,
-                              ),
-                            ),
-                            onPressed: () {
-                              _contentController.clear();
-                            },
-                          ),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        maxLines: 10,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        focusNode: _contentFocusNode,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter a reviews content.';
-                          } else {
-                            return null; // no error
-                          }
-                        },
-                        onSaved: (value) {
-                          _editedReview = Review(
-                            institutionName: _editedReview.institutionName,
-                            courseId: _editedReview.courseId,
-                            reviewsContent: value,
-                            starScore: _editedReview.starScore,
-                            createdAt: _editedReview.createdAt,
-                          );
-                        },
-                      ),
+                    _createFormField(
+                      _contentController,
+                      _contentFocusNode,
+                      _scoreFocusNode,
+                      _formLabel1,
+                      _formTitle1,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
@@ -455,6 +506,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                             isEmpty: _currentSelectedValue2 == '',
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<int>(
+                                focusNode: _scoreFocusNode,
                                 value: _currentSelectedValue2,
                                 isDense: true,
                                 onChanged: (int newValue) {
@@ -484,30 +536,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         },
                       ),
                     ),
-                    // Raised Button
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: ButtonTheme(
-                        minWidth: double.infinity,
-                        child: RaisedButton(
-                          onPressed: _saveForm,
-                          child: Text(
-                            "Save Review",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          color: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                      // to do, add clear form button
-                      // to do, add save and add another button
-                    ),
+                    _createRaisedButton(_buttonText),
                   ],
                 ),
               ),

@@ -6,7 +6,7 @@ class Review with ChangeNotifier {
   final String courseId;
   final String reviewsContent;
   final int starScore;
-  var createdAt;
+  final String createdAt;
 
   Review({
     @required this.institutionName,

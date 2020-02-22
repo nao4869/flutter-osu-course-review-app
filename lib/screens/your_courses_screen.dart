@@ -9,11 +9,6 @@ import '../models/courses_provider.dart';
 import '../models/course.dart';
 import '../widgets/course_item.dart';
 
-enum FilterOptions {
-  Favorites,
-  All,
-}
-
 class YourCoursesScreen extends StatefulWidget {
   static const routeName = '/your-courses-screen';
 
@@ -41,8 +36,46 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
     super.initState();
   }
 
+  Widget _displaySubHeader(String text) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displayFavoriteCourses(List<Course> courses) {
+    return Flexible(
+      child: new ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(15),
+        itemCount: 1,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: courses[i],
+          child: CourseItem(_showOnlyFavorites),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    const title = 'University Course Search';
+    const text = 'Your subscribed courses';
+
     final courseData = Provider.of<Courses>(context);
     final courses = courseData.courses;
 
@@ -52,7 +85,7 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
           onTap: () {
             Navigator.of(context).pushNamed('/');
           },
-          child: Text('University Course Search'),
+          child: Text(title),
         ),
       ),
       body: _isLoading
@@ -72,36 +105,8 @@ class _YourCoursesScreenState extends State<YourCoursesScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                child: Text(
-                                  'Your subscribed courses',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Flexible(
-                          child: new ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(15),
-                            itemCount: 1,
-                            itemBuilder: (ctx, i) =>
-                                ChangeNotifierProvider.value(
-                              value: courses[i],
-                              child: CourseItem(_showOnlyFavorites),
-                            ),
-                          ),
-                        ),
+                        _displaySubHeader(text),
+                        _displayFavoriteCourses(courses),
                       ],
                     ),
                   ),
@@ -184,7 +189,9 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings: RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(
+                arguments: sugestionList[index].id,
+              ),
             ),
           );
         },
@@ -212,7 +219,9 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings: RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(
+                arguments: sugestionList[index].id,
+              ),
             ),
           );
         },
