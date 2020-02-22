@@ -9,11 +9,6 @@ import '../models/courses_provider.dart';
 import '../models/course.dart';
 import '../widgets/course_item.dart';
 
-enum FilterOptions {
-  Favorites,
-  All,
-}
-
 class YourCoursesScreen extends StatefulWidget {
   static const routeName = '/your-courses-screen';
 
@@ -194,7 +189,9 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings: RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(
+                arguments: sugestionList[index].id,
+              ),
             ),
           );
         },
@@ -222,7 +219,9 @@ class DataSearch extends SearchDelegate<Course> {
             context,
             MaterialPageRoute(
               builder: (context) => CourseDetailScreen(),
-              settings: RouteSettings(arguments: sugestionList[index].id),
+              settings: RouteSettings(
+                arguments: sugestionList[index].id,
+              ),
             ),
           );
         },

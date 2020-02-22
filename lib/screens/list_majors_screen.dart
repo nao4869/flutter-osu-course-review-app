@@ -236,8 +236,8 @@ class DataSearch extends SearchDelegate<Major> {
               builder: (context) => ListCoursesScreen(),
               settings: RouteSettings(
                 arguments: ScreenArguments(
-                  'Extract Arguments Screen',
-                  'This message is extracted in the build method.',
+                  sugestionList[index].institutionName,
+                  sugestionList[index].majorName,
                 ),
               ),
             ),
@@ -267,8 +267,10 @@ class DataSearch extends SearchDelegate<Major> {
             MaterialPageRoute(
               builder: (context) => ListCoursesScreen(),
               settings: RouteSettings(
-                arguments: ScreenArguments(sugestionList[index].institutionName,
-                    sugestionList[index].majorName),
+                arguments: ScreenArguments(
+                  sugestionList[index].institutionName,
+                  sugestionList[index].majorName,
+                ),
               ),
             ),
           );
