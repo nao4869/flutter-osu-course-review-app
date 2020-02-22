@@ -183,6 +183,14 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New institution has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -194,11 +202,6 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       _isLoading = true;
     });
 
-    // if existing items edited
-    // if (_editedInstitution.courseId != null) {
-    // Provider.of<Institutions>(context, listen: false)
-    //       .updateInstitution(_editedInstitution, _editedInstitution.courseId);
-    // } else {
     try {
       await Provider.of<Institutions>(context, listen: false)
           .addInstitution(_editedInstitution);
@@ -206,11 +209,11 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('An error occured!'),
-                content: Text('Some error occInstitutionhile adding products'),
+                title: Text(_errorMessageHead),
+                content: Text(_errorMessageSub),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Okay'),
+                    child: Text(_popupButton),
                     onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop('dialog');
                     },
@@ -236,11 +239,11 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('New activity'),
-        content: Text('New institution has been created'),
+        title: Text(_popupHead),
+        content: Text(_popupSub),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },

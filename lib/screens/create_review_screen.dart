@@ -125,7 +125,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
 
     // pop up message when course successfully added
     const _popupHead = 'New activity';
-    const _popupSub = 'New major has been created';
+    const _popupSub = 'New review has been created';
     const _popupButton = 'Okay';
 
     // error handling for the form value

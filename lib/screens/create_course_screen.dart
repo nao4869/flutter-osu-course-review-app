@@ -221,6 +221,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New course has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -244,11 +252,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         await showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-                  title: Text('An error occured!'),
-                  content: Text('Some error occured while adding courses'),
+                  title: Text(_errorMessageHead),
+                  content: Text(_errorMessageSub),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text('Okay'),
+                      child: Text(_popupButton),
                       onPressed: () {
                         Navigator.of(context, rootNavigator: true)
                             .pop('dialog');
@@ -256,12 +264,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                   ],
                 ));
-        // finally block always run no matter try, catch succeded or not
-        // } finally {
-        //   setState(() {
-        //     _isLoading = false;
-        //   });
-        //   Navigator.of(context).pop();
       }
     }
     setState(() {
@@ -274,26 +276,25 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         builder: (context) => ListCoursesScreen(),
         settings: RouteSettings(
           arguments: ScreenArguments(
-            'Extract Arguments Screen',
-            'This message is extracted in the build method.',
+            _editedCourse.institutionName,
+            _editedCourse.major,
           ),
         ),
       ),
     );
 
-    // pop up message when course successfully added
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          'New activity',
+          _popupHead,
         ),
         content: Text(
-          'New course has been created',
+          _popupSub,
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },
