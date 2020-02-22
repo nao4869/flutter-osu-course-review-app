@@ -20,6 +20,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
   final _majorNameFocusNode = FocusNode();
   final _institutionNameFocusNode = FocusNode();
   final _logoFocusNode = FocusNode();
+
   final _majorNameController = TextEditingController();
   final _institutionNameController = TextEditingController();
   final _logoController = TextEditingController();
@@ -27,6 +28,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
   /// Creates the [KeyboardActionsConfig] to hook up the fields
   /// and their focus nodes to our [FormKeyboardActions].
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const _message = 'CLOSE';
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -39,7 +41,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                _message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -54,7 +56,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                _message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -69,7 +71,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                _message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -143,6 +145,14 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New major has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -165,11 +175,11 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('An error occured!'),
-                content: Text('Some error occInstitutionhile adding products'),
+                title: Text(_errorMessageHead),
+                content: Text(_errorMessageSub),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Okay'),
+                    child: Text(_popupButton),
                     onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop('dialog');
                     },
@@ -190,15 +200,14 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
       ),
     );
 
-    // pop up message when course successfully added
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('New activity'),
-        content: Text('New major has been created'),
+        title: Text(_popupHead),
+        content: Text(_popupSub),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },
@@ -298,6 +307,33 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
     );
   }
 
+  Widget _displayImagePreview(TextEditingController controller) {
+    return Container(
+      width: 100,
+      height: 100,
+      margin: EdgeInsets.only(
+        top: 8,
+        right: 10,
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(
+        width: 1,
+        color: Colors.grey,
+      )),
+      child: controller.text.isEmpty
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Enter a URL'),
+            )
+          : FittedBox(
+              child: Image.network(
+                controller.text,
+                fit: BoxFit.cover,
+              ),
+            ),
+    );
+  }
+
   Widget _createRaisedButton(String title) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -327,9 +363,19 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
+    const _title = 'University Course Search';
+    const _subHeader = 'Create new major';
+    const _buttonText = 'Save Major';
+
+    const _formLabel1 = 'Major name';
+    const _formLabel2 = 'Logo or image of school';
+
+    const _formTitle1 = 'majorName';
+    const _formTitle2 = 'logo';
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: Text(_title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -341,7 +387,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _displaySubHeader('Create new major'),
+                  _displaySubHeader(_subHeader),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -391,51 +437,32 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
                       },
                     ),
                   ),
-                  _createFormField(_majorNameController, _majorNameFocusNode,
-                      _logoFocusNode, 'Major name', 'majorName'),
+                  _createFormField(
+                    _majorNameController,
+                    _majorNameFocusNode,
+                    _logoFocusNode,
+                    _formLabel1,
+                    _formTitle1,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        Container(
-                          width: 100,
-                          height: 100,
-                          margin: EdgeInsets.only(
-                            top: 8,
-                            right: 10,
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            width: 1,
-                            color: Colors.grey,
-                          )),
-                          child: _logoController.text.isEmpty
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Enter a URL'),
-                                )
-                              : FittedBox(
-                                  child: Image.network(
-                                    _logoController.text,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                        ),
+                        _displayImagePreview(_logoController),
                         Expanded(
                           child: _createFormField(
-                              _logoController,
-                              _logoFocusNode,
-                              _logoFocusNode,
-                              'Logo or image of school',
-                              'logo'),
+                            _logoController,
+                            _logoFocusNode,
+                            _logoFocusNode,
+                            _formLabel2,
+                            _formTitle2,
+                          ),
                         ),
                       ],
                     ),
                   ),
-
-                  // Raised Button
-                  _createRaisedButton('Save Major'),
+                  _createRaisedButton(_buttonText),
                 ],
               ),
             ),
