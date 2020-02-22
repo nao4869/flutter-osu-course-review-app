@@ -46,13 +46,14 @@ class CourseItemDisplay extends StatelessWidget {
   }
 
   Widget _displayCourseSubItem(String courseItem) {
+    const prerequisite = 'Pre-requisite: ';
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
       child: Row(
         children: <Widget>[
           Expanded(
             child: Text(
-              'Pre-requisite: ' + courseItem,
+              prerequisite + courseItem,
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.black,
