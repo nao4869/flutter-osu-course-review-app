@@ -41,13 +41,14 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 
   Widget _displaySubHeader(String majorName) {
+    const courses = ' courses';
     return Row(
       children: <Widget>[
         Expanded(
           child: Container(
             margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
             child: Text(
-              majorName + ' courses',
+              majorName + courses,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -62,6 +63,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
 
   Widget _displaySearchNavigator(List<Course> loadedMajorCourse,
       String institutionName, String majorName) {
+    const separator = ' | ';
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
       child: Container(
@@ -81,7 +83,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             loadedMajorCourse.isEmpty
                 ? Expanded(
                     child: Text(
-                      institutionName + ' | ' + majorName,
+                      institutionName + separator + majorName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
@@ -93,7 +95,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                   )
                 : Expanded(
                     child: Text(
-                      '${loadedMajorCourse.first.institutionName} |' +
+                      '${loadedMajorCourse.first.institutionName}' +
+                          separator +
                           majorName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -111,6 +114,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 
   Widget _displaySearchResults(List<Course> loadedMajorCourse) {
+    const searchResults = 'Search Results: ';
+    const courses = ' courses';
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: Container(
@@ -122,7 +127,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
               child: Text(
-                'Search Results: ' + '${loadedMajorCourse.length}' + ' courses',
+                searchResults + '${loadedMajorCourse.length}' + courses,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,

@@ -29,6 +29,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
   /// Creates the [KeyboardActionsConfig] to hook up the fields
   /// and their focus nodes to our [FormKeyboardActions].
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const message = "CLOSE";
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -41,7 +42,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -56,7 +57,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -71,7 +72,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -86,7 +87,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -101,7 +102,7 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -343,6 +344,33 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
     );
   }
 
+  Widget _displayImagePreview(TextEditingController controller) {
+    return Container(
+      width: 100,
+      height: 100,
+      margin: EdgeInsets.only(
+        top: 8,
+        right: 10,
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(
+        width: 1,
+        color: Colors.grey,
+      )),
+      child: controller.text.isEmpty
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Enter a URL'),
+            )
+          : FittedBox(
+              child: Image.network(
+                controller.text,
+                fit: BoxFit.cover,
+              ),
+            ),
+    );
+  }
+
   Widget _createRaisedButton(String title) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -369,11 +397,23 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'University Institution Search';
+    const _title = 'University Institution Search';
+    const _subHeader = 'Create new institution';
+    const _buttonText = 'Save Institution';
+
+    const _formLabel1 = 'Name';
+    const _formLabel2 = 'State';
+    const _formLabel3 = 'City';
+    const _formLabel4 = 'Logo or image of school';
+
+    const _formTitle1 = 'name';
+    const _formTitle2 = 'state';
+    const _formTitle3 = 'city';
+    const _formTitle4 = 'logo';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(_title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -385,115 +425,46 @@ class _CreateInstitutionScreen extends State<CreateInstitutionScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _displaySubHeader('Create new institution'),
+                  _displaySubHeader(_subHeader),
                   _createFormField(
                     _nameController,
                     _nameFocusNode,
                     _countryFocusNode,
-                    'Name',
-                    'name',
+                    _formLabel1,
+                    _formTitle1,
                   ),
                   _createFormField(
                     _countryController,
                     _countryFocusNode,
                     _stateFocusNode,
-                    'State',
-                    'state',
+                    _formLabel2,
+                    _formTitle2,
                   ),
                   _createFormField(
                     _cityController,
                     _cityFocusNode,
                     _logoFocusNode,
-                    'City',
-                    'city',
+                    _formLabel3,
+                    _formTitle3,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        Container(
-                          width: 100,
-                          height: 100,
-                          margin: EdgeInsets.only(
-                            top: 8,
-                            right: 10,
-                          ),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            width: 1,
-                            color: Colors.grey,
-                          )),
-                          child: _logoController.text.isEmpty
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Enter a URL'),
-                                )
-                              : FittedBox(
-                                  child: Image.network(
-                                    _logoController.text,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                        ),
+                        _displayImagePreview(_logoController),
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Logo or image of school',
-                                labelStyle: TextStyle(
-                                  fontSize: 13,
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: 18,
-                                  ),
-                                  onPressed: () {
-                                    _logoController.clear();
-                                  },
-                                ),
-                                contentPadding: const EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              keyboardType: TextInputType.url,
-                              textInputAction: TextInputAction.done,
-                              controller: _logoController,
-                              focusNode: _logoFocusNode,
-                              onFieldSubmitted: (_) {
-                                _saveForm();
-                              },
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Please enter an image URL.';
-                                }
-                                if (!value.startsWith('http') ||
-                                    !value.startsWith('https')) {
-                                  return 'Please enter a valid URL.';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _editedInstitution = Institution(
-                                  id: _editedInstitution.id,
-                                  name: _editedInstitution.name,
-                                  country: _editedInstitution.country,
-                                  state: _editedInstitution.state,
-                                  city: _editedInstitution.city,
-                                  logo: value,
-                                );
-                              },
-                            ),
-                          ),
+                          child: _createFormField(
+                              _logoController,
+                              _logoFocusNode,
+                              _logoFocusNode,
+                              _formLabel4,
+                              _formTitle4),
                         ),
                       ],
                     ),
                   ),
-                  // Raised Button
-                  _createRaisedButton('Save Institution'),
+                  _createRaisedButton(_buttonText),
                 ],
               ),
             ),

@@ -53,6 +53,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   }
 
   Widget subHeader(String courseName, String text) {
+    const separator = '/ ';
+    const displayReview = ' review';
     return Row(
       children: <Widget>[
         Container(
@@ -85,7 +87,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         ),
         Expanded(
           child: Text(
-            '/ ' + courseName + ' review',
+            separator + courseName + displayReview,
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -152,7 +154,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         style: TextStyle(
           color: Colors.black,
           fontSize: 15,
-          //fontWeight: FontWeight.normal,
         ),
       ),
     );
@@ -171,8 +172,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         shrinkWrap: true,
         padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
         itemCount: reviews.length,
-        itemBuilder: (ctx, i) =>
-            ChangeNotifierProvider.value(
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: reviews[i],
           child: CourseReviewItem(),
         ),
@@ -200,6 +200,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     var intScore = int.tryParse(scoreToDisplay.toStringAsFixed(1)) ?? 5;
     final finalScore = num.parse(scoreToDisplay.toStringAsFixed(1));
 
+    const headerName = 'HOME';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedCourse.courseName),
@@ -216,7 +218,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  subHeader(loadedCourse.courseName, 'HOME'),
+                  subHeader(loadedCourse.courseName, headerName),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
@@ -238,19 +240,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   _isLoading
                       ? progreeIndicator()
                       : _displayListOfReviews(reviews),
-                      // : Flexible(
-                      //     child: ListView.builder(
-                      //       scrollDirection: Axis.vertical,
-                      //       shrinkWrap: true,
-                      //       padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      //       itemCount: reviews.length,
-                      //       itemBuilder: (ctx, i) =>
-                      //           ChangeNotifierProvider.value(
-                      //         value: reviews[i],
-                      //         child: CourseReviewItem(),
-                      //       ),
-                      //     ),
-                      //   ),
                 ],
               ),
             ),

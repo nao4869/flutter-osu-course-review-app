@@ -39,6 +39,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   /// Creates the [KeyboardActionsConfig] to hook up the fields
   /// and their focus nodes to our [FormKeyboardActions].
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const message = "CLOSE";
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -51,7 +52,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -66,7 +67,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -81,7 +82,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -96,7 +97,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -111,7 +112,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -126,7 +127,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -435,6 +436,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   @override
   Widget build(BuildContext context) {
     const title = 'University Course Search';
+    const subHeadername = 'Create New Course';
+    const buttonName = 'Save Course';
 
     final majorList = Provider.of<Majors>(context);
     final majors = majorList.majors;
@@ -459,7 +462,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _displaySubHeader('Create New Course'),
+                  _displaySubHeader(subHeadername),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -703,7 +706,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     ),
                   ),
                   // Raised Button
-                  _createRaisedButton('Save Review'),
+                  _createRaisedButton(buttonName),
                 ],
               ),
             ),
