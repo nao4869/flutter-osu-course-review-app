@@ -25,6 +25,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   final _contentController = TextEditingController();
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
+    const _message = 'CLOSE';
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.black,
@@ -37,7 +38,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 33.0),
               child: Text(
-                "CLOSE",
+                _message,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -99,13 +100,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     if (_isInit) {
       final courseId = ModalRoute.of(context).settings.arguments as String;
 
-      // this line is to initialize currentSelectedValue3 with first institution
-      // final institutionList = Provider.of<Institutions>(context);
-      // final institutions = institutionList.institutions;
-      // if (currentSelectedValue3 == null) {
-      //   currentSelectedValue3 = institutions.first;
-      // }
-
       if (courseId != null) {
         _editedReview =
             Provider.of<Reviews>(context, listen: false).findById(courseId);
@@ -126,6 +120,14 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
 
+    const _errorMessageHead = 'An error occured!';
+    const _errorMessageSub = 'Some error occInstitutionhile adding products';
+
+    // pop up message when course successfully added
+    const _popupHead = 'New activity';
+    const _popupSub = 'New major has been created';
+    const _popupButton = 'Okay';
+
     // error handling for the form value
     if (!isValid) {
       return;
@@ -137,11 +139,6 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       _isLoading = true;
     });
 
-    // if existing items edited
-    // if (_editedReview.courseId != null) {
-    //   await Provider.of<Reviews>(context, listen: false)
-    //       .updateReview(_editedReview, _editedReview.courseId);
-    // } else {
     try {
       await Provider.of<Reviews>(context, listen: false).addReview(
           _editedReview, _editedReview.courseId, _editedReview.starScore);
@@ -149,11 +146,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('An error occured!'),
-                content: Text('Some error occured while adding review'),
+                title: Text(_errorMessageSub),
+                content: Text(_errorMessageSub),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Okay'),
+                    child: Text(_popupButton),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -180,11 +177,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('New activity'),
-        content: Text('New Review has been created'),
+        title: Text(_popupHead),
+        content: Text(_popupSub),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text(_popupButton),
             onPressed: () {
               // Navigator.of(context).pop();
               Navigator.of(context, rootNavigator: true).pop('dialog');
@@ -311,9 +308,17 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
+    const _title = 'University Course Search';
+    const _subHeader = 'Create new review';
+
+    const _formLabel1 = 'Review Content';
+    const _formTitle1 = 'reviewsContent';
+
+    const _buttonText = 'Save Review';
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('University Course Search'),
+        title: Text(_title),
       ),
       body: KeyboardActions(
         config: _buildConfig(context),
@@ -321,12 +326,11 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
-              // setting global key in the form
               key: _form,
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    _displaySubHeader('Create new review'),
+                    _displaySubHeader(_subHeader),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FormField<Institution>(
@@ -474,8 +478,13 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         },
                       ),
                     ),
-                    _createFormField(_contentController, _contentFocusNode,
-                        _scoreFocusNode, 'Review Content', 'reviewsContent'),
+                    _createFormField(
+                      _contentController,
+                      _contentFocusNode,
+                      _scoreFocusNode,
+                      _formLabel1,
+                      _formTitle1,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FormField<int>(
@@ -527,8 +536,7 @@ class _CreateReviewScreen extends State<CreateReviewScreen> {
                         },
                       ),
                     ),
-                    // Raised Button
-                    _createRaisedButton('Save Review'),
+                    _createRaisedButton(_buttonText),
                   ],
                 ),
               ),

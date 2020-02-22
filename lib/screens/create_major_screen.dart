@@ -164,11 +164,6 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
       _isLoading = true;
     });
 
-    // if existing items edited
-    // if (_editedMajor.courseId != null) {
-    // Provider.of<Institutions>(context, listen: false)
-    //       .updateInstitution(_editedMajor, _editedMajor.courseId);
-    // } else {
     try {
       await Provider.of<Majors>(context, listen: false).addMajor(_editedMajor);
     } catch (error) {
