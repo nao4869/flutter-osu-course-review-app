@@ -295,6 +295,7 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? courses
         : courses
@@ -304,8 +305,14 @@ class DataSearch extends SearchDelegate<Course> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
-        title: Text(sugestionList[index].courseName.toString()),
+        leading: Icon(Icons.chevron_right),
+        title: Text(
+          sugestionList[index].courseName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -322,7 +329,7 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? courses
         : courses
@@ -331,8 +338,14 @@ class DataSearch extends SearchDelegate<Course> {
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
-        title: Text(sugestionList[index].courseName.toString()),
+        leading: Icon(Icons.chevron_right),
+        title: Text(
+          sugestionList[index].courseName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
