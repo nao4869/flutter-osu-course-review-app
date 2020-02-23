@@ -26,12 +26,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var createdAt = DateFormat("y/m/d").format(new DateTime.now());
+  final String createdAt = DateFormat("y/m/d").format(new DateTime.now());
 
   @override
   Widget build(BuildContext context) {
-    final insitutionName = 'Oregon State University';
-    final majorName = 'Computer Science';
+    const title = 'University Course Search';
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -68,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: MaterialApp(
-            title: 'OSU Course Review',
+            title: title,
             theme: ThemeData(
               primarySwatch: Colors.red,
               accentColor: Colors.amberAccent,
