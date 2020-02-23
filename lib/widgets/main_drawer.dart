@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../models/theme_provider.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -64,6 +65,7 @@ class MainDrawer extends StatelessWidget {
                   value: themeProvider.isLightTheme,
                   onChanged: (val) {
                     themeProvider.setThemeData = val;
+                    Navigator.of(context).pushNamed('/');
                   },
                 ),
               ],
