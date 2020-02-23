@@ -1,12 +1,11 @@
-// Control the entire contents of the first screens
-// Displays lsit of institutions for the application
-
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/main_drawer.dart';
 import '../models/institution_provider.dart';
 import '../models/institution.dart';
+import '../models/theme_provider.dart';
 import '../widgets/institution_list_item.dart';
 
 class ListInstitutionScreen extends StatefulWidget {
@@ -78,8 +77,10 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
   Widget build(BuildContext context) {
     const title = 'University Course Search';
     const subheader = 'Search course by school';
+
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -90,6 +91,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           child: Text(title),
         ),
       ),
+      drawer: MainDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),

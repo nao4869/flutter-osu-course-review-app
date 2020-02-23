@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/theme_provider.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, Function tapHandler) {
@@ -18,6 +20,8 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -39,12 +43,32 @@ class MainDrawer extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          buildListTile('Login', Icons.settings, () {
-            Navigator.of(context).pushNamed('/');
-          }),
-          buildListTile('Sign up / Sign in', Icons.settings, () {
-            Navigator.of(context).pushNamed('/');
-          }),
+          Container(
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Container(
+                    child: Text(
+                      'Dark Mode',
+                      style: TextStyle(
+                        color: themeProvider.getThemeData == lightTheme
+                            ? Colors.black
+                            : Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Switch(
+                  value: themeProvider.isLightTheme,
+                  onChanged: (val) {
+                    themeProvider.setThemeData = val;
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

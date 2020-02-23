@@ -42,11 +42,11 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
-  primarySwatch: Colors.grey,
-  primaryColor: Colors.white,
+  primarySwatch: Colors.red,
+  primaryColor: Colors.red,
+  accentColor: Colors.amberAccent,
   brightness: Brightness.light,
   backgroundColor: Color(0xFFE5E5E5),
-  accentColor: Colors.black,
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.white54,
   fontFamily: 'Raleway',

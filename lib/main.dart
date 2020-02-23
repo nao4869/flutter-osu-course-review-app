@@ -16,9 +16,17 @@ import './models/reviews_provider.dart';
 import './models/major_provider.dart';
 import './models/language_provider.dart';
 import './models/institution_provider.dart';
+import './models/theme_provider.dart';
 import "package:intl/intl.dart";
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      builder: (_) => ThemeProvider(isLightTheme: true),
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -30,7 +38,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     const title = 'University Course Search';
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -67,36 +77,20 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: MaterialApp(
-            title: title,
-            theme: ThemeData(
-              primarySwatch: Colors.red,
-              accentColor: Colors.amberAccent,
-              canvasColor: Color.fromRGBO(250, 245, 240, 1),
-              fontFamily: 'Raleway',
-              textTheme: ThemeData.light().textTheme.copyWith(
-                    body1: TextStyle(
-                      color: Color.fromRGBO(20, 51, 51, 1),
-                    ),
-                    body2: TextStyle(
-                      color: Color.fromRGBO(20, 51, 51, 1),
-                    ),
-                    title: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'RobotoCondensed',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-            ),
-            home: TabScreen(),
-            routes: {
-              ListInstitutionScreen.routeName: (context) => ListInstitutionScreen(),
-              ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
-              ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
-              CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
-              CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
-              CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
-              CreateMajorScreen.routeName: (context) => CreateMajorScreen(),
-            }),
+          title: title,
+          theme: themeProvider.getThemeData,
+          home: TabScreen(),
+          routes: {
+            ListInstitutionScreen.routeName: (context) =>
+                ListInstitutionScreen(),
+            ListMajorsScreen.routeName: (context) => ListMajorsScreen(),
+            ListCoursesScreen.routeName: (context) => ListCoursesScreen(),
+            CourseDetailScreen.routeName: (context) => CourseDetailScreen(),
+            CreateCourseScreen.routeName: (context) => CreateCourseScreen(),
+            CreateReviewScreen.routeName: (context) => CreateReviewScreen(),
+            CreateMajorScreen.routeName: (context) => CreateMajorScreen(),
+          },
+        ),
       ),
     );
   }
