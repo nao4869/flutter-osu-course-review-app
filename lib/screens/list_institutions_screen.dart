@@ -39,7 +39,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
     super.didChangeDependencies();
   }
 
-  Widget _displaySubHeader(String text) {
+  Widget _displaySubHeader(String text, ThemeProvider theme) {
     return Row(
       children: <Widget>[
         Container(
@@ -47,7 +47,9 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           child: Text(
             text,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -109,7 +111,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        _displaySubHeader(subheader),
+                        _displaySubHeader(subheader, themeProvider),
                         _displayListOfInstitutions(institutions),
                       ],
                     ),
