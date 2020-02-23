@@ -177,6 +177,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? institutions
         : institutions
@@ -187,7 +188,13 @@ class DataSearch extends SearchDelegate<Institution> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].name.toString()),
+        title: Text(
+          sugestionList[index].name.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -204,7 +211,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? institutions
         : institutions
@@ -214,7 +221,13 @@ class DataSearch extends SearchDelegate<Institution> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].name.toString()),
+        title: Text(
+          sugestionList[index].name.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,

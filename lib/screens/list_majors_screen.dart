@@ -4,8 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
+
 import '../screens/create_major_screen.dart';
 import '../screens/list_courses_screen.dart';
+import '../models/theme_provider.dart';
 import '../models/major_provider.dart';
 import '../models/major.dart';
 import '../widgets/major_list_item.dart';
@@ -22,17 +24,24 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) {
-      setState(() {
-        _isLoading = true;
-      });
-      //Provider.of<Institutions>(context).retrieveInstitutionData();
-      Provider.of<Majors>(context).retrieveMajorData().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    });
+    Future.delayed(Duration.zero).then(
+      (_) {
+        setState(
+          () {
+            _isLoading = true;
+          },
+        );
+        Provider.of<Majors>(context).retrieveMajorData().then(
+          (_) {
+            setState(
+              () {
+                _isLoading = false;
+              },
+            );
+          },
+        );
+      },
+    );
     super.initState();
   }
 
@@ -51,7 +60,8 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
     );
   }
 
-  Widget _displaySubHeader(Majors majorList, String institutionName) {
+  Widget _displaySubHeader(
+      Majors majorList, String institutionName, ThemeProvider theme) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -59,13 +69,17 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
             margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(ListCoursesScreen.routeName,
-                    arguments: majorList.majors);
+                Navigator.of(context).pushNamed(
+                  ListCoursesScreen.routeName,
+                  arguments: majorList.majors,
+                );
               },
               child: Text(
                 '$institutionName\'s majors',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: theme.getThemeData == lightTheme
+                      ? Colors.black
+                      : Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
@@ -109,6 +123,8 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
 
     final majorList = Provider.of<Majors>(context);
 
+    final theme = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -150,7 +166,7 @@ class _ListMajorsScreenState extends State<ListMajorsScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        _displaySubHeader(majorList, institutionName),
+                        _displaySubHeader(majorList, institutionName, theme),
                         _displayGridView(loadedInstitutionMajors),
                       ],
                     ),
@@ -218,6 +234,7 @@ class DataSearch extends SearchDelegate<Major> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? majors
         : majors
@@ -228,7 +245,13 @@ class DataSearch extends SearchDelegate<Major> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].majorName.toString()),
+        title: Text(
+          sugestionList[index].majorName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -250,7 +273,7 @@ class DataSearch extends SearchDelegate<Major> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? majors
         : majors
@@ -260,7 +283,13 @@ class DataSearch extends SearchDelegate<Major> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].majorName.toString()),
+        title: Text(
+          sugestionList[index].majorName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,

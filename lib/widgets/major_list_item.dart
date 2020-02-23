@@ -3,6 +3,7 @@ import 'package:osu_course_review/screens/list_courses_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/major.dart';
+import '../models/theme_provider.dart';
 
 class MajorListItem extends StatefulWidget {
   @override
@@ -27,13 +28,14 @@ class _MajorListItemState extends State<MajorListItem> {
     );
   }
 
-  Widget _displayMajorName(String majorName) {
+  Widget _displayMajorName(String majorName, ThemeProvider theme) {
     return Expanded(
       child: Text(
         majorName,
         style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
+          color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
         ),
       ),
     );
@@ -42,6 +44,7 @@ class _MajorListItemState extends State<MajorListItem> {
   @override
   Widget build(BuildContext context) {
     final major = Provider.of<Major>(context, listen: false);
+    final theme = Provider.of<ThemeProvider>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -66,7 +69,7 @@ class _MajorListItemState extends State<MajorListItem> {
         child: Column(
           children: <Widget>[
             _displayMajorLogo(major.logo),
-            _displayMajorName(major.majorName),
+            _displayMajorName(major.majorName, theme),
           ],
         ),
       ),
