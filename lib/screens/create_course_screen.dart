@@ -11,6 +11,7 @@ import '../models/language.dart';
 import '../models/language_provider.dart';
 import '../models/institution.dart';
 import '../models/institution_provider.dart';
+import '../models/theme_provider.dart';
 
 class CreateCourseScreen extends StatefulWidget {
   static const routeName = '/create-new-course';
@@ -325,7 +326,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     super.dispose();
   }
 
-  Widget _displaySubHeader(String title) {
+  Widget _displaySubHeader(String title, ThemeProvider theme) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -335,7 +336,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             title,
             textAlign: TextAlign.end,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -345,8 +348,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     );
   }
 
-  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
-      FocusNode nextFocusNode, String labelText, String formTitle) {
+  Widget _createFormField(
+      TextEditingController controller,
+      FocusNode focusNode,
+      FocusNode nextFocusNode,
+      String labelText,
+      String formTitle,
+      ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -356,6 +364,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           labelText: labelText,
           labelStyle: TextStyle(
             fontSize: 13,
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           ),
           suffixIcon: IconButton(
             icon: Padding(
@@ -449,6 +459,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
 
+    final theme = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -463,7 +475,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _displaySubHeader(subHeadername),
+                  _displaySubHeader(subHeadername, theme),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -473,6 +485,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             labelText: 'Institution name',
                             labelStyle: TextStyle(
                               fontSize: 18,
+                              color: theme.getThemeData == lightTheme
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                             errorStyle: TextStyle(
                                 color: Colors.redAccent, fontSize: 15.0),
@@ -496,7 +511,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               items: institutions.map((Institution value) {
                                 return DropdownMenuItem<Institution>(
                                   value: value,
-                                  child: Text(value.name.toString()),
+                                  child: Text(
+                                    value.name.toString(),
+                                    style: TextStyle(
+                                      color: theme.getThemeData == lightTheme
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
+                                  ),
                                 );
                               }).toList(),
                             ),
@@ -525,6 +547,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _contentFocusNode,
                     'Course Name',
                     'CourseName',
+                    theme,
                   ),
                   _createFormField(
                     _contentController,
@@ -532,6 +555,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _prerequisiteFocusNode,
                     'Course Content',
                     'CourseContent',
+                    theme,
                   ),
                   _createFormField(
                     _prerequisiteController,
@@ -539,6 +563,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _proctoredExamsFocusNode,
                     'Prerequisite',
                     'prerequisite',
+                    theme,
                   ),
                   _createFormField(
                     _proctoredexamsController,
@@ -546,6 +571,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _groupWorkFocusNode,
                     'Proctored-Exams',
                     'proctoredexams',
+                    theme,
                   ),
                   _createFormField(
                     _groupworkController,
@@ -553,6 +579,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _textBookFocusNode,
                     'Groupwork',
                     'groupwork',
+                    theme,
                   ),
                   _createFormField(
                     _textbookController,
@@ -560,6 +587,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                     _languageFocusNode,
                     'Textbook',
                     'textbook',
+                    theme,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -570,6 +598,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             labelText: 'Programming language',
                             labelStyle: TextStyle(
                               fontSize: 18,
+                              color: theme.getThemeData == lightTheme
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                             errorStyle: TextStyle(
                                 color: Colors.redAccent, fontSize: 15.0),
@@ -595,7 +626,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               items: languages.map((Language value) {
                                 return DropdownMenuItem<Language>(
                                   value: value,
-                                  child: Text(value.languageName.toString()),
+                                  child: Text(
+                                    value.languageName.toString(),
+                                    style: TextStyle(
+                                      color: theme.getThemeData == lightTheme
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
+                                  ),
                                 );
                               }).toList(),
                             ),
@@ -627,6 +665,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             labelText: 'Major of course',
                             labelStyle: TextStyle(
                               fontSize: 18,
+                              color: theme.getThemeData == lightTheme
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                             errorStyle: TextStyle(
                                 color: Colors.redAccent, fontSize: 15.0),
@@ -667,7 +708,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                           child: Text(
                                             value.majorName.toString(),
                                             style: TextStyle(
-                                              color: Colors.black,
+                                              color: theme.getThemeData ==
+                                                      lightTheme
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               fontWeight: FontWeight.normal,
                                               fontSize: 14,
                                             ),
@@ -680,7 +724,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                           child: Text(
                                             value.majorName.toString(),
                                             style: TextStyle(
-                                              color: Colors.black,
+                                              color: theme.getThemeData ==
+                                                      lightTheme
+                                                  ? Colors.black
+                                                  : Colors.white,
                                               fontWeight: FontWeight.normal,
                                               fontSize: 14,
                                             ),
