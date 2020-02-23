@@ -7,6 +7,7 @@ import '../models/courses_provider.dart';
 import '../models/review.dart';
 import '../models/reviews_provider.dart';
 import '../models/star_display.dart';
+import '../models/theme_provider.dart';
 import '../widgets/course_review_item.dart';
 
 class CourseDetailScreen extends StatefulWidget {
@@ -38,13 +39,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     super.initState();
   }
 
-  Widget buildSectionTitle(BuildContext context, String text) {
+  Widget buildSectionTitle(
+      BuildContext context, String text, ThemeProvider theme) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Text(
         text,
         style: TextStyle(
-          color: Colors.black,
+          color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
@@ -52,7 +54,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  Widget subHeader(String courseName, String text) {
+  Widget subHeader(String courseName, String text, ThemeProvider theme) {
     const separator = '/ ';
     const displayReview = ' review';
     return Row(
@@ -65,7 +67,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             },
             child: Icon(
               Icons.home,
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
             ),
           ),
         ),
@@ -78,7 +82,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             child: Text(
               text + ' ',
               style: TextStyle(
-                color: Colors.black,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),
@@ -89,7 +95,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           child: Text(
             separator + courseName + displayReview,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
@@ -100,13 +108,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  Widget displayCourseName(String courseName) {
+  Widget displayCourseName(String courseName, ThemeProvider theme) {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: Text(
         courseName,
         style: TextStyle(
-          color: Colors.black,
+          color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
@@ -115,7 +123,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  Widget displayStarAndScoreNumber(int starScore, scoreNumber) {
+  Widget displayStarAndScoreNumber(
+      int starScore, num scoreNumber, ThemeProvider theme) {
     return Row(
       children: <Widget>[
         Container(
@@ -133,7 +142,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             '$scoreNumber',
             textAlign: TextAlign.left,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.bold,
               fontFamily: 'roboto',
@@ -144,7 +155,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     );
   }
 
-  Widget displayCourseDescription(String courseDescription) {
+  Widget displayCourseDescription(
+      String courseDescription, ThemeProvider theme) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(30, 10, 20, 15),
@@ -152,7 +164,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         courseDescription,
         textAlign: TextAlign.left,
         style: TextStyle(
-          color: Colors.black,
+          color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           fontSize: 15,
         ),
       ),
@@ -189,6 +201,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     final reviewList = Provider.of<Reviews>(context);
     final reviews = reviewList.reviews;
 
+    final theme = Provider.of<ThemeProvider>(context);
+
     // map to obtain each reviews star score
     final total = reviews.map((rv) => rv.starScore).toList();
 
@@ -218,25 +232,28 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  subHeader(loadedCourse.courseName, headerName),
+                  subHeader(loadedCourse.courseName, headerName, theme),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(255, 255, 255, 1),
+                      color: theme.getThemeData == lightTheme
+                          ? Colors.white
+                          : Colors.black26,
                     ),
                     margin: EdgeInsets.all(5),
                     padding: EdgeInsets.all(5),
                     width: double.infinity,
                     child: Column(
                       children: <Widget>[
-                        displayCourseName(loadedCourse.courseName),
-                        displayStarAndScoreNumber(intScore, finalScore),
-                        displayCourseDescription(loadedCourse.courseContent),
+                        displayCourseName(loadedCourse.courseName, theme),
+                        displayStarAndScoreNumber(intScore, finalScore, theme),
+                        displayCourseDescription(
+                            loadedCourse.courseContent, theme),
                       ],
                     ),
                   ),
-                  buildSectionTitle(context, 'Course Reviews'),
+                  buildSectionTitle(context, 'Course Reviews', theme),
                   _isLoading
                       ? progreeIndicator()
                       : _displayListOfReviews(reviews),

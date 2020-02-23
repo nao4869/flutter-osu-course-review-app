@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/star_display.dart';
 import '../models/review.dart';
+import '../models/theme_provider.dart';
 
 class CourseReviewItem extends StatelessWidget {
   Widget _displayStarScore(int score) {
@@ -17,7 +18,7 @@ class CourseReviewItem extends StatelessWidget {
     );
   }
 
-  Widget _displayReviewsContent(String reviewContent) {
+  Widget _displayReviewsContent(String reviewContent, ThemeProvider theme) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -27,7 +28,9 @@ class CourseReviewItem extends StatelessWidget {
             child: Text(
               reviewContent,
               style: TextStyle(
-                color: Colors.black,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.white,
                 fontSize: 15,
               ),
             ),
@@ -37,14 +40,14 @@ class CourseReviewItem extends StatelessWidget {
     );
   }
 
-  Widget _displayDateTime(dynamic createdAt) {
+  Widget _displayDateTime(dynamic createdAt, ThemeProvider theme) {
     return Container(
       alignment: Alignment.bottomRight,
       padding: EdgeInsets.fromLTRB(0, 10, 15, 5),
       child: Text(
         createdAt,
         style: TextStyle(
-          color: Colors.black,
+          color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           fontSize: 15,
         ),
       ),
@@ -54,6 +57,7 @@ class CourseReviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final review = Provider.of<Review>(context, listen: false);
+    final theme = Provider.of<ThemeProvider>(context);
 
     return Container(
       padding: EdgeInsets.only(bottom: 15),
@@ -62,15 +66,17 @@ class CourseReviewItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
-              color: Colors.white,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.white
+                  : Colors.black26,
               borderRadius: BorderRadius.circular(8),
             ),
             width: double.infinity,
             child: Column(
               children: <Widget>[
                 _displayStarScore(review.starScore),
-                _displayReviewsContent(review.reviewsContent),
-                _displayDateTime(review.createdAt),
+                _displayReviewsContent(review.reviewsContent, theme),
+                _displayDateTime(review.createdAt, theme),
               ],
             ),
           ),
