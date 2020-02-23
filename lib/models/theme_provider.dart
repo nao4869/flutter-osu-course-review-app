@@ -23,7 +23,7 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   fontFamily: 'Raleway',
   backgroundColor: Color(0xFF000000),
-  accentColor: Colors.white,
+  accentColor: Colors.red,
   accentIconTheme: IconThemeData(color: Colors.black),
   dividerColor: Colors.black54,
   textTheme: ThemeData.light().textTheme.copyWith(
