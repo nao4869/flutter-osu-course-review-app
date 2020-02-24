@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
 import '../models/http_exception.dart';
+import '../models/theme_provider.dart';
 import '../screens/your_courses_screen.dart';
 
 enum AuthMode { Signup, Login }
@@ -18,23 +19,26 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    final theme = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.red.withOpacity(1.0),
-                  Colors.red
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
-              ),
-            ),
-          ),
+          theme.getThemeData == lightTheme
+              ? Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.red.withOpacity(1.0),
+                        Colors.red,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0, 1],
+                    ),
+                  ),
+                )
+              : Container(),
           SingleChildScrollView(
             child: Container(
               height: deviceSize.height,

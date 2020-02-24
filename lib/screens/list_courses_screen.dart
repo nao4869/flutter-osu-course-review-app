@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../screens/course_detail_screen.dart';
 import '../models/courses_provider.dart';
 import '../models/course.dart';
+import '../models/theme_provider.dart';
 import '../widgets/course_list_item.dart';
 
 class ListCoursesScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     );
   }
 
-  Widget _displaySubHeader(String majorName) {
+  Widget _displaySubHeader(String majorName, ThemeProvider theme) {
     const courses = ' courses';
     return Row(
       children: <Widget>[
@@ -50,7 +51,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
             child: Text(
               majorName + courses,
               style: TextStyle(
-                color: Colors.black,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
@@ -62,7 +65,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
   }
 
   Widget _displaySearchNavigator(List<Course> loadedMajorCourse,
-      String institutionName, String majorName) {
+      String institutionName, String majorName, ThemeProvider theme) {
     const separator = ' | ';
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
@@ -72,13 +75,16 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         padding: EdgeInsets.fromLTRB(17, 0, 17, 0),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
-          color: Colors.white,
+          color:
+              theme.getThemeData == lightTheme ? Colors.white : Colors.black26,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           children: <Widget>[
             Icon(
               Icons.search,
+              color:
+                  theme.getThemeData == lightTheme ? Colors.black : Colors.grey,
             ),
             loadedMajorCourse.isEmpty
                 ? Expanded(
@@ -87,6 +93,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
+                        color: theme.getThemeData == lightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.clip,
@@ -101,6 +110,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
+                        color: theme.getThemeData == lightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.clip,
@@ -113,7 +125,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
     );
   }
 
-  Widget _displaySearchResults(List<Course> loadedMajorCourse) {
+  Widget _displaySearchResults(
+      List<Course> loadedMajorCourse, ThemeProvider theme) {
     const searchResults = 'Search Results: ';
     const courses = ' courses';
     return Padding(
@@ -122,6 +135,7 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         height: 30,
         alignment: Alignment.center,
         padding: EdgeInsets.fromLTRB(10, 0, 17, 0),
+        color: theme.getThemeData == lightTheme ? Colors.white : Colors.black26,
         child: Row(
           children: <Widget>[
             Padding(
@@ -132,6 +146,9 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                   fontFamily: 'Roboto',
+                  color: theme.getThemeData == lightTheme
+                      ? Colors.black
+                      : Colors.white,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.clip,
@@ -171,6 +188,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
         .where((cs) => cs.institutionName == args.institutionName)
         .toList();
 
+    final theme = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
@@ -209,10 +228,10 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        _displaySubHeader(args.majorName),
-                        _displaySearchNavigator(
-                            finalCourses, args.institutionName, args.majorName),
-                        _displaySearchResults(finalCourses),
+                        _displaySubHeader(args.majorName, theme),
+                        _displaySearchNavigator(finalCourses,
+                            args.institutionName, args.majorName, theme),
+                        _displaySearchResults(finalCourses, theme),
                         _displayListOfCourses(finalCourses),
                       ],
                     ),
@@ -278,6 +297,7 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? courses
         : courses
@@ -287,8 +307,14 @@ class DataSearch extends SearchDelegate<Course> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
-        title: Text(sugestionList[index].courseName.toString()),
+        leading: Icon(Icons.chevron_right),
+        title: Text(
+          sugestionList[index].courseName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -305,7 +331,7 @@ class DataSearch extends SearchDelegate<Course> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? courses
         : courses
@@ -314,8 +340,14 @@ class DataSearch extends SearchDelegate<Course> {
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.class_),
-        title: Text(sugestionList[index].courseName.toString()),
+        leading: Icon(Icons.chevron_right),
+        title: Text(
+          sugestionList[index].courseName.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,

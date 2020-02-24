@@ -3,6 +3,7 @@ import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/institution.dart';
+import '../models/theme_provider.dart';
 
 class InstitutionListItem extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class InstitutionListItem extends StatefulWidget {
 }
 
 class _InstitutionListItemState extends State<InstitutionListItem> {
-  Widget _displayInstitutionName(String name) {
+  Widget _displayInstitutionName(String name, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 5, 5),
       child: Row(
@@ -21,6 +22,9 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.white,
               ),
             ),
           ),
@@ -49,7 +53,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
     );
   }
 
-  Widget _displayIconAndText(String text, IconData icon) {
+  Widget _displayIconAndText(String text, IconData icon, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 3),
       child: Row(
@@ -60,7 +64,9 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
               onTap: () {},
               child: Icon(
                 icon,
-                color: Colors.black,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.grey,
                 size: 20,
               ),
             ),
@@ -71,6 +77,9 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
+                color: theme.getThemeData == lightTheme
+                    ? Colors.black
+                    : Colors.white,
               ),
             ),
           ),
@@ -81,8 +90,8 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
 
   @override
   Widget build(BuildContext context) {
-    // retrieving providers objects
     final institution = Provider.of<Institution>(context, listen: false);
+    final theme = Provider.of<ThemeProvider>(context);
 
     return InkWell(
       onTap: () {
@@ -98,28 +107,43 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
         margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
-          color: Colors.white,
+          color:
+              theme.getThemeData == lightTheme ? Colors.white : Colors.black26,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           children: <Widget>[
-            _displayInstitutionName(institution.name),
+            _displayInstitutionName(
+              institution.name,
+              theme,
+            ),
             _displayDivider(),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
               child: Row(
                 children: <Widget>[
-                  _displaySchoolLogo(institution.logo),
+                  _displaySchoolLogo(
+                    institution.logo,
+                  ),
                   Expanded(
                     flex: 3,
                     child: Column(
                       children: <Widget>[
                         _displayIconAndText(
-                            institution.country, Icons.location_on),
+                          institution.country,
+                          Icons.location_on,
+                          theme,
+                        ),
                         _displayIconAndText(
-                            institution.state, Icons.location_searching),
+                          institution.state,
+                          Icons.location_searching,
+                          theme,
+                        ),
                         _displayIconAndText(
-                            institution.city, Icons.location_city),
+                          institution.city,
+                          Icons.location_city,
+                          theme,
+                        ),
                       ],
                     ),
                   ),

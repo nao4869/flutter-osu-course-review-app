@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/models/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -227,7 +228,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
     super.dispose();
   }
 
-  Widget _displaySubHeader(String title) {
+  Widget _displaySubHeader(String title, ThemeProvider theme) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -237,7 +238,9 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             title,
             textAlign: TextAlign.end,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -247,8 +250,13 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
     );
   }
 
-  Widget _createFormField(TextEditingController controller, FocusNode focusNode,
-      FocusNode nextFocusNode, String labelText, String formTitle) {
+  Widget _createFormField(
+      TextEditingController controller,
+      FocusNode focusNode,
+      FocusNode nextFocusNode,
+      String labelText,
+      String formTitle,
+      ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -258,6 +266,8 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
           labelText: labelText,
           labelStyle: TextStyle(
             fontSize: 13,
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
           ),
           suffixIcon: IconButton(
             icon: Padding(
@@ -357,6 +367,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
   Widget build(BuildContext context) {
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
+    final theme = Provider.of<ThemeProvider>(context);
 
     const _title = 'University Course Search';
     const _subHeader = 'Create new major';
@@ -382,7 +393,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _displaySubHeader(_subHeader),
+                  _displaySubHeader(_subHeader, theme),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormField<Institution>(
@@ -438,6 +449,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
                     _logoFocusNode,
                     _formLabel1,
                     _formTitle1,
+                    theme,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -452,6 +464,7 @@ class _CreateMajorScreen extends State<CreateMajorScreen> {
                             _logoFocusNode,
                             _formLabel2,
                             _formTitle2,
+                            theme,
                           ),
                         ),
                       ],

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../models/course.dart';
 import '../models/auth.dart';
+import '../models/theme_provider.dart';
 
 class CourseListItem extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class CourseListItem extends StatefulWidget {
 
 class _CourseListItemState extends State<CourseListItem> {
   Widget _displayCourseNameAndFavIcon(
-      BuildContext context, String courseName, Auth authData) {
+      BuildContext context, String courseName, Auth authData, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 0, 3),
       child: Row(
@@ -24,6 +25,7 @@ class _CourseListItemState extends State<CourseListItem> {
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
                 fontFamily: 'Roboto',
+                color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
               ),
               maxLines: 1,
               overflow: TextOverflow.clip,
@@ -50,7 +52,7 @@ class _CourseListItemState extends State<CourseListItem> {
     );
   }
 
-  Widget _displayCourseSubItem(String text, String courseItem) {
+  Widget _displayCourseSubItem(String text, String courseItem, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 0, 3),
       child: Row(
@@ -60,7 +62,7 @@ class _CourseListItemState extends State<CourseListItem> {
               text + courseItem,
               textAlign: TextAlign.left,
               style: TextStyle(
-                color: Colors.black,
+                color: theme.getThemeData == lightTheme ? Colors.black : Colors.white,
                 fontSize: 15,
                 fontFamily: 'Roboto',
               ),
@@ -116,6 +118,7 @@ class _CourseListItemState extends State<CourseListItem> {
     const buttonText = 'Check all reviews';
     final course = Provider.of<Course>(context, listen: false);
     final authData = Provider.of<Auth>(context, listen: false);
+    final theme = Provider.of<ThemeProvider>(context);
 
     return Container(
       padding: EdgeInsets.only(bottom: 5),
@@ -123,15 +126,15 @@ class _CourseListItemState extends State<CourseListItem> {
         margin: EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
-          color: Colors.white,
+          color: theme.getThemeData == lightTheme ? Colors.white : Colors.black26,
           borderRadius: BorderRadius.circular(8),
         ),
         width: double.infinity,
         child: Column(
           children: <Widget>[
-            _displayCourseNameAndFavIcon(context, course.courseName, authData),
-            _displayCourseSubItem(prerequisite, course.prerequisite),
-            _displayCourseSubItem(language, course.language),
+            _displayCourseNameAndFavIcon(context, course.courseName, authData, theme),
+            _displayCourseSubItem(prerequisite, course.prerequisite, theme),
+            _displayCourseSubItem(language, course.language, theme),
             _displayRaisedButton(context, course.id, buttonText),
           ],
         ),

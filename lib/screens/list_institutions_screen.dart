@@ -1,12 +1,11 @@
-// Control the entire contents of the first screens
-// Displays lsit of institutions for the application
-
 import 'package:flutter/material.dart';
 import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/main_drawer.dart';
 import '../models/institution_provider.dart';
 import '../models/institution.dart';
+import '../models/theme_provider.dart';
 import '../widgets/institution_list_item.dart';
 
 class ListInstitutionScreen extends StatefulWidget {
@@ -40,7 +39,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
     super.didChangeDependencies();
   }
 
-  Widget _displaySubHeader(String text) {
+  Widget _displaySubHeader(String text, ThemeProvider theme) {
     return Row(
       children: <Widget>[
         Container(
@@ -48,7 +47,9 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           child: Text(
             text,
             style: TextStyle(
-              color: Colors.black,
+              color: theme.getThemeData == lightTheme
+                  ? Colors.black
+                  : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -78,8 +79,10 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
   Widget build(BuildContext context) {
     const title = 'University Course Search';
     const subheader = 'Search course by school';
+
     final institutionList = Provider.of<Institutions>(context);
     final institutions = institutionList.institutions;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -90,6 +93,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
           child: Text(title),
         ),
       ),
+      drawer: MainDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -107,7 +111,7 @@ class _ListInstitutionScreenState extends State<ListInstitutionScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        _displaySubHeader(subheader),
+                        _displaySubHeader(subheader, themeProvider),
                         _displayListOfInstitutions(institutions),
                       ],
                     ),
@@ -173,6 +177,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? institutions
         : institutions
@@ -183,7 +188,13 @@ class DataSearch extends SearchDelegate<Institution> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].name.toString()),
+        title: Text(
+          sugestionList[index].name.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
@@ -200,7 +211,7 @@ class DataSearch extends SearchDelegate<Institution> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
+    final theme = Provider.of<ThemeProvider>(context);
     final sugestionList = query.isEmpty
         ? institutions
         : institutions
@@ -210,7 +221,13 @@ class DataSearch extends SearchDelegate<Institution> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.chevron_right),
-        title: Text(sugestionList[index].name.toString()),
+        title: Text(
+          sugestionList[index].name.toString(),
+          style: TextStyle(
+            color:
+                theme.getThemeData == lightTheme ? Colors.black : Colors.white,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,
