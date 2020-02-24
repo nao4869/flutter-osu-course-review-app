@@ -69,7 +69,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               Icons.home,
               color: theme.getThemeData == lightTheme
                   ? Colors.black
-                  : Colors.white,
+                  : Colors.grey,
             ),
           ),
         ),

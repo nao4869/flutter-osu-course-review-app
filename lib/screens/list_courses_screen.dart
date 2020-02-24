@@ -83,6 +83,8 @@ class _ListCoursesScreenState extends State<ListCoursesScreen> {
           children: <Widget>[
             Icon(
               Icons.search,
+              color:
+                  theme.getThemeData == lightTheme ? Colors.black : Colors.grey,
             ),
             loadedMajorCourse.isEmpty
                 ? Expanded(

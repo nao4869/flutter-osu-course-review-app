@@ -66,7 +66,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                 icon,
                 color: theme.getThemeData == lightTheme
                     ? Colors.black
-                    : Colors.white,
+                    : Colors.grey,
                 size: 20,
               ),
             ),
