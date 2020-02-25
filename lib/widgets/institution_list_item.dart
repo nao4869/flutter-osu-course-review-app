@@ -42,7 +42,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MoviePlayerWidget(ins.videoUrl),
+                    builder: (context) => VideoPlayerScreen(ins.videoUrl),
                   ),
                 );
               },
