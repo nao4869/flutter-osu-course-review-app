@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:osu_course_review/models/institution_provider.dart';
 import 'package:osu_course_review/screens/list_majors_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/video_player_screen.dart';
 import '../models/institution.dart';
 import '../models/theme_provider.dart';
 
@@ -11,14 +13,15 @@ class InstitutionListItem extends StatefulWidget {
 }
 
 class _InstitutionListItemState extends State<InstitutionListItem> {
-  Widget _displayInstitutionName(String name, ThemeProvider theme) {
+  Widget _displayInstitutionName(Institution ins, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 5, 5),
       child: Row(
         children: <Widget>[
           Expanded(
+            flex: 8,
             child: Text(
-              name,
+              ins.name,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -26,6 +29,23 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                     ? Colors.black
                     : Colors.white,
               ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: IconButton(
+              icon: Icon(
+                Icons.video_label,
+                size: 18,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MoviePlayerWidget(ins.videoUrl),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -114,7 +134,7 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
         child: Column(
           children: <Widget>[
             _displayInstitutionName(
-              institution.name,
+              institution,
               theme,
             ),
             _displayDivider(),
