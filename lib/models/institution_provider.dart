@@ -45,6 +45,7 @@ class Institutions with ChangeNotifier {
           state: institutionData['state'],
           city: institutionData['city'],
           logo: institutionData['logo'],
+          videoUrl: institutionData['videoUrl'],
         ));
       });
       _institutions = loadedInstitution;
