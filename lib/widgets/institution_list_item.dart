@@ -43,6 +43,9 @@ class _InstitutionListItemState extends State<InstitutionListItem> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => VideoPlayerScreen(ins.videoUrl),
+                    // settings: RouteSettings(
+                    //   arguments: ins.videoUrl,
+                    // ),
                   ),
                 );
               },
